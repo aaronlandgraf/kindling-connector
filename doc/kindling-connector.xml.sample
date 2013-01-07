@@ -1,0 +1,66 @@
+<!-- BEGIN_INCLUDE(kindling:my-processor) -->
+    <kindling:my-processor content="#[map-payload:content]" />
+<!-- END_INCLUDE(kindling:my-processor) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-groups) -->
+    <kindling:retrieve-groups  />
+<!-- END_INCLUDE(kindling:retrieve-groups) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-group) -->
+    <kindling:retrieve-group groupId="#[map-payload:groupId]" />
+<!-- END_INCLUDE(kindling:retrieve-group) -->
+<!-- BEGIN_INCLUDE(kindling:update-group) -->
+    <kindling:update-group groupId="#[map-payload:groupId]" groupJson="#[map-payload:groupJson]" />
+<!-- END_INCLUDE(kindling:update-group) -->
+<!-- BEGIN_INCLUDE(kindling:create-group) -->
+    <kindling:create-group groupJson="#[map-payload:groupJson]" />
+<!-- END_INCLUDE(kindling:create-group) -->
+<!-- BEGIN_INCLUDE(kindling:get-comments) -->
+    <kindling:get-comments parentType="#[map-payload:parentType]" />
+<!-- END_INCLUDE(kindling:get-comments) -->
+<!-- BEGIN_INCLUDE(kindling:create-comment) -->
+    <kindling:create-comment commentJson="#[map-payload:commentJson]" />
+<!-- END_INCLUDE(kindling:create-comment) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-comment) -->
+    <kindling:retrieve-comment commentId="#[map-payload:commentId]" />
+<!-- END_INCLUDE(kindling:retrieve-comment) -->
+<!-- BEGIN_INCLUDE(kindling:delete-comment) -->
+    <kindling:delete-comment commentId="#[map-payload:commentId]" />
+<!-- END_INCLUDE(kindling:delete-comment) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-ideas) -->
+    <kindling:retrieve-ideas />
+<!-- END_INCLUDE(kindling:retrieve-ideas) -->
+<!-- BEGIN_INCLUDE(kindling:create-idea) -->
+    <kindling:create-idea ideaJson="#[map-payload:ideaJson]" />
+<!-- END_INCLUDE(kindling:create-idea) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-idea) -->
+    <kindling:retrieve-idea ideaId="#[map-payload:ideaId]" />
+<!-- END_INCLUDE(kindling:retrieve-idea) -->
+<!-- BEGIN_INCLUDE(kindling:update-idea) -->
+    <kindling:update-idea ideaId="#[map-payload:ideaId]" ideaJson="#[map-payload:ideaJson]" />
+<!-- END_INCLUDE(kindling:update-idea) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-users) -->
+    <kindling:retrieve-users  />
+<!-- END_INCLUDE(kindling:retrieve-users) -->
+<!-- BEGIN_INCLUDE(kindling:create-user) -->
+    <kindling:create-user userJson="#[map-payload:userJson]" />
+<!-- END_INCLUDE(kindling:create-user) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-user) -->
+    <kindling:retrieve-user userId="#[map-payload:userId]" />
+<!-- END_INCLUDE(kindling:retrieve-user) -->
+<!-- BEGIN_INCLUDE(kindling:update-user) -->
+    <kindling:update-user userId="#[map-payload:userId]" userJson="#[map-payload:userJson]" />
+<!-- END_INCLUDE(kindling:update-user) -->
+<!-- BEGIN_INCLUDE(kindling:delete-user) -->
+    <kindling:delete-user userId="#[map-payload:userId]" />
+<!-- END_INCLUDE(kindling:delete-user) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-categories) -->
+    <kindling:retrieve-categories  />
+<!-- END_INCLUDE(kindling:retrieve-categories) -->
+<!-- BEGIN_INCLUDE(kindling:create-category) -->
+    <kindling:create-category categoryJson="#[map-payload:categoryJson]" />
+<!-- END_INCLUDE(kindling:create-category) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-category) -->
+    <kindling:retrieve-category categoryId="#[map-payload:categoryId]" />
+<!-- END_INCLUDE(kindling:retrieve-category) -->
+<!-- BEGIN_INCLUDE(kindling:update-category) -->
+    <kindling:update-category categoryId="#[map-payload:categoryId]" categoryJson="#[map-payload:categoryJson]" />
+<!-- END_INCLUDE(kindling:update-category) -->
