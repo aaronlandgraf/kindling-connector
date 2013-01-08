@@ -11,16 +11,7 @@
  */
 package org.mule.module.kindling;
 
-import java.net.URI;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.mule.api.ConnectionException;
-import org.mule.api.ConnectionExceptionCode;
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Connect;
 import org.mule.api.annotations.ConnectionIdentifier;
@@ -30,6 +21,10 @@ import org.mule.api.annotations.Processor;
 import org.mule.api.annotations.ValidateConnection;
 import org.mule.api.annotations.param.ConnectionKey;
 import org.mule.api.annotations.param.Optional;
+import org.mule.module.kindling.client.KindlingClient;
+import org.mule.module.kindling.client.authentication.KindlingAuthentication;
+import org.mule.module.kindling.client.authentication.impl.KindlingAuthenticationBasic;
+import org.mule.module.kindling.client.impl.KindlingClientImpl;
 import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
 import org.mule.module.kindling.types.KindlingCategoryState;
@@ -40,11 +35,6 @@ import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
 import org.mule.module.kindling.types.KindlingUserReputationTimeframe;
 import org.mule.module.kindling.types.KindlingUserState;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 /**
  * Kindling Cloud Connector
@@ -376,12 +366,9 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
  * </pre>
  * @author MuleSoft, Inc.
  */
-@Connector(name="kindling", schemaVersion="1.0", friendlyName="Kindling")
+@Connector(name="kindling", schemaVersion="1.1", friendlyName="Kindling")
 public class KindlingConnector
 {
-	static final private Log logger = LogFactory.getLog(KindlingConnector.class);
-	
-	static final private String API_URL = "https://%s.kindlingapp.com/api/";
 	
 	/**
 	 * The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com
@@ -389,9 +376,7 @@ public class KindlingConnector
 	@Configurable
 	private String companyName;
 	
-	private String jerseyUser;
-	
-	private Client jerseyClient;
+	private KindlingClient client;
 	
 	public String getCompanyName() {
 		return companyName;
@@ -399,10 +384,6 @@ public class KindlingConnector
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-	
-	public void setJerseyClient(Client jerseyClient) {
-		this.jerseyClient = jerseyClient;
 	}
 	
     /**
@@ -415,23 +396,9 @@ public class KindlingConnector
     @Connect
     public void connect(@ConnectionKey String username, String password)
         throws ConnectionException {
-    	jerseyClient = new Client();
-        HTTPBasicAuthFilter authFilter = new HTTPBasicAuthFilter(username, password);
-        // Add basic auth filter for all the
-        jerseyClient.addFilter(authFilter);
-        
-        jerseyUser = username;
-        
-        // Call getGroups with the first result to check the authentication process
-        try {
-        	retrieveGroups(0, null, 0, 1, null, null, null);
-        } catch (KindlingConnectorUnauthorizedException e) {
-        	throw new ConnectionException(ConnectionExceptionCode.INCORRECT_CREDENTIALS, null, e.getMessage());
-        } catch (KindlingConnectorException e) {
-        	throw new ConnectionException(ConnectionExceptionCode.UNKNOWN, null, e.getMessage());
-        }
-        
-        logger.info(String.format("User %s has been authenticated in Kindling Service...", jerseyUser));
+    	
+    	KindlingAuthentication auth = new KindlingAuthenticationBasic(username, password);
+    	client = new KindlingClientImpl(companyName, auth);
     }
 
     /**
@@ -439,8 +406,7 @@ public class KindlingConnector
      */
     @Disconnect
     public void disconnect() {
-    	jerseyClient = null;
-    	jerseyUser = null;
+    	client = null;
     }
 
     /**
@@ -448,7 +414,7 @@ public class KindlingConnector
      */
     @ValidateConnection
     public boolean isConnected() {
-        return jerseyClient != null;
+        return client != null;
     }
 
     /**
@@ -486,34 +452,7 @@ public class KindlingConnector
 	    						@Optional String query) 
     		throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	URI uri = getBaseUriBuilder().path("groups").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	if (!StringUtils.isEmpty(sort))
-    		wr = wr.queryParam("sort", sort);
-    	
-    	if (page != null && page > 1)
-    		wr = wr.queryParam("page", String.valueOf(page));
-    	
-    	if (limit != null && limit > 0)
-    		wr = wr.queryParam("limit", String.valueOf(limit));
-    	
-    	if (state != null)
-    		wr = wr.queryParam("state", state.getValue());
-    	
-    	if (!StringUtils.isEmpty(startsWith))
-    		wr = wr.queryParam("startsWith", startsWith);
-    	
-    	if (!StringUtils.isEmpty(query))
-    		wr = wr.queryParam("q", query);
-    	
-    	logger.info("Requesting retrieveGroups to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveGroups(depth, sort, page, limit, state, startsWith, query);
     }
     
     /**
@@ -532,19 +471,7 @@ public class KindlingConnector
     public String retrieveGroup(String groupId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(groupId))
-    		throw new KindlingConnectorException("The groupId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("groups/{groupId}").build(groupId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	    	    	
-    	logger.info("Requesting retrieveGroup to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveGroup(groupId, depth);
     }
     
     /**
@@ -562,18 +489,7 @@ public class KindlingConnector
     public String updateGroup(String groupId, String groupJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(groupId))
-    		throw new KindlingConnectorException("The groupId parameter it's required");
-    	
-    	if (StringUtils.isEmpty(groupJson))
-    		throw new KindlingConnectorException("The groupJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("groups/{groupId}").build(groupId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	    	    	
-    	logger.info("Requesting updateGroup to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.PUT, groupJson);
+    	return client.updateGroup(groupId, groupJson);
     }
     
     /**
@@ -590,15 +506,7 @@ public class KindlingConnector
     public String createGroup(String groupJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(groupJson))
-    		throw new KindlingConnectorException("The groupJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("groups").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting createGroup to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.POST, groupJson); 
+    	return client.createGroup(groupJson);
     }
 
     /**
@@ -630,39 +538,7 @@ public class KindlingConnector
 							@Optional KindlingCommentType type)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (parentType == null)
-    		throw new KindlingConnectorException("The parentType parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("comments").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	wr = wr.queryParam("parentType", parentType.getValue());
-    	
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	if (!StringUtils.isEmpty(sort))
-    		wr = wr.queryParam("sort", sort);
-    	
-    	if (page != null && page > 1)
-    		wr = wr.queryParam("page", String.valueOf(page));
-    	
-    	if (limit != null && limit > 0)
-    		wr = wr.queryParam("limit", String.valueOf(limit));
-    	
-    	if (state != null)
-    		wr = wr.queryParam("state", state.getValue());
-    	
-    	if (parentId != null && parentId > 0)
-    		wr = wr.queryParam("parentId", String.valueOf(parentId));
-    	
-    	if (type != null)
-    		wr = wr.queryParam("type", type.getValue());
-    	    	
-    	logger.info("Requesting getComments to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveComments(parentType, depth, sort, page, limit, state, parentId, type);
     }
     
     /**
@@ -679,15 +555,7 @@ public class KindlingConnector
     public String createComment(String commentJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (commentJson == null)
-    		throw new KindlingConnectorException("The commentJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("comments").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting createComment to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.POST, commentJson);
+    	return client.createComment(commentJson);
     }
     
     /**
@@ -705,18 +573,7 @@ public class KindlingConnector
     public String retrieveComment(String commentId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(commentId))
-    		throw new KindlingConnectorException("The commentId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("comments/{commentId}").build(commentId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	logger.info("Requesting retrieveComment to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveComment(commentId, depth);
     }
     
     /**
@@ -732,15 +589,7 @@ public class KindlingConnector
     public void deleteComment(String commentId)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(commentId))
-    		throw new KindlingConnectorException("The commentId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("comments/{commentId}").build(commentId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting deleteComment to: " + wr.toString());
-    	webResourceGet(wr, WebResourceMethods.DELETE, null);
+    	client.deleteComment(commentId);
     }
     
     /**
@@ -785,43 +634,7 @@ public class KindlingConnector
 								@Optional KindlingIdeaFilter filter)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	URI uri = getBaseUriBuilder().path("ideas").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	if (!StringUtils.isEmpty(sort))
-    		wr = wr.queryParam("sort", sort);
-    	
-    	if (page != null && page > 1)
-    		wr = wr.queryParam("page", String.valueOf(page));
-    	
-    	if (limit != null && limit > 0)
-    		wr = wr.queryParam("limit", String.valueOf(limit));
-    	
-    	if (!StringUtils.isEmpty(state))
-    		wr = wr.queryParam("state", state);
-    	
-    	if (allowsVoting != null)
-    		wr = wr.queryParam("allowsVoting", String.valueOf(allowsVoting));
-    	
-    	if (!StringUtils.isEmpty(query))
-    		wr = wr.queryParam("q", query);
-    	
-    	if (!StringUtils.isEmpty(authorId))
-    		wr = wr.queryParam("authorId", authorId);
-    	
-    	if (!StringUtils.isEmpty(categoryId))
-    		wr = wr.queryParam("categoryId", categoryId);
-    	
-    	if (filter != null)
-    		wr = wr.queryParam("filter", filter.getValue());
-    	
-    	logger.info("Requesting retrieveIdeas to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveIdeas(depth, sort, page, limit, state, allowsVoting, query, authorId, categoryId, filter);
     }
     
     /**
@@ -838,15 +651,7 @@ public class KindlingConnector
     public String createIdea(String ideaJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(ideaJson))
-    		throw new KindlingConnectorException("The ideaJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("ideas").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting createIdea to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.POST, ideaJson);
+    	return client.createIdea(ideaJson);
     }
     
     /**
@@ -865,18 +670,7 @@ public class KindlingConnector
     							@Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(ideaId))
-    		throw new KindlingConnectorException("The ideaId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("ideas/{ideaId}").build(ideaId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	logger.info("Requesting retrieveIdea to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveIdea(ideaId, depth);
     }
     
     /**
@@ -894,18 +688,7 @@ public class KindlingConnector
     public String updateIdea(String ideaId, String ideaJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(ideaId))
-    		throw new KindlingConnectorException("The ideaId parameter it's required");
-    	
-    	if (StringUtils.isEmpty(ideaJson))
-    		throw new KindlingConnectorException("The ideaJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("ideas/{ideaId}").build(ideaId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting updateIdea to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.PUT, ideaJson);
+    	return client.updateIdea(ideaId, ideaJson);
     }
     
     /**
@@ -938,40 +721,7 @@ public class KindlingConnector
 								@Optional KindlingUserReputationTimeframe reputationTimeframe)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	URI uri = getBaseUriBuilder().path("users").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	if (!StringUtils.isEmpty(sort))
-    		wr = wr.queryParam("sort", sort);
-    	
-    	if (page != null && page > 1)
-    		wr = wr.queryParam("page", String.valueOf(page));
-    	
-    	if (limit != null && limit > 0)
-    		wr = wr.queryParam("limit", String.valueOf(limit));
-    	
-    	if (state != null)
-    		wr = wr.queryParam("state", state.getValue());
-    	
-    	if (associatedWithCategoryId != null && associatedWithCategoryId > 0)
-    		wr = wr.queryParam("associatedWithCategoryId", String.valueOf(associatedWithCategoryId));
-    	
-    	if (digest != null)
-    		wr = wr.queryParam("hasDigests", digest.getValue());
-    	
-    	if (!StringUtils.isEmpty(query))
-    		wr = wr.queryParam("q", query);
-   	
-    	if (reputationTimeframe != null)
-    		wr = wr.queryParam("reputationTimeframe", reputationTimeframe.getValue());
-    	
-    	logger.info("Requesting retrieveUsers to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveUsers(depth, sort, page, limit, state, associatedWithCategoryId, digest, query, reputationTimeframe);
     }
     
     /**
@@ -988,15 +738,7 @@ public class KindlingConnector
     public String createUser(String userJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (userJson == null)
-    		throw new KindlingConnectorException("The userJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("users").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	logger.info("Requesting createUser to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.POST, userJson);
+    	return client.createUser(userJson);
     }
     
     /**
@@ -1015,18 +757,7 @@ public class KindlingConnector
     							@Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (userId == null)
-    		throw new KindlingConnectorException("The userId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("users/{userId}").build(userId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	if (depth != null)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	logger.info("Requesting retrieveUser to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveUser(userId, depth);
     }
     
     /**
@@ -1044,18 +775,7 @@ public class KindlingConnector
     public String updateUser(String userId, String userJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(userId))
-    		throw new KindlingConnectorException("The userId parameter it's required");
-    	
-    	if (StringUtils.isEmpty(userJson))
-    		throw new KindlingConnectorException("The userJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("users/{userId}").build(userId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	    	
-    	logger.info("Requesting updateUser to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.PUT, userJson);
+    	return client.updateUser(userId, userJson);
     }
     
     /**
@@ -1071,15 +791,7 @@ public class KindlingConnector
     public void deleteUser(String userId)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(userId))
-    		throw new KindlingConnectorException("The userId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("users/{userId}").build(userId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	    	
-    	logger.info("Requesting deleteUser to: " + wr.toString());
-    	webResourceGet(wr, WebResourceMethods.DELETE, null);
+    	client.deleteUser(userId);
     }
     
     /**
@@ -1109,34 +821,7 @@ public class KindlingConnector
 									@Optional Integer associatedWithUserId)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	URI uri = getBaseUriBuilder().path("categories").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	// Check for optional parameters (do not send them if they have their default value)
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	
-    	if (!StringUtils.isEmpty(sort))
-    		wr = wr.queryParam("sort", sort);
-    	
-    	if (page != null && page > 1)
-    		wr = wr.queryParam("page", String.valueOf(page));
-    	
-    	if (limit != null && limit > 0)
-    		wr = wr.queryParam("limit", String.valueOf(limit));
-    	
-    	if (state != null)
-    		wr = wr.queryParam("state", state.getValue());
-    	
-    	if (!StringUtils.isEmpty(query))
-    		wr = wr.queryParam("q", query);
-    	
-     	if (associatedWithUserId != null && associatedWithUserId > 0)
-    		wr = wr.queryParam("associatedWithUserId", String.valueOf(associatedWithUserId));
-    	
-    	logger.info("Requesting retrieveCategories to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveCategories(depth, sort, page, limit, state, query, associatedWithUserId);
     }
     
     /**
@@ -1153,15 +838,7 @@ public class KindlingConnector
     public String createCategory(String categoryJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(categoryJson))
-    		throw new KindlingConnectorException("The categoryJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("categories").build();
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	    	
-    	logger.info("Requesting createCategory to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.POST, categoryJson);
+    	return client.createCategory(categoryJson);
     }
     
     /**
@@ -1180,18 +857,7 @@ public class KindlingConnector
     								@Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(categoryId))
-    		throw new KindlingConnectorException("The categoryId parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("categories/{categoryId}").build(categoryId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	
-    	if (depth != null && depth > 0)
-    		wr = wr.queryParam("depth", String.valueOf(depth));
-    	    	
-    	logger.info("Requesting retrieveCategory to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.GET, null);
+    	return client.retrieveCategory(categoryId, depth);
     }
     
     /**
@@ -1209,60 +875,8 @@ public class KindlingConnector
     public String updateCategory(String categoryId, String categoryJson)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(categoryId))
-    		throw new KindlingConnectorException("The categoryId parameter it's required");
-    	
-    	if (StringUtils.isEmpty(categoryJson))
-    		throw new KindlingConnectorException("The categoryJson parameter it's required");
-    	
-    	URI uri = getBaseUriBuilder().path("categories/{categoryId}").build(categoryId);
-    	
-    	WebResource wr = jerseyClient.resource(uri);
-    	    	
-    	logger.info("Requesting updateCategory to: " + wr.toString());
-    	return webResourceGet(wr, WebResourceMethods.PUT, categoryJson);
+    	return client.updateCategory(categoryId, categoryJson);
     }
     
-    private UriBuilder getBaseUriBuilder() {
-    	return UriBuilder.fromPath(String.format(API_URL, companyName));
-    }
     
-    private String webResourceGet(WebResource wr, WebResourceMethods method, String requestBody) 
-			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
-		try {
-			return webResourceCallByEnumType(wr, method, requestBody);
-		} catch (UniformInterfaceException e) {
-			int statusCode = e.getResponse().getStatus();
-			
-			// The code 204 is returned as a successful operation with no response, but as the expected parameter is a String.class it throws a UniformInterfaceException.
-			if (statusCode == 204) {
-				return "";
-			} else if (statusCode == 401) {
-				throw new KindlingConnectorUnauthorizedException(jerseyUser);
-			} else {
-				throw new KindlingConnectorException("ERROR - statusCode: " + statusCode, e);
-			}
-		}
-	}
-    
-    private String webResourceCallByEnumType(WebResource wr, WebResourceMethods method, String requestBody) {
-		if (WebResourceMethods.GET.equals(method)) {
-			return wr.type(MediaType.APPLICATION_JSON_TYPE).get(String.class);
-		} else if (WebResourceMethods.POST.equals(method)) {
-			return wr.type(MediaType.APPLICATION_JSON_TYPE).post(String.class, requestBody);
-		} else if (WebResourceMethods.PUT.equals(method)) {
-			return wr.type(MediaType.APPLICATION_JSON_TYPE).put(String.class, requestBody);
-		} else if (WebResourceMethods.DELETE.equals(method)) {
-			return wr.type(MediaType.APPLICATION_JSON_TYPE).delete(String.class);
-		} else {
-			return null;
-		}
-	}
-    
-    static private enum WebResourceMethods {
-		GET,
-		POST,
-		PUT,
-		DELETE;
-	}
 }

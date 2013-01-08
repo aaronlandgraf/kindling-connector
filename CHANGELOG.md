@@ -1,3 +1,7 @@
+1.1 Beta
+========
+	* Mass refactor of the classes. Added interfaces for client and authentication. Cleaned the connector code
+
 1.0 Beta
 ========
     * First Release Beta
