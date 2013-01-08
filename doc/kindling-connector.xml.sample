@@ -13,9 +13,9 @@
 <!-- BEGIN_INCLUDE(kindling:create-group) -->
     <kindling:create-group groupJson="#[map-payload:groupJson]" />
 <!-- END_INCLUDE(kindling:create-group) -->
-<!-- BEGIN_INCLUDE(kindling:get-comments) -->
-    <kindling:get-comments parentType="#[map-payload:parentType]" />
-<!-- END_INCLUDE(kindling:get-comments) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-comments) -->
+    <kindling:retrieve-comments parentType="#[map-payload:parentType]" />
+<!-- END_INCLUDE(kindling:retrieve-comments) -->
 <!-- BEGIN_INCLUDE(kindling:create-comment) -->
     <kindling:create-comment commentJson="#[map-payload:commentJson]" />
 <!-- END_INCLUDE(kindling:create-comment) -->

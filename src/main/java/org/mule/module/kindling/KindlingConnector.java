@@ -105,7 +105,275 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
  * 		<td></td>		
  * 	</tr>
  * </table>
- * 
+ * <h3>Entity representations</h3>
+ * <b>group.json-collection (application/json)</b>
+ * <pre>
+ * {@code 
+ * {
+ *     "meta": {
+ *         "count":        "integer",
+ *         "totalCount":   "integer",
+ *         "totalPages":   "integer",
+ *         "parameters": {
+ *             "page":     "integer",
+ *             "limit":    "integer",
+ *             "sort":     "string",
+ *             "*":        "*"
+ *         }
+ *     },
+ *     "results": ["group.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>group.json (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "className":                    "string(Group_Managed|Group_Smart_*)",
+ *     "id":                           "integer",
+ *     "title":                        "string",
+ *     "description":                  "string",
+ *     "type":                         "string(smart|managed)",
+ *     "stateId":                      "integer(1|3|8)",
+ *     "stateName":                    "string(Activated|Archived|Disabled)",
+ *     "requiresLdap":                 "boolean",
+ *     "parameters":                   "json",
+ *     "dateCreated":                  "date",
+ *     "dateCreatedLocalized":         "dateFormatted",
+ *     "dateUpdated":                  "date",
+ *     "dateUpdatedLocalized":         "dateFormatted",
+ *     "resourceUri":                  "string(\/api\/groups\/$id)",
+ *     "applicationUri":               "string(\/groups\/$id)",
+ *     "depth>0(members)":             ["user.json|integer"],
+ *     "depth>0(moderators)":          ["user.json|integer"],
+ *     "depth>0(categories)":          ["category.json|integer"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>comment.json-collection (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "meta": {
+ *         "count":        "integer",
+ *         "totalCount":   "integer",
+ *         "totalPages":   "integer",
+ *         "parameters": {
+ *             "page":     "integer",
+ *             "limit":    "integer",
+ *             "sort":     "string",
+ *             "*":        "*"
+ *         }
+ *     },
+ *     "results": ["comment.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>comment.json (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "className":                                "string(Comment)",
+ *     "id":                                       "integer",
+ *     "owner(Id)":                                "user.json|integer",
+ *     "parentType":                               "string(ideas|posts)",
+ *     "matchOptionIndex=parentType(parent(Id))":  "idea.json|post.json|integer",
+ *     "type":                                     "string(user|moderator)",
+ *     "description":                              "html",
+ *     "dateCreated":                              "date",
+ *     "dateCreatedLocalized":                     "dateFormatted",
+ *     "stateId":                                  "integer(1|3)",
+ *     "stateName":                                "string(Activated|Archived)",
+ *     "resourceUri":                              "string(\/api\/comments\/$id)",
+ *     "depth>0(attachments)":                     ["attachment.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>idea.json-collection (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "meta": {
+ *         "count":        "integer",
+ *         "totalCount":   "integer",
+ *         "totalPages":   "integer",
+ *         "parameters": {
+ *             "page":     "integer",
+ *             "limit":    "integer",
+ *             "sort":     "string",
+ *             "*":        "*"
+ *         }
+ *     },
+ *     "results": ["idea.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>idea.json (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "className":                "string(Idea)",
+ *     "id":                       "integer",
+ *     "category(Id)":             "category.json|integer",
+ *     "title":                    "string",
+ *     "description":              "html",
+ *     "votes":                    "integer",
+ *     "anonymous":                "integer",
+ *     "dateCreated":              "date",
+ *     "dateCreatedLocalized":     "dateFormatted",
+ *     "dateUpdated":              "date",
+ *     "dateUpdatedLocalized":     "dateFormatted",
+ *     "dateManaged":              "date",
+ *     "dateManagedLocalized":     "dateFormatted",
+ *     "dateRectified":            "date",
+ *     "dateRectifiedLocalized":   "dateFormatted",
+ *     "stateId":                  "integer(9|13|14|7|2|5|3|?)",
+ *     "stateName":                "string(Drafted|Open|Paused|Declined|Approved|Completed|Archived|?)",
+ *     "cachedTags":               "string",
+ *     "lockedForComments":        "boolean",
+ *     "bonfireUrl":               "string",
+ *     "submissionSource":         "string",
+ *     "resourceUri":              "string(\/api\/ideas\/$id)",
+ *     "applicationUri":           "string(\/ideas\/$id)",
+ *     "assignedTo":               "integer",
+ *     "author(Id)":               "user.json|integer",
+ *     "depth>0(tags)":            ["string"],
+ *     "depth>0(comments)":        ["comment.json"],
+ *     "currentUserInfo": {
+ *         "votes":                "integer",
+ *         "votesAvailable":       "integer",
+ *         "votesMax":             "integer",
+ *         "votesTotal":           "integer",
+ *         "voterCount":           "integer",
+ *         "ideaId":               "integer($id)",
+ *         "categoryId":           "integer($categoryId)",
+ *         "isVotable":            "boolean"
+ *     }
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>user.json-collection (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "meta": {
+ *         "count":        "integer",
+ *         "totalCount":   "integer",
+ *         "totalPages":   "integer",
+ *         "parameters": {
+ *             "page":     "integer",
+ *             "limit":    "integer",
+ *             "sort":     "string",
+ *             "*":        "*"
+ *         }
+ *     },
+ *     "results": ["user.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>user.json (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "className":            "string(User)",
+ *     "id":                   "integer",
+ *     "avatar(Id)":           "attachment.json|integer",
+ *     "username":             "string",
+ *     "firstName":            "string",
+ *     "lastName":             "string",
+ *     "email":                "email",
+ *     "emailPreferences":     "string(all|digest-nightly|digest-weekly|none)",
+ *     "votesTotal":           "integer",
+ *     "reputation":           "integer",
+ *     "stateId":              "integer(11|1|8|3)",
+ *     "stateName":            "string(Invited|Activated|Disabled|Archived)",
+ *     "resetRequested":       "date",
+ *     "storNotification":     "boolean",
+ *     "backend":              "string",
+ *     "fullName":             "string($firstName $lastName)",
+ *     "avatarUri":            "string(\/api\/users\/$id\/avatar)",
+ *     "resourceUri":          "string(\/api\/users\/$id)",
+ *     "applicationUri":       "string(\/users\/$id)",
+ *     "locale":               "string",
+ *     "lastLogin":            "date",
+ *     "lastLoginLocalized":   "dateFormatted",
+ *     "dateCreated":          "date",
+ *     "dateCreatedLocalized": "dateFormatted",
+ *     "depth>0(skills)":      ["string"],
+ *     "depth>0(interests)":   ["string"],
+ *     "depth>0(categories)":  ["category.json|integer"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>category.json-collection (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "meta": {
+ *         "count":        "integer",
+ *         "totalCount":   "integer",
+ *         "totalPages":   "integer",
+ *         "parameters": {
+ *             "page":     "integer",
+ *             "limit":    "integer",
+ *             "sort":     "string",
+ *             "*":        "*"
+ *         }
+ *     },
+ *     "results": ["category.json"]
+ * }
+ * }
+ * </pre>
+ * <p>
+ * <b>category.json (application/json)</b>
+ * <pre>
+ * {@code
+ * {
+ *     "className":                "string(Category|Category_Campaign)",
+ *     "id":                       "integer",
+ *     "parent(Id)":               "category.json|integer",
+ *     "owner(Id)":                "user.json|integer",
+ *     "slug":                     "string",
+ *     "title":                    "string",
+ *     "description":              "string",
+ *     "stateId":                  "integer(1|8|3|12|21|17)",
+ *     "stateName":                "string(Activated|Disabled|Archived|Locked|Queued|Ended)",
+ *     "dateCreated":              "date",
+ *     "dateCreatedLocalized":     "dateFormatted",
+ *     "dateUpdated":              "date",
+ *     "dateUpdatedLocalized":     "dateFormatted",
+ *     "isDefault":                "boolean",
+ *     "submitIdeaRestriction":    "string(all|moderators)",
+ *     "dateStart":                "date",
+ *     "dateStartLocalized":       "dateFormatted",
+ *     "dateEnd":                  "date",
+ *     "dateEndLocalized":         "dateFormatted",
+ *     "notifyPhase":              "integer",
+ *     "notifyStart":              "integer",
+ *     "notifyDaysLeft":           "integer",
+ *     "notifyEnd":                "integer",
+ *     "reward":                   "string",
+ *     "fullyQualifiedTitle":      "string",
+ *     "hierarchy":                ["string"],
+ *     "ideas": {
+ *         "count":                "integer",
+ *         "collectionUri":        "string(\/api\/ideas?category=$id)"
+ *     },
+ *     "resourceUri":              "string(\/api\/categories\/$id)",
+ *     "applicationUri":           "string(\/categories\/$id)",
+ *     "voteMax":                  "integer",
+ *     "depth>0(groups)":          ["group.json|integer"]
+ * } 
+ * }
+ * </pre>
  * @author MuleSoft, Inc.
  */
 @Connector(name="kindling", schemaVersion="1.0", friendlyName="Kindling")
@@ -162,6 +430,8 @@ public class KindlingConnector
         } catch (KindlingConnectorException e) {
         	throw new ConnectionException(ConnectionExceptionCode.UNKNOWN, null, e.getMessage());
         }
+        
+        logger.info(String.format("User %s has been authenticated in Kindling Service...", jerseyUser));
     }
 
     /**
@@ -334,7 +604,7 @@ public class KindlingConnector
     /**
      * Gets the comments collection
      * <p>
-     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:get-comments}
+     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:retrieve-comments}
      * 
      * @param parentType Retrieve only comments whose parent is of this type
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
@@ -348,7 +618,8 @@ public class KindlingConnector
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
-    public String getComments(
+    @Processor
+    public String retrieveComments(
     						KindlingCommentParentType parentType,
     						@Optional Integer depth,
 							@Optional String sort,
@@ -483,15 +754,15 @@ public class KindlingConnector
      * @param limit <i>Default: 20</i> The limit on number of collection items to show per page
      * @param state Get only items in the collection that are in the given state, either by a state ID or it's natural language name
      * <p>
-     * <li>
-     * 	<ul>drafted</ul>
-     * 	<ul>open</ul>
-     * 	<ul>approved/ul>
-     * 	<ul>completed</ul>
-     * 	<ul>declined</ul>
-     * 	<ul>paused</ul>
-     * 	<ul>others depending on workflow settings</ul>
-     * </li>
+     * <ul>
+     * 	<li>drafted</li>
+     * 	<li>open</li>
+     * 	<li>approved</li>
+     * 	<li>completed</li>
+     * 	<li>declined</li>
+     * 	<li>paused</li>
+     * 	<li>others depending on workflow settings</ul>
+     * </ul>
      * @param allowsVoting only show ideas that can or cannot be voted upon
      * @param query a general idea search string
      * @param authorId show only ideas from a particular author
