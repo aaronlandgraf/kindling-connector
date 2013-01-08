@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="gustavoalberola" created="Mon Jan 07 16:06:48 GMT-03:00 2013" guiVersion="3.3.0.M2" id="1357587031427" licenseCode="Unlicensed" licenseType="Unknown" modified="Mon Jan 07 16:06:48 GMT-03:00 2013" modifiedBy="gustavoalberola" name="Categories" preview-file="${Project_Home}/src/main/resources/RetrieveCategories.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __sourcePath="{}/object/results" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="Metadata0" _parent_id="__parent_id" _position="0" id="Metadata1">
+<Record fieldDelimiter="|" name="__singleDimensionalCollection_1" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/results/className" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/results/id" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/results/owner/id" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/results/title" label="title" name="title" type="string"/>
+<Field __sourcePath="{}/object/results/description" label="description" name="description" type="string"/>
+<Field __sourcePath="{}/object/results/stateId" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/results/stateName" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreated" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreatedLocalized" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/results/isDefault" label="isDefault" name="isDefault" type="number"/>
+<Field __sourcePath="{}/object/results/submitIdeaRestriction" label="submitIdeaRestriction" name="submitIdeaRestriction" type="string"/>
+<Field __sourcePath="{}/object/results/fullyQualifiedTitle" label="fullyQualifiedTitle" name="fullyQualifiedTitle" type="string"/>
+<Field __sourcePath="{}/object/results/ideas/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/results/ideas/collectionUri" label="collectionUri" name="collectionUri" type="string"/>
+<Field __sourcePath="{}/object/results/resourceUri" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/results/applicationUri" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/results/voteMax" label="voteMax" name="voteMax" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/results" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="Metadata3" _parent_id="__parent_id" _position="0" _type="Input" id="Metadata4">
+<Record fieldDelimiter="|" name="__singleDimensionalCollection_1" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/results/className" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/results/id" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/results/owner/id" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/results/title" label="title" name="title" type="string"/>
+<Field __sourcePath="{}/object/results/description" label="description" name="description" type="string"/>
+<Field __sourcePath="{}/object/results/stateId" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/results/stateName" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreated" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreatedLocalized" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/results/isDefault" label="isDefault" name="isDefault" type="number"/>
+<Field __sourcePath="{}/object/results/submitIdeaRestriction" label="submitIdeaRestriction" name="submitIdeaRestriction" type="string"/>
+<Field __sourcePath="{}/object/results/fullyQualifiedTitle" label="fullyQualifiedTitle" name="fullyQualifiedTitle" type="string"/>
+<Field __sourcePath="{}/object/results/ideas/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/results/ideas/collectionUri" label="collectionUri" name="collectionUri" type="string"/>
+<Field __sourcePath="{}/object/results/resourceUri" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/results/applicationUri" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/results/voteMax" label="voteMax" name="voteMax" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/results/hierarchy" _dataStructure="OBJECT" _id="__id" _metadataParentId="Metadata1" _parent_id="__parent_id" _position="0" id="Metadata2">
+<Record fieldDelimiter="|" name="anyType" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/results/hierarchy/text()" label="text" name="text" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/results/hierarchy" _dataStructure="OBJECT" _id="__id" _metadataParentId="Metadata4" _parent_id="__parent_id" _position="0" _type="Input" id="Metadata5">
+<Record fieldDelimiter="|" name="anyType" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/results/hierarchy/text()" label="text" name="text" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" id="Metadata0">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/meta/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/meta/totalCount" label="totalCount" name="totalCount" type="number"/>
+<Field __sourcePath="{}/object/meta/totalPages" label="totalPages" name="totalPages" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/page" label="page" name="page" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/limit" label="limit" name="limit" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/sort" label="sort" name="sort" type="string"/>
+<Field __sourcePath="{}/object/meta/parameters/state" label="state" name="state" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="Metadata3">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/meta/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/meta/totalCount" label="totalCount" name="totalCount" type="number"/>
+<Field __sourcePath="{}/object/meta/totalPages" label="totalPages" name="totalPages" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/page" label="page" name="page" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/limit" label="limit" name="limit" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/sort" label="sort" name="sort" type="string"/>
+<Field __sourcePath="{}/object/meta/parameters/state" label="state" name="state" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Output" id="1de34cfe-486f-4e8c-82b9-e416d898ea42">
+<Record fieldDelimiter="|" label="object" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __sourcePath="{}/object/meta/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/meta/totalCount" label="totalCount" name="totalCount" type="number"/>
+<Field __sourcePath="{}/object/meta/totalPages" label="totalPages" name="totalPages" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/page" label="page" name="page" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/limit" label="limit" name="limit" type="number"/>
+<Field __sourcePath="{}/object/meta/parameters/sort" label="sort" name="sort" type="string"/>
+<Field __sourcePath="{}/object/meta/parameters/state" label="state" name="state" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/results" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="1de34cfe-486f-4e8c-82b9-e416d898ea42" _parent_id="__parent_id" _type="Output" id="0c27de67-6abe-4c71-ac23-dafdcc1a786e">
+<Record fieldDelimiter="|" label="results" name="results" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/results/className" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/results/id" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/results/owner/id2" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/results/title" label="title" name="title" type="string"/>
+<Field __sourcePath="{}/object/results/description" label="description" name="description" type="string"/>
+<Field __sourcePath="{}/object/results/stateId" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/results/stateName" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreated" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/results/dateCreatedLocalized" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/results/isDefault" label="isDefault" name="isDefault" type="number"/>
+<Field __sourcePath="{}/object/results/submitIdeaRestriction" label="submitIdeaRestriction" name="submitIdeaRestriction" type="string"/>
+<Field __sourcePath="{}/object/results/fullyQualifiedTitle" label="fullyQualifiedTitle" name="fullyQualifiedTitle" type="string"/>
+<Field __sourcePath="{}/object/results/ideas/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/results/ideas/collectionUri" label="collectionUri" name="collectionUri" type="string"/>
+<Field __sourcePath="{}/object/results/resourceUri" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/results/applicationUri" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/results/voteMax" label="voteMax" name="voteMax" type="string"/>
+<Field __sourcePath="{}/object/results/hierarchy/text" label="text" name="text" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiHeight="0" guiName="JSON READER" guiWidth="0" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object/results">
+    <Mapping cloverField="className" trim="true" xpath="className"/>
+    <Mapping cloverField="id" trim="true" xpath="id"/>
+    <Mapping cloverField="id2" trim="true" xpath="owner/id"/>
+    <Mapping cloverField="title" trim="true" xpath="title"/>
+    <Mapping cloverField="description" trim="true" xpath="description"/>
+    <Mapping cloverField="stateId" trim="true" xpath="stateId"/>
+    <Mapping cloverField="stateName" trim="true" xpath="stateName"/>
+    <Mapping cloverField="dateCreated" trim="true" xpath="dateCreated"/>
+    <Mapping cloverField="dateCreatedLocalized" trim="true" xpath="dateCreatedLocalized"/>
+    <Mapping cloverField="isDefault" trim="true" xpath="isDefault"/>
+    <Mapping cloverField="submitIdeaRestriction" trim="true" xpath="submitIdeaRestriction"/>
+    <Mapping cloverField="fullyQualifiedTitle" trim="true" xpath="fullyQualifiedTitle"/>
+    <Mapping cloverField="count" trim="true" xpath="ideas/count"/>
+    <Mapping cloverField="collectionUri" trim="true" xpath="ideas/collectionUri"/>
+    <Mapping cloverField="resourceUri" trim="true" xpath="resourceUri"/>
+    <Mapping cloverField="applicationUri" trim="true" xpath="applicationUri"/>
+    <Mapping cloverField="voteMax" trim="true" xpath="voteMax"/>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/main/resources/RetrieveCategories.json]]></attr>
+</Node>
+<Node enabled="enabled" fileURL="dict:outputPayload" guiHeight="0" guiName="Maps / List of Maps  WRITER" guiWidth="0" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<object xmlns:clover="http://www.cloveretl.com/ns/xmlmapping">
+  <clover:collection clover:name="results">
+    <item clover:inPort="0">
+      <className>$0.className</className>
+      <id>$0.id</id>
+      <owner>
+        <id2>$0.id2</id2>
+      </owner>
+      <title>$0.title</title>
+      <description>$0.description</description>
+      <stateId>$0.stateId</stateId>
+      <stateName>$0.stateName</stateName>
+      <dateCreated>$0.dateCreated</dateCreated>
+      <dateCreatedLocalized>$0.dateCreatedLocalized</dateCreatedLocalized>
+      <isDefault>$0.isDefault</isDefault>
+      <submitIdeaRestriction>$0.submitIdeaRestriction</submitIdeaRestriction>
+      <fullyQualifiedTitle>$0.fullyQualifiedTitle</fullyQualifiedTitle>
+      <ideas>
+        <count>$0.count</count>
+        <collectionUri>$0.collectionUri</collectionUri>
+      </ideas>
+      <resourceUri>$0.resourceUri</resourceUri>
+      <applicationUri>$0.applicationUri</applicationUri>
+      <voteMax>$0.voteMax</voteMax>
+      <hierarchy>
+        <text>$0.text</text>
+      </hierarchy>
+    </item>
+  </clover:collection>
+</object>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node enabled="enabled" guiHeight="0" guiName="results_to_results" guiWidth="0" guiX="460" guiY="120" id="REFORMAT1" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+$out.0.__id=$in.0.__id;
+	$out.0.__parent_id=$in.0.__parent_id;
+	$out.0.className=$in.0.className;
+	$out.0.id=$in.0.id;
+	$out.0.id2=$in.0.id2;
+	$out.0.title=$in.0.title;
+	$out.0.description=$in.0.description;
+	$out.0.stateId=$in.0.stateId;
+	$out.0.stateName=$in.0.stateName;
+	$out.0.dateCreated=$in.0.dateCreated;
+	$out.0.dateCreatedLocalized=$in.0.dateCreatedLocalized;
+	$out.0.isDefault=$in.0.isDefault;
+	$out.0.submitIdeaRestriction=$in.0.submitIdeaRestriction;
+	$out.0.fullyQualifiedTitle=$in.0.fullyQualifiedTitle;
+	$out.0.count=$in.0.count;
+	$out.0.collectionUri=$in.0.collectionUri;
+	$out.0.resourceUri=$in.0.resourceUri;
+	$out.0.applicationUri=$in.0.applicationUri;
+	$out.0.voteMax=$in.0.voteMax;
+		return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="Metadata4" outPort="Port 0 (out)" toNode="REFORMAT1:0"/>
+<Edge debugMode="true" fromNode="REFORMAT1:0" guiBendpoints="" id="Edge3" inPort="Port 0 (in)" metadata="0c27de67-6abe-4c71-ac23-dafdcc1a786e" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+</Phase>
+</Graph>

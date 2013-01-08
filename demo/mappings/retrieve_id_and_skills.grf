@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="gustavoalberola" created="Tue Jan 08 12:36:07 GMT-03:00 2013" guiVersion="3.3.0.M2" id="1357660854115" licenseCode="Unlicensed" licenseType="Unknown" modified="Tue Jan 08 12:36:07 GMT-03:00 2013" modifiedBy="gustavoalberola" name="Retrieve Id and Skills" preview-file="${Project_Home}/src/main/resources/user.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __sourcePath="{}/object/categories" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="dbf2cae1-db6e-4088-8b2e-5e07d08d8df5" _parent_id="__parent_id" _type="Output" id="0af69dbe-cbe7-470a-84cd-b34f1c3932a2">
+<Record fieldDelimiter="|" label="categories" name="categories" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/categories/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/categories/canModerate" containerType="" label="canModerate" name="canModerate" type="boolean"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" id="Metadata0">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/className" containerType="" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/avatar/id" containerType="" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/username" containerType="" label="username" name="username" type="string"/>
+<Field __sourcePath="{}/object/firstName" containerType="" label="firstName" name="firstName" type="string"/>
+<Field __sourcePath="{}/object/lastName" containerType="" label="lastName" name="lastName" type="string"/>
+<Field __sourcePath="{}/object/email" containerType="" label="email" name="email" type="string"/>
+<Field __sourcePath="{}/object/votesTotal" containerType="" label="votesTotal" name="votesTotal" type="number"/>
+<Field __sourcePath="{}/object/stateId" containerType="" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/stateName" containerType="" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/backend" containerType="" label="backend" name="backend" type="string"/>
+<Field __sourcePath="{}/object/fullName" containerType="" label="fullName" name="fullName" type="string"/>
+<Field __sourcePath="{}/object/avatarUri" containerType="" label="avatarUri" name="avatarUri" type="string"/>
+<Field __sourcePath="{}/object/resourceUri" containerType="" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/applicationUri" containerType="" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/reputation" containerType="" label="reputation" name="reputation" type="number"/>
+<Field __sourcePath="{}/object/isAnonymous" containerType="" label="isAnonymous" name="isAnonymous" type="boolean"/>
+<Field __sourcePath="{}/object/lastLogin" containerType="" label="lastLogin" name="lastLogin" type="string"/>
+<Field __sourcePath="{}/object/lastLoginLocalized" containerType="" label="lastLoginLocalized" name="lastLoginLocalized" type="string"/>
+<Field __sourcePath="{}/object/dateCreated" containerType="" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/dateCreatedLocalized" containerType="" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/token" containerType="" label="token" name="token" type="string"/>
+<Field __sourcePath="{}/object/skills" containerType="list" label="skills" name="skills" type="string"/>
+<Field __sourcePath="{}/object/interests" containerType="list" label="interests" name="interests" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/default" containerType="" label="default" name="default" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0032" containerType="" label="2" name="_x0032" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0033" containerType="" label="3" name="_x0033" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0031" containerType="" label="1" name="_x0031" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/categories" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="Metadata0" _parent_id="__parent_id" _position="0" id="Metadata1">
+<Record fieldDelimiter="|" name="__singleDimensionalCollection_1" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/categories/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/categories/canModerate" containerType="" label="canModerate" name="canModerate" type="boolean"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="Metadata2">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/className" containerType="" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/avatar/id" containerType="" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/username" containerType="" label="username" name="username" type="string"/>
+<Field __sourcePath="{}/object/firstName" containerType="" label="firstName" name="firstName" type="string"/>
+<Field __sourcePath="{}/object/lastName" containerType="" label="lastName" name="lastName" type="string"/>
+<Field __sourcePath="{}/object/email" containerType="" label="email" name="email" type="string"/>
+<Field __sourcePath="{}/object/votesTotal" containerType="" label="votesTotal" name="votesTotal" type="number"/>
+<Field __sourcePath="{}/object/stateId" containerType="" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/stateName" containerType="" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/backend" containerType="" label="backend" name="backend" type="string"/>
+<Field __sourcePath="{}/object/fullName" containerType="" label="fullName" name="fullName" type="string"/>
+<Field __sourcePath="{}/object/avatarUri" containerType="" label="avatarUri" name="avatarUri" type="string"/>
+<Field __sourcePath="{}/object/resourceUri" containerType="" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/applicationUri" containerType="" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/reputation" containerType="" label="reputation" name="reputation" type="number"/>
+<Field __sourcePath="{}/object/isAnonymous" containerType="" label="isAnonymous" name="isAnonymous" type="boolean"/>
+<Field __sourcePath="{}/object/lastLogin" containerType="" label="lastLogin" name="lastLogin" type="string"/>
+<Field __sourcePath="{}/object/lastLoginLocalized" containerType="" label="lastLoginLocalized" name="lastLoginLocalized" type="string"/>
+<Field __sourcePath="{}/object/dateCreated" containerType="" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/dateCreatedLocalized" containerType="" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/token" containerType="" label="token" name="token" type="string"/>
+<Field __sourcePath="{}/object/skills" containerType="list" label="skills" name="skills" type="string"/>
+<Field __sourcePath="{}/object/interests" containerType="list" label="interests" name="interests" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/default" containerType="" label="default" name="default" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0032" containerType="" label="2" name="_x0032" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0033" containerType="" label="3" name="_x0033" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0031" containerType="" label="1" name="_x0031" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object/categories" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="Metadata2" _parent_id="__parent_id" _position="0" _type="Input" id="Metadata3">
+<Record fieldDelimiter="|" name="__singleDimensionalCollection_1" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/categories/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/categories/canModerate" containerType="" label="canModerate" name="canModerate" type="boolean"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Output" id="dbf2cae1-db6e-4088-8b2e-5e07d08d8df5">
+<Record fieldDelimiter="|" label="object" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __sourcePath="{}/object/className" containerType="" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/id" containerType="" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/avatar/id2" containerType="" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/username" containerType="" label="username" name="username" type="string"/>
+<Field __sourcePath="{}/object/firstName" containerType="" label="firstName" name="firstName" type="string"/>
+<Field __sourcePath="{}/object/lastName" containerType="" label="lastName" name="lastName" type="string"/>
+<Field __sourcePath="{}/object/email" containerType="" label="email" name="email" type="string"/>
+<Field __sourcePath="{}/object/votesTotal" containerType="" label="votesTotal" name="votesTotal" type="number"/>
+<Field __sourcePath="{}/object/stateId" containerType="" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/stateName" containerType="" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/backend" containerType="" label="backend" name="backend" type="string"/>
+<Field __sourcePath="{}/object/fullName" containerType="" label="fullName" name="fullName" type="string"/>
+<Field __sourcePath="{}/object/avatarUri" containerType="" label="avatarUri" name="avatarUri" type="string"/>
+<Field __sourcePath="{}/object/resourceUri" containerType="" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/applicationUri" containerType="" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/reputation" containerType="" label="reputation" name="reputation" type="number"/>
+<Field __sourcePath="{}/object/isAnonymous" containerType="" label="isAnonymous" name="isAnonymous" type="boolean"/>
+<Field __sourcePath="{}/object/lastLogin" containerType="" label="lastLogin" name="lastLogin" type="string"/>
+<Field __sourcePath="{}/object/lastLoginLocalized" containerType="" label="lastLoginLocalized" name="lastLoginLocalized" type="string"/>
+<Field __sourcePath="{}/object/dateCreated" containerType="" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/dateCreatedLocalized" containerType="" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/token" containerType="" label="token" name="token" type="string"/>
+<Field __sourcePath="{}/object/skills" containerType="list" label="skills" name="skills" type="string"/>
+<Field __sourcePath="{}/object/interests" containerType="list" label="interests" name="interests" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/default" containerType="" label="default" name="default" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0032" containerType="" label="_x0032" name="_x0032" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0033" containerType="" label="_x0033" name="_x0033" type="string"/>
+<Field __sourcePath="{}/object/emailPreferences/categories/_x0031" containerType="" label="_x0031" name="_x0031" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiHeight="0" guiName="JSON READER" guiWidth="0" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object">
+    <Mapping cloverField="className" trim="true" xpath="className"/>
+    <Mapping cloverField="id" trim="true" xpath="id"/>
+    <Mapping cloverField="id2" trim="true" xpath="avatar/id"/>
+    <Mapping cloverField="username" trim="true" xpath="username"/>
+    <Mapping cloverField="firstName" trim="true" xpath="firstName"/>
+    <Mapping cloverField="lastName" trim="true" xpath="lastName"/>
+    <Mapping cloverField="email" trim="true" xpath="email"/>
+    <Mapping cloverField="votesTotal" trim="true" xpath="votesTotal"/>
+    <Mapping cloverField="stateId" trim="true" xpath="stateId"/>
+    <Mapping cloverField="stateName" trim="true" xpath="stateName"/>
+    <Mapping cloverField="backend" trim="true" xpath="backend"/>
+    <Mapping cloverField="fullName" trim="true" xpath="fullName"/>
+    <Mapping cloverField="avatarUri" trim="true" xpath="avatarUri"/>
+    <Mapping cloverField="resourceUri" trim="true" xpath="resourceUri"/>
+    <Mapping cloverField="applicationUri" trim="true" xpath="applicationUri"/>
+    <Mapping cloverField="reputation" trim="true" xpath="reputation"/>
+    <Mapping cloverField="isAnonymous" trim="true" xpath="isAnonymous"/>
+    <Mapping cloverField="lastLogin" trim="true" xpath="lastLogin"/>
+    <Mapping cloverField="lastLoginLocalized" trim="true" xpath="lastLoginLocalized"/>
+    <Mapping cloverField="dateCreated" trim="true" xpath="dateCreated"/>
+    <Mapping cloverField="dateCreatedLocalized" trim="true" xpath="dateCreatedLocalized"/>
+    <Mapping cloverField="token" trim="true" xpath="token"/>
+    <Mapping cloverField="skills" trim="true" xpath="skills"/>
+    <Mapping cloverField="interests" trim="true" xpath="interests"/>
+    <Mapping cloverField="default" trim="true" xpath="emailPreferences/default"/>
+    <Mapping cloverField="_x0032" trim="true" xpath="emailPreferences/categories/_x0032"/>
+    <Mapping cloverField="_x0033" trim="true" xpath="emailPreferences/categories/_x0033"/>
+    <Mapping cloverField="_x0031" trim="true" xpath="emailPreferences/categories/_x0031"/>
+    <Context generatedKey="__parent_id" outPort="1" parentKey="__id" sequenceField="__id" xpath="categories">
+      <Mapping cloverField="id" trim="true" xpath="id"/>
+      <Mapping cloverField="canModerate" trim="true" xpath="canModerate"/>
+    </Context>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/main/resources/user.json]]></attr>
+</Node>
+<Node enabled="enabled" fileURL="dict:outputPayload" guiHeight="0" guiName="Maps / List of Maps  WRITER" guiWidth="0" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<object xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <className>$0.className</className>
+  <id>$0.id</id>
+  <avatar>
+    <id2>$0.id2</id2>
+  </avatar>
+  <username>$0.username</username>
+  <firstName>$0.firstName</firstName>
+  <lastName>$0.lastName</lastName>
+  <email>$0.email</email>
+  <votesTotal>$0.votesTotal</votesTotal>
+  <stateId>$0.stateId</stateId>
+  <stateName>$0.stateName</stateName>
+  <backend>$0.backend</backend>
+  <fullName>$0.fullName</fullName>
+  <avatarUri>$0.avatarUri</avatarUri>
+  <resourceUri>$0.resourceUri</resourceUri>
+  <applicationUri>$0.applicationUri</applicationUri>
+  <reputation>$0.reputation</reputation>
+  <isAnonymous>$0.isAnonymous</isAnonymous>
+  <lastLogin>$0.lastLogin</lastLogin>
+  <lastLoginLocalized>$0.lastLoginLocalized</lastLoginLocalized>
+  <dateCreated>$0.dateCreated</dateCreated>
+  <dateCreatedLocalized>$0.dateCreatedLocalized</dateCreatedLocalized>
+  <token>$0.token</token>
+  <clover:collection clover:name="skills">$0.skills</clover:collection>
+  <clover:collection clover:name="interests">$0.interests</clover:collection>
+  <emailPreferences>
+    <default>$0.default</default>
+    <categories>
+      <_x005fx0032>$0._x0032</_x005fx0032>
+      <_x005fx0033>$0._x0033</_x005fx0033>
+      <_x005fx0031>$0._x0031</_x005fx0031>
+    </categories>
+  </emailPreferences>
+  <clover:collection clover:name="categories">
+    <item clover:inPort="1" clover:key="__parent_id" clover:parentKey="__id">
+      <id>$1.id</id>
+      <canModerate>$1.canModerate</canModerate>
+    </item>
+  </clover:collection>
+</object>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node enabled="enabled" guiHeight="0" guiName="object_to_object" guiWidth="0" guiX="460" guiY="20" id="REFORMAT0" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+$out.0.__id=$in.0.__id;
+	$out.0.className=$in.0.className;
+	$out.0.id=$in.0.id;
+	$out.0.id2=$in.0.id2;
+	$out.0.username=$in.0.username;
+	$out.0.firstName=$in.0.firstName;
+	$out.0.lastName=$in.0.lastName;
+	$out.0.email=$in.0.email;
+	$out.0.votesTotal=$in.0.votesTotal;
+	$out.0.stateId=$in.0.stateId;
+	$out.0.stateName=$in.0.stateName;
+	$out.0.backend=$in.0.backend;
+	$out.0.fullName=$in.0.fullName;
+	$out.0.avatarUri=$in.0.avatarUri;
+	$out.0.resourceUri=$in.0.resourceUri;
+	$out.0.applicationUri=$in.0.applicationUri;
+	$out.0.reputation=$in.0.reputation;
+	$out.0.isAnonymous=$in.0.isAnonymous;
+	$out.0.lastLogin=$in.0.lastLogin;
+	$out.0.lastLoginLocalized=$in.0.lastLoginLocalized;
+	$out.0.dateCreated=$in.0.dateCreated;
+	$out.0.dateCreatedLocalized=$in.0.dateCreatedLocalized;
+	$out.0.token=$in.0.token;
+	$out.0.skills=$in.0.skills;
+	$out.0.interests=$in.0.interests;
+	$out.0.default=$in.0.default;
+	$out.0._x0032=$in.0._x0032;
+	$out.0._x0033=$in.0._x0033;
+	$out.0._x0031=$in.0._x0031;
+		return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node enabled="enabled" guiHeight="0" guiName="categories_to_categories" guiWidth="0" guiX="460" guiY="120" id="REFORMAT1" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+$out.0.__id=$in.0.__id;
+	$out.0.__parent_id=$in.0.__parent_id;
+	$out.0.id=$in.0.id;
+	$out.0.canModerate=$in.0.canModerate;
+		return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (out)" toNode="REFORMAT0:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:1" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="Metadata3" outPort="Port 1 (out)" toNode="REFORMAT1:0"/>
+<Edge debugMode="true" fromNode="REFORMAT0:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="dbf2cae1-db6e-4088-8b2e-5e07d08d8df5" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="REFORMAT1:0" guiBendpoints="" id="Edge3" inPort="Port 1 (in)" metadata="0af69dbe-cbe7-470a-84cd-b34f1c3932a2" outPort="Port 0 (out)" toNode="MAP_WRITER0:1"/>
+</Phase>
+</Graph>

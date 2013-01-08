@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:kindling="http://www.mulesoft.org/schema/mule/kindling" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/kindling http://www.mulesoft.org/schema/mule/kindling/1.0/mule-kindling.xsd 
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd ">
+    <kindling:config name="KindlingCfg" username="gustavo.alberola@mulesoft.com" password="Mule1234" companyName="mulesoft" doc:name="Kindling">
+        <kindling:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </kindling:config>
+    <data-mapper:config name="Categories" transformationGraphPath="categories.grf" doc:name="DataMapper"/>
+    <data-mapper:config name="Update_Category" transformationGraphPath="update_category.grf" doc:name="DataMapper"/>
+    <data-mapper:config name="Retrieve_Id_and_Skills" transformationGraphPath="retrieve_id_and_skills.grf" doc:name="Retrieve_Id_and_Skills"/>
+    <flow name="Add_New_Skill_Flow" doc:name="Add_New_Skill_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="newskill" doc:name="HTTP"/>
+        <kindling:retrieve-user config-ref="KindlingCfg" doc:name="Retrieve User" depth="1" userId="5"/>
+        <data-mapper:transform config-ref="Retrieve_Id_and_Skills" doc:name="Retrieve ID and Skills"/>
+        <set-variable variableName="userid" value="#[payload.id]" doc:name="Store User Id"/>
+        <set-variable variableName="userskills" value="#[payload.skills]" doc:name="Store User Skills"/>
+        <logger message="User #[flowVars.get('userid')] has skills: #[flowVars.get('userskills')]" level="INFO" doc:name="Logger"/>
+        <set-payload value="#[flowVars.get('userskills')]" doc:name="Set user skills as payload"/>
+        <json:object-to-json-transformer doc:name="Transform skills to JSON"/>
+        <logger message="payload is #[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="Retrieve_Categories_Flow" doc:name="Retrieve_Categories_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="categories" doc:name="HTTP"/>
+        <kindling:retrieve-categories config-ref="KindlingCfg" doc:name="Retrieve Categories"/>
+    </flow>
+    <flow name="Retrieve_Groups_Flow" doc:name="Retrieve_Groups_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="groups" doc:name="HTTP"/>
+        <kindling:retrieve-groups config-ref="KindlingCfg" doc:name="Retrieve Groups"/>
+    </flow>
+    <flow name="Retrieve_Ideas_Flow" doc:name="Retrieve_Ideas_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="ideas" doc:name="HTTP"/>
+        <kindling:retrieve-ideas config-ref="KindlingCfg" doc:name="Retrieve ideas"/>
+    </flow>
+    <flow name="Retrieve_Users_Flow" doc:name="Retrieve_Users_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="users" doc:name="HTTP"/>
+        <kindling:retrieve-user config-ref="KindlingCfg" doc:name="Retrieve Users" depth="1" userId="5"/>
+    </flow>
+    <flow name="Retrieve_Comments_Flow" doc:name="Retrieve_Comments_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="comments" doc:name="HTTP"/>
+        <kindling:retrieve-comments config-ref="KindlingCfg" parentType="IDEAS" doc:name="Retrieve Comments"/>
+    </flow>
+</mule>

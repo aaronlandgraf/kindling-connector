@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="gustavoalberola" created="Mon Jan 07 16:06:48 GMT-03:00 2013" guiVersion="3.3.0.M2" id="1357588028602" licenseCode="Unlicensed" licenseType="Unknown" modified="Mon Jan 07 16:06:48 GMT-03:00 2013" modifiedBy="gustavoalberola" name="Update Category" preview-file="${Project_Home}/src/main/resources/RetrieveCategory.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __sourcePath="{}/object/hierarchy" _dataStructure="OBJECT" _id="__id" _metadataParentId="Metadata0" _parent_id="__parent_id" _position="0" _type="Input" id="Metadata1">
+<Record fieldDelimiter="|" name="anyType" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __sourcePath="{}/object/hierarchy/text()" label="text" name="text" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="Metadata0">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/className" label="className" name="className" type="string"/>
+<Field __sourcePath="{}/object/id" label="id" name="id" type="number"/>
+<Field __sourcePath="{}/object/owner/id" label="id2" name="id2" type="number"/>
+<Field __sourcePath="{}/object/title" label="title" name="title" type="string"/>
+<Field __sourcePath="{}/object/description" label="description" name="description" type="string"/>
+<Field __sourcePath="{}/object/stateId" label="stateId" name="stateId" type="number"/>
+<Field __sourcePath="{}/object/stateName" label="stateName" name="stateName" type="string"/>
+<Field __sourcePath="{}/object/dateCreated" label="dateCreated" name="dateCreated" type="string"/>
+<Field __sourcePath="{}/object/dateCreatedLocalized" label="dateCreatedLocalized" name="dateCreatedLocalized" type="string"/>
+<Field __sourcePath="{}/object/isDefault" label="isDefault" name="isDefault" type="number"/>
+<Field __sourcePath="{}/object/submitIdeaRestriction" label="submitIdeaRestriction" name="submitIdeaRestriction" type="string"/>
+<Field __sourcePath="{}/object/fullyQualifiedTitle" label="fullyQualifiedTitle" name="fullyQualifiedTitle" type="string"/>
+<Field __sourcePath="{}/object/ideas/count" label="count" name="count" type="number"/>
+<Field __sourcePath="{}/object/ideas/collectionUri" label="collectionUri" name="collectionUri" type="string"/>
+<Field __sourcePath="{}/object/resourceUri" label="resourceUri" name="resourceUri" type="string"/>
+<Field __sourcePath="{}/object/applicationUri" label="applicationUri" name="applicationUri" type="string"/>
+<Field __sourcePath="{}/object/voteMax" label="voteMax" name="voteMax" type="string"/>
+</Record>
+</Metadata>
+<Metadata __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Output" id="Metadata2">
+<Record fieldDelimiter="|" name="object" recordDelimiter="&#10;" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __sourcePath="{}/object/description" label="description" name="description" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiHeight="0" guiName="JSON READER" guiWidth="0" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object">
+    <Mapping cloverField="className" trim="true" xpath="className"/>
+    <Mapping cloverField="id" trim="true" xpath="id"/>
+    <Mapping cloverField="id2" trim="true" xpath="owner/id"/>
+    <Mapping cloverField="title" trim="true" xpath="title"/>
+    <Mapping cloverField="description" trim="true" xpath="description"/>
+    <Mapping cloverField="stateId" trim="true" xpath="stateId"/>
+    <Mapping cloverField="stateName" trim="true" xpath="stateName"/>
+    <Mapping cloverField="dateCreated" trim="true" xpath="dateCreated"/>
+    <Mapping cloverField="dateCreatedLocalized" trim="true" xpath="dateCreatedLocalized"/>
+    <Mapping cloverField="isDefault" trim="true" xpath="isDefault"/>
+    <Mapping cloverField="submitIdeaRestriction" trim="true" xpath="submitIdeaRestriction"/>
+    <Mapping cloverField="fullyQualifiedTitle" trim="true" xpath="fullyQualifiedTitle"/>
+    <Mapping cloverField="count" trim="true" xpath="ideas/count"/>
+    <Mapping cloverField="collectionUri" trim="true" xpath="ideas/collectionUri"/>
+    <Mapping cloverField="resourceUri" trim="true" xpath="resourceUri"/>
+    <Mapping cloverField="applicationUri" trim="true" xpath="applicationUri"/>
+    <Mapping cloverField="voteMax" trim="true" xpath="voteMax"/>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/main/resources/RetrieveCategory.json]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:outputPayload" guiHeight="0" guiName="JSON WRITER" guiWidth="0" guiX="900" guiY="20" id="JSON_WRITER0" type="JSON_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<object xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <description>$0.description</description>
+</object>]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/main/resources/UpdateCategory.json]]></attr>
+</Node>
+<Node enabled="enabled" guiHeight="0" guiName="object_to_object" guiWidth="0" guiX="460" guiY="20" id="REFORMAT0" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+$out.0.__id=$in.0.__id;
+	$out.0.description = $in.0.description + "0";
+		return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="Metadata0" outPort="Port 0 (out)" toNode="REFORMAT0:0"/>
+<Edge debugMode="true" fromNode="REFORMAT0:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (out)" toNode="JSON_WRITER0:0"/>
+</Phase>
+</Graph>
