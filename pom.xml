@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.mule.module</groupId>
+    <groupId>org.mule.modules</groupId>
     <artifactId>mule-module-kindling</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>mule-module</packaging>
@@ -40,9 +40,9 @@
 	</dependencies>
 
     <scm>
-        <connection>scm:git:git://github.com:mulesoft/mule-module-kindling.git</connection>
-        <developerConnection>scm:git:git@github.com:mulesoft/mule-module-kindling.git</developerConnection>
-        <url>http://github.com/mulesoft/mule-module-kindling</url>
+        <connection>scm:git:git://github.com:mulesoft/kindling-connector.git</connection>
+        <developerConnection>scm:git:git@github.com:mulesoft/kindling-connector.git</developerConnection>
+        <url>http://github.com/mulesoft/kindling-connector</url>
     </scm>
 	
 	<repositories>
