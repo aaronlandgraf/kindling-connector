@@ -1,0 +1,15 @@
+org.mule.module.kindling
+org.mule.module.kindling.adapters
+org.mule.module.kindling.agents
+org.mule.module.kindling.client
+org.mule.module.kindling.client.authentication
+org.mule.module.kindling.client.authentication.impl
+org.mule.module.kindling.client.impl
+org.mule.module.kindling.config
+org.mule.module.kindling.connectivity
+org.mule.module.kindling.exception
+org.mule.module.kindling.process
+org.mule.module.kindling.processors
+org.mule.module.kindling.types
+org.mule.module.kindling.types.transformers
+
