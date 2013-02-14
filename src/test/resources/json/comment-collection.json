@@ -1,0 +1,52 @@
+{
+   "meta":{
+      "count":2,
+      "totalCount":2,
+      "totalPages":1,
+      "parameters":{
+         "page":1,
+         "limit":20,
+         "sort":"dateCreated",
+         "state":"Activated",
+         "parentType":"ideas"
+      }
+   },
+   "results":[
+      {
+         "className":"Comment",
+         "id":1,
+         "owner":{
+            "id":5
+         },
+         "parentType":"ideas",
+         "type":"user",
+         "description":"<p>Comment<\\/p>\\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique suscipit nibh at aliquet. Nam at dui dolor. Sed tellus<\\/p>",
+         "dateCreated":"2013-01-04T16:02:17+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "stateId":1,
+         "stateName":"Activated",
+         "resourceUri":"\\/api\\/comments\\/1",
+         "parent":{
+            "id":5
+         }
+      },
+      {
+         "className":"Comment",
+         "id":2,
+         "owner":{
+            "id":5
+         },
+         "parentType":"ideas",
+         "type":"user",
+         "description":"<p>Another comment<\\/p>\\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique suscipit nibh at aliquet. Nam at dui dolor. Sed tellus<\\/p>",
+         "dateCreated":"2013-01-04T16:02:25+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "stateId":1,
+         "stateName":"Activated",
+         "resourceUri":"\\/api\\/comments\\/2",
+         "parent":{
+            "id":5
+         }
+      }
+   ]
+}

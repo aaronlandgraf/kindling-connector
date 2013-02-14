@@ -1,3 +1,9 @@
+2.0 Beta
+========
+	* Replaced the signatures of the operations from plain Strings (JSON format) to POJOs
+	* Added unit test to check POJOs mapping
+	* Added basic integration test
+
 1.1 Beta
 ========
 	* Mass refactor of the classes. Added interfaces for client and authentication. Cleaned the connector code

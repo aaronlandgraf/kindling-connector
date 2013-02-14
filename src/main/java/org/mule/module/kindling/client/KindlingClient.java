@@ -11,9 +11,15 @@ package org.mule.module.kindling.client;
 
 import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
+import org.mule.module.kindling.model.KindlingCollection;
+import org.mule.module.kindling.model.category.KindlingCategory;
+import org.mule.module.kindling.model.commnet.KindlingComment;
+import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
+import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.group.KindlingGroup;
+import org.mule.module.kindling.model.idea.KindlingIdea;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
-import org.mule.module.kindling.types.KindlingCommentParentType;
-import org.mule.module.kindling.types.KindlingCommentType;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
@@ -22,34 +28,34 @@ import org.mule.module.kindling.types.KindlingUserState;
 
 public interface KindlingClient {
 
-	public String retrieveGroups(Integer depth, String sort, Integer page,
+	public KindlingCollection<KindlingGroup> retrieveGroups(Integer depth, String sort, Integer page,
 			Integer limit, KindlingState state, String startsWith, String query)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveGroup(String groupId, Integer depth)
+	public KindlingGroup retrieveGroup(String groupId, Integer depth)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String updateGroup(String groupId, String groupJson)
+	public KindlingGroup updateGroup(String groupId, KindlingGroup group)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String createGroup(String groupJson)
+	public KindlingGroup createGroup(KindlingGroup group)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveComments(KindlingCommentParentType parentType,
+	public KindlingCollection<KindlingComment> retrieveComments(KindlingCommentParentType parentType,
 			Integer depth, String sort, Integer page, Integer limit,
 			KindlingState state, Integer parentId, KindlingCommentType type)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String createComment(String commentJson)
+	public KindlingComment createComment(KindlingComment comment)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveComment(String commentId, Integer depth)
+	public KindlingComment retrieveComment(String commentId, Integer depth)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
@@ -57,60 +63,60 @@ public interface KindlingClient {
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveIdeas(Integer depth, String sort, Integer page,
+	public KindlingCollection<KindlingIdea> retrieveIdeas(Integer depth, String sort, Integer page,
 			Integer limit, String state, Boolean allowsVoting, String query,
 			String authorId, String categoryId, KindlingIdeaFilter filter)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String createIdea(String ideaJson)
+	public KindlingIdea createIdea(KindlingIdea idea)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveIdea(String ideaId, Integer depth)
+	public KindlingIdea retrieveIdea(String ideaId, Integer depth)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String updateIdea(String ideaId, String ideaJson)
+	public KindlingIdea updateIdea(String ideaId, KindlingIdea idea)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveUsers(Integer depth, String sort, Integer page,
+	public KindlingCollection<KindlingUser> retrieveUsers(Integer depth, String sort, Integer page,
 			Integer limit, KindlingUserState state,
 			Integer associatedWithCategoryId, KindlingUserDigest digest,
 			String query, KindlingUserReputationTimeframe reputationTimeframe)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String createUser(String userJson)
+	public KindlingUser createUser(KindlingUser user)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveUser(String userId, Integer depth)
+	public KindlingUser retrieveUser(String userId, Integer depth)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String updateUser(String userId, String userJson)
+	public KindlingUser updateUser(String userId, KindlingUser user)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
 	public void deleteUser(String userId) throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveCategories(Integer depth, String sort, Integer page,
+	public KindlingCollection<KindlingCategory> retrieveCategories(Integer depth, String sort, Integer page,
 			Integer limit, KindlingCategoryState state, String query,
 			Integer associatedWithUserId) throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String createCategory(String categoryJson)
+	public KindlingCategory createCategory(KindlingCategory category)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String retrieveCategory(String categoryId, Integer depth)
+	public KindlingCategory retrieveCategory(String categoryId, Integer depth)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 
-	public String updateCategory(String categoryId, String categoryJson)
+	public KindlingCategory updateCategory(String categoryId, KindlingCategory category)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 }

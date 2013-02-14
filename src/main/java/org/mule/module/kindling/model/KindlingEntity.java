@@ -7,17 +7,6 @@
  * place, you may not use the software.
  */
 
-package org.mule.module.kindling.types;
+package org.mule.module.kindling.model;
 
-public enum KindlingCommentParentType {
-	IDEAS("ideas"),
-	POSTS("posts");
-	
-	private String value;
-	
-	private KindlingCommentParentType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() { return value; }
-}
+public interface KindlingEntity {}

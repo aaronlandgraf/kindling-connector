@@ -14,13 +14,21 @@ import java.net.URI;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.type.JavaType;
 import org.mule.module.kindling.client.KindlingClientBase;
+import org.mule.module.kindling.client.KindlingClientUtils;
 import org.mule.module.kindling.client.authentication.KindlingAuthentication;
 import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
+import org.mule.module.kindling.model.KindlingCollection;
+import org.mule.module.kindling.model.category.KindlingCategory;
+import org.mule.module.kindling.model.commnet.KindlingComment;
+import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
+import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.group.KindlingGroup;
+import org.mule.module.kindling.model.idea.KindlingIdea;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
-import org.mule.module.kindling.types.KindlingCommentParentType;
-import org.mule.module.kindling.types.KindlingCommentType;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
@@ -39,8 +47,9 @@ public class KindlingClientImpl extends KindlingClientBase {
 		super(companyName, authentication);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-    public String retrieveGroups(Integer depth,
+    public KindlingCollection<KindlingGroup> retrieveGroups(Integer depth,
 	    						String sort,
 	    						Integer page,
 	    						Integer limit,
@@ -76,11 +85,14 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("q", query);
     	
     	logger.info("Requesting retrieveGroups to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+//    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	
+    	JavaType type = KindlingClientUtils.constructKindlingCollectionType(KindlingGroup.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(type, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
         
     @Override
-    public String retrieveGroup(String groupId, Integer depth)
+    public KindlingGroup retrieveGroup(String groupId, Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(groupId))
@@ -95,44 +107,49 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	    	    	
     	logger.info("Requesting retrieveGroup to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
     
     @Override
-    public String updateGroup(String groupId, String groupJson)
+    public KindlingGroup updateGroup(String groupId, KindlingGroup group)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(groupId))
     		throw new KindlingConnectorException("The groupId parameter it's required");
     	
-    	if (StringUtils.isEmpty(groupJson))
-    		throw new KindlingConnectorException("The groupJson parameter it's required");
+    	if (group == null)
+    		throw new KindlingConnectorException("The group parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("groups/{groupId}").build(groupId);
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	    	    	
+    	String groupJson = KindlingClientUtils.transformObjectToJson(group);
+    	
     	logger.info("Requesting updateGroup to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.PUT, groupJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, groupJson);
     }
     
     @Override
-    public String createGroup(String groupJson)
+    public KindlingGroup createGroup(KindlingGroup group)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(groupJson))
-    		throw new KindlingConnectorException("The groupJson parameter it's required");
+    	if (group == null)
+    		throw new KindlingConnectorException("The group parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("groups").build();
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	
-    	logger.info("Requesting createGroup to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.POST, groupJson); 
+    	String groupJson = KindlingClientUtils.transformObjectToJson(group);
+    	
+    	logger.info("Requesting createGroup to: " + wr.toString());    	
+    	return KindlingClientUtils.webResourceCallWithClassType(null, wr, getLoggedUser(), KindlingWebResourceMethods.POST, groupJson);
     }
 
-    @Override
-    public String retrieveComments(
+    @SuppressWarnings("unchecked")
+	@Override
+    public KindlingCollection<KindlingComment> retrieveComments(
     						KindlingCommentParentType parentType,
     						Integer depth,
 							String sort,
@@ -175,26 +192,29 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("type", type.getValue());
     	    	
     	logger.info("Requesting getComments to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingComment.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
     
     @Override
-    public String createComment(String commentJson)
+    public KindlingComment createComment(KindlingComment comment)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (commentJson == null)
-    		throw new KindlingConnectorException("The commentJson parameter it's required");
+    	if (comment == null)
+    		throw new KindlingConnectorException("The comment parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("comments").build();
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	
+    	String commentJson = KindlingClientUtils.transformObjectToJson(comment);
+    	
     	logger.info("Requesting createComment to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.POST, commentJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, commentJson);
     }
     
     @Override
-    public String retrieveComment(String commentId, Integer depth)
+    public KindlingComment retrieveComment(String commentId, Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(commentId))
@@ -208,7 +228,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveComment to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
     
     @Override
@@ -223,11 +243,12 @@ public class KindlingClientImpl extends KindlingClientBase {
     	WebResource wr = getJerseyClient().resource(uri);
     	
     	logger.info("Requesting deleteComment to: " + wr.toString());
-    	webResourceGet(wr, KindlingWebResourceMethods.DELETE, null);
+    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), KindlingWebResourceMethods.DELETE);
     }
     
-    @Override
-    public String retrieveIdeas(Integer depth,
+    @SuppressWarnings("unchecked")
+	@Override
+    public KindlingCollection<KindlingIdea> retrieveIdeas(Integer depth,
 								String sort,
 								Integer page,
 								Integer limit,
@@ -275,28 +296,30 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("filter", filter.getValue());
     	
     	logger.info("Requesting retrieveIdeas to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingIdea.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String createIdea(String ideaJson)
+    public KindlingIdea createIdea(KindlingIdea idea)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(ideaJson))
-    		throw new KindlingConnectorException("The ideaJson parameter it's required");
+    	if (idea == null)
+    		throw new KindlingConnectorException("The idea parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("ideas").build();
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	
+    	String ideaJson = KindlingClientUtils.transformObjectToJson(idea);
+    	
     	logger.info("Requesting createIdea to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.POST, ideaJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, ideaJson);
     }
 
     @Override
-    public String retrieveIdea(	String ideaId,
-    							Integer depth)
-    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    public KindlingIdea retrieveIdea(String ideaId, Integer depth)
+			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(ideaId))
     		throw new KindlingConnectorException("The ideaId parameter it's required");
@@ -309,29 +332,30 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveIdea to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String updateIdea(String ideaId, String ideaJson)
+    public KindlingIdea updateIdea(String ideaId, KindlingIdea idea)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(ideaId))
     		throw new KindlingConnectorException("The ideaId parameter it's required");
     	
-    	if (StringUtils.isEmpty(ideaJson))
-    		throw new KindlingConnectorException("The ideaJson parameter it's required");
+    	if (idea == null)
+    		throw new KindlingConnectorException("The idea parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("ideas/{ideaId}").build(ideaId);
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	
     	logger.info("Requesting updateIdea to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.PUT, ideaJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT);
     }
 
-    @Override
-    public String retrieveUsers(Integer depth,
+    @SuppressWarnings("unchecked")
+	@Override
+    public KindlingCollection<KindlingUser> retrieveUsers(Integer depth,
 								String sort,
 								Integer page,
 								Integer limit,
@@ -375,27 +399,29 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("reputationTimeframe", reputationTimeframe.getValue());
     	
     	logger.info("Requesting retrieveUsers to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingUser.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String createUser(String userJson)
+    public KindlingUser createUser(KindlingUser user)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (userJson == null)
-    		throw new KindlingConnectorException("The userJson parameter it's required");
+    	if (user == null)
+    		throw new KindlingConnectorException("The user parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("users").build();
     	
     	WebResource wr = getJerseyClient().resource(uri);
     	
+    	String userJson = KindlingClientUtils.transformObjectToJson(user);
+    	
     	logger.info("Requesting createUser to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.POST, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, userJson);
     }
 
     @Override
-    public String retrieveUser(	String userId,
-    							Integer depth)
+    public KindlingUser retrieveUser(String userId, Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (userId == null)
@@ -409,25 +435,27 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveUser to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String updateUser(String userId, String userJson)
+    public KindlingUser updateUser(String userId, KindlingUser user)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(userId))
     		throw new KindlingConnectorException("The userId parameter it's required");
     	
-    	if (StringUtils.isEmpty(userJson))
-    		throw new KindlingConnectorException("The userJson parameter it's required");
+    	if (user == null)
+    		throw new KindlingConnectorException("The user parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("users/{userId}").build(userId);
     	
     	WebResource wr = getJerseyClient().resource(uri);
-    	    	
+    	
+    	String userJson = KindlingClientUtils.transformObjectToJson(user);
+    	
     	logger.info("Requesting updateUser to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.PUT, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, userJson);
     }
 
     @Override
@@ -442,11 +470,12 @@ public class KindlingClientImpl extends KindlingClientBase {
     	WebResource wr = getJerseyClient().resource(uri);
     	    	
     	logger.info("Requesting deleteUser to: " + wr.toString());
-    	webResourceGet(wr, KindlingWebResourceMethods.DELETE, null);
+    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), KindlingWebResourceMethods.DELETE);
     }
 
-    @Override
-    public String retrieveCategories(Integer depth,
+    @SuppressWarnings("unchecked")
+	@Override
+    public KindlingCollection<KindlingCategory> retrieveCategories(Integer depth,
 									String sort,
 									Integer page,
 									Integer limit,
@@ -482,27 +511,29 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("associatedWithUserId", String.valueOf(associatedWithUserId));
     	
     	logger.info("Requesting retrieveCategories to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingCategory.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String createCategory(String categoryJson)
+    public KindlingCategory createCategory(KindlingCategory category)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	if (StringUtils.isEmpty(categoryJson))
-    		throw new KindlingConnectorException("The categoryJson parameter it's required");
+    	if (category == null)
+    		throw new KindlingConnectorException("The category parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("categories").build();
     	
     	WebResource wr = getJerseyClient().resource(uri);
-    	    	
+    	
+    	String categoryJson = KindlingClientUtils.transformObjectToJson(category);
+    	
     	logger.info("Requesting createCategory to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.POST, categoryJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, categoryJson);
     }
 
     @Override
-    public String retrieveCategory(	String categoryId,
-    								Integer depth)
+    public KindlingCategory retrieveCategory(String categoryId, Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(categoryId))
@@ -514,27 +545,29 @@ public class KindlingClientImpl extends KindlingClientBase {
     	
     	if (depth != null && depth > 0)
     		wr = wr.queryParam("depth", String.valueOf(depth));
-    	    	
+    	
     	logger.info("Requesting retrieveCategory to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
     }
 
     @Override
-    public String updateCategory(String categoryId, String categoryJson)
+    public KindlingCategory updateCategory(String categoryId, KindlingCategory category)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	if (StringUtils.isEmpty(categoryId))
     		throw new KindlingConnectorException("The categoryId parameter it's required");
     	
-    	if (StringUtils.isEmpty(categoryJson))
-    		throw new KindlingConnectorException("The categoryJson parameter it's required");
+    	if (category == null)
+    		throw new KindlingConnectorException("The category parameter it's required");
     	
     	URI uri = getBaseUriBuilder().path("categories/{categoryId}").build(categoryId);
     	
     	WebResource wr = getJerseyClient().resource(uri);
-    	    	
+    	
+    	String categoryJson = KindlingClientUtils.transformObjectToJson(category);
+    	
     	logger.info("Requesting updateCategory to: " + wr.toString());
-    	return webResourceGet(wr, KindlingWebResourceMethods.PUT, categoryJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, categoryJson);
     }
 
 }

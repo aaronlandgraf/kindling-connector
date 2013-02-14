@@ -1,0 +1,357 @@
+{
+   "className":"Category",
+   "id":2,
+   "parent":null,
+   "owner":{
+      "className":"User",
+      "id":5,
+      "avatar":{
+         "id":0
+      },
+      "username":"gustavo.alberola@mulesoft.com",
+      "firstName":"Gustavo",
+      "lastName":"Alberola",
+      "email":"gustavo.alberola@mulesoft.com",
+      "votesTotal":10,
+      "stateId":1,
+      "stateName":"Activated",
+      "resetRequested":null,
+      "storNotification":null,
+      "backend":"local",
+      "fullName":"Gustavo Alberola",
+      "avatarUri":"\/img\/avatarDefault75.png",
+      "resourceUri":"\/api\/users\/5",
+      "applicationUri":"\/users\/5",
+      "locale":null,
+      "reputation":10,
+      "isAnonymous":false,
+      "lastLogin":"2013-01-25T21:12:02+00:00",
+      "lastLoginLocalized":"January 25, 2013",
+      "dateCreated":"2013-01-02T22:09:15+00:00",
+      "dateCreatedLocalized":"January  2, 2013",
+      "token":"e24d89300d94c7f7a8c5548d118e315f",
+      "skills":[
+         "Cloud Connector Developer",
+         "Kindling Expert",
+         "Pianist",
+         "Swimmer"
+      ],
+      "interests":[
+         "tag1",
+         "tag3"
+      ],
+      "categories":[
+         {
+            "className":"Category",
+            "id":2,
+            "parent":null,
+            "owner":{
+               "id":5
+            },
+            "slug":null,
+            "title":"Awesome",
+            "description":"The Awesome category!",
+            "stateId":1,
+            "stateName":"Activated",
+            "dateCreated":"2013-01-04T16:55:07+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":0,
+            "submitIdeaRestriction":"all",
+            "dateStart":null,
+            "dateStartLocalized":null,
+            "dateEnd":null,
+            "dateEndLocalized":null,
+            "dateClose":null,
+            "dateCloseLocalized":null,
+            "notifyPhase":null,
+            "notifyStart":null,
+            "notifyDaysLeft":null,
+            "notifyEnd":null,
+            "reward":null,
+            "fullyQualifiedTitle":"Awesome",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":0,
+               "collectionUri":"\/api\/ideas?category=2"
+            },
+            "resourceUri":"\/api\/categories\/2",
+            "applicationUri":"\/categories\/2",
+            "voteMax":"10",
+            "canModerate":true
+         },
+         {
+            "className":"Category_Campaign",
+            "id":3,
+            "parent":null,
+            "owner":{
+               "id":5
+            },
+            "slug":null,
+            "title":"Campaign 1",
+            "description":"This is a campaign category",
+            "stateId":21,
+            "stateName":"Ended",
+            "dateCreated":"2013-01-04T16:55:53+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":0,
+            "submitIdeaRestriction":"all",
+            "dateStart":"2013-01-04T08:00:00+00:00",
+            "dateStartLocalized":"January  4, 2013",
+            "dateEnd":"2013-01-31T08:00:00+00:00",
+            "dateEndLocalized":"January 31, 2013",
+            "dateClose":"2013-03-17T08:00:00+00:00",
+            "dateCloseLocalized":"March 17, 2013",
+            "notifyPhase":1,
+            "notifyStart":0,
+            "notifyDaysLeft":0,
+            "notifyEnd":0,
+            "reward":"iPad 3",
+            "fullyQualifiedTitle":"Campaign 1",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":0,
+               "collectionUri":"\/api\/ideas?category=3"
+            },
+            "resourceUri":"\/api\/categories\/3",
+            "applicationUri":"\/categories\/3",
+            "voteMax":"10",
+            "canModerate":true
+         },
+         {
+            "className":"Category",
+            "id":1,
+            "parent":null,
+            "owner":{
+               "id":1
+            },
+            "slug":"general",
+            "title":"General",
+            "description":null,
+            "stateId":1,
+            "stateName":"Activated",
+            "dateCreated":"2012-07-10T15:37:24+00:00",
+            "dateCreatedLocalized":"July 10, 2012",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":1,
+            "submitIdeaRestriction":"all",
+            "dateStart":null,
+            "dateStartLocalized":null,
+            "dateEnd":null,
+            "dateEndLocalized":null,
+            "dateClose":null,
+            "dateCloseLocalized":null,
+            "notifyPhase":0,
+            "notifyStart":0,
+            "notifyDaysLeft":0,
+            "notifyEnd":0,
+            "reward":"",
+            "fullyQualifiedTitle":"General",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":4,
+               "collectionUri":"\/api\/ideas?category=1"
+            },
+            "resourceUri":"\/api\/categories\/1",
+            "applicationUri":"\/categories\/1",
+            "voteMax":"10",
+            "canModerate":true
+         }
+      ],
+      "emailPreferences":{
+         "default":"instant",
+         "categories":{
+            "2":"instant",
+            "3":"digest-weekly",
+            "1":"digest-nightly"
+         }
+      }
+   },
+   "slug":null,
+   "title":"Awesome",
+   "description":"The Awesome category!",
+   "stateId":1,
+   "stateName":"Activated",
+   "dateCreated":"2013-01-04T16:55:07+00:00",
+   "dateCreatedLocalized":"January  4, 2013",
+   "dateUpdated":null,
+   "dateUpdatedLocalized":null,
+   "isDefault":0,
+   "submitIdeaRestriction":"all",
+   "dateStart":null,
+   "dateStartLocalized":null,
+   "dateEnd":null,
+   "dateEndLocalized":null,
+   "dateClose":null,
+   "dateCloseLocalized":null,
+   "notifyPhase":null,
+   "notifyStart":null,
+   "notifyDaysLeft":null,
+   "notifyEnd":null,
+   "reward":null,
+   "fullyQualifiedTitle":"Awesome",
+   "hierarchy":[
+
+   ],
+   "ideas":{
+      "count":0,
+      "collectionUri":"\/api\/ideas?category=2"
+   },
+   "resourceUri":"\/api\/categories\/2",
+   "applicationUri":"\/categories\/2",
+   "voteMax":"10",
+   "groups":[
+      {
+         "className":"Group_Smart_All",
+         "id":1,
+         "title":"All Users",
+         "description":"All Users",
+         "type":"smart",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "dateCreated":"2012-07-10T15:37:24+00:00",
+         "dateCreatedLocalized":"July 10, 2012",
+         "dateUpdated":"2012-07-10T15:37:24+00:00",
+         "dateUpdatedLocalized":"July 10, 2012",
+         "parameters":null,
+         "resourceUri":"\/api\/groups\/1",
+         "applicationUri":"\/groups\/1",
+         "members":[
+            {
+               "id":5
+            },
+            {
+               "id":2
+            },
+            {
+               "id":3
+            },
+            {
+               "id":1
+            },
+            {
+               "id":4
+            }
+         ],
+         "moderators":[
+
+         ],
+         "categories":[
+            {
+               "id":1
+            },
+            {
+               "id":2
+            }
+         ]
+      },
+      {
+         "className":"Group_Managed",
+         "id":2,
+         "title":"OnlyMe",
+         "description":"A group for more people",
+         "type":"managed",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "parameters":null,
+         "dateCreated":"2013-01-04T16:49:55+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "dateUpdated":"2013-01-04T16:49:55+00:00",
+         "dateUpdatedLocalized":"January  4, 2013",
+         "resourceUri":"\/api\/groups\/2",
+         "applicationUri":"\/groups\/2",
+         "members":[
+            {
+               "id":5
+            }
+         ],
+         "moderators":[
+            {
+               "id":5
+            }
+         ],
+         "categories":[
+            {
+               "id":1
+            },
+            {
+               "id":2
+            },
+            {
+               "id":3
+            }
+         ]
+      },
+      {
+         "className":"Group_Managed",
+         "id":3,
+         "title":"Random People",
+         "description":"A group for random people",
+         "type":"managed",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "parameters":null,
+         "dateCreated":"2013-01-04T16:53:14+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "dateUpdated":"2013-01-04T16:53:14+00:00",
+         "dateUpdatedLocalized":"January  4, 2013",
+         "resourceUri":"\/api\/groups\/3",
+         "applicationUri":"\/groups\/3",
+         "members":[
+            {
+               "id":5
+            },
+            {
+               "id":2
+            },
+            {
+               "id":3
+            },
+            {
+               "id":1
+            },
+            {
+               "id":4
+            }
+         ],
+         "moderators":[
+            {
+               "id":5
+            },
+            {
+               "id":2
+            },
+            {
+               "id":3
+            },
+            {
+               "id":1
+            },
+            {
+               "id":4
+            }
+         ],
+         "categories":[
+            {
+               "id":1
+            },
+            {
+               "id":2
+            }
+         ]
+      }
+   ]
+}

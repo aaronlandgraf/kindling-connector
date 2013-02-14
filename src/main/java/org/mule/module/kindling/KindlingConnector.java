@@ -27,9 +27,15 @@ import org.mule.module.kindling.client.authentication.impl.KindlingAuthenticatio
 import org.mule.module.kindling.client.impl.KindlingClientImpl;
 import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
+import org.mule.module.kindling.model.KindlingCollection;
+import org.mule.module.kindling.model.category.KindlingCategory;
+import org.mule.module.kindling.model.commnet.KindlingComment;
+import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
+import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.group.KindlingGroup;
+import org.mule.module.kindling.model.idea.KindlingIdea;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
-import org.mule.module.kindling.types.KindlingCommentParentType;
-import org.mule.module.kindling.types.KindlingCommentType;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
@@ -42,331 +48,10 @@ import org.mule.module.kindling.types.KindlingUserState;
  * Kindling ignites innovation by connecting people and ideas
  * <p>
  * Allows to connect to the kindling site across the Kindling Service API.
- * Connector created with the documentation of the service for the version v3.9.2.0
- * <p>
- * The supported actions provided for each entity are:
- * <table>
- * 	<tr>
- * 		<td>Entity name</td>
- * 		<td>Retrieve Collection</td>
- * 		<td>Retrieve single</td>
- * 		<td>Create</td>
- * 		<td>Update</td>
- * 		<td>Delete</td>
- * 	</tr>
- * 	<tr>
- * 		<td>Group</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td></td>		
- * 	</tr>
- * 	<tr>
- * 		<td>Comment</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td></td>
- * 		<td>x</td>		
- * 	</tr>
- * 	<tr>
- * 		<td>Idea</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td></td>		
- * 	</tr>
- * 	<tr>
- * 		<td>User</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>		
- * 	</tr>
- * 	<tr>
- * 		<td>Category</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td>x</td>
- * 		<td></td>		
- * 	</tr>
- * </table>
- * <h3>Entity representations</h3>
- * <b>group.json-collection (application/json)</b>
- * <pre>
- * {@code 
- * {
- *     "meta": {
- *         "count":        "integer",
- *         "totalCount":   "integer",
- *         "totalPages":   "integer",
- *         "parameters": {
- *             "page":     "integer",
- *             "limit":    "integer",
- *             "sort":     "string",
- *             "*":        "*"
- *         }
- *     },
- *     "results": ["group.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>group.json (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "className":                    "string(Group_Managed|Group_Smart_*)",
- *     "id":                           "integer",
- *     "title":                        "string",
- *     "description":                  "string",
- *     "type":                         "string(smart|managed)",
- *     "stateId":                      "integer(1|3|8)",
- *     "stateName":                    "string(Activated|Archived|Disabled)",
- *     "requiresLdap":                 "boolean",
- *     "parameters":                   "json",
- *     "dateCreated":                  "date",
- *     "dateCreatedLocalized":         "dateFormatted",
- *     "dateUpdated":                  "date",
- *     "dateUpdatedLocalized":         "dateFormatted",
- *     "resourceUri":                  "string(\/api\/groups\/$id)",
- *     "applicationUri":               "string(\/groups\/$id)",
- *     "depth>0(members)":             ["user.json|integer"],
- *     "depth>0(moderators)":          ["user.json|integer"],
- *     "depth>0(categories)":          ["category.json|integer"]
- * }
- * }
- * </pre>
- * <p>
- * <b>comment.json-collection (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "meta": {
- *         "count":        "integer",
- *         "totalCount":   "integer",
- *         "totalPages":   "integer",
- *         "parameters": {
- *             "page":     "integer",
- *             "limit":    "integer",
- *             "sort":     "string",
- *             "*":        "*"
- *         }
- *     },
- *     "results": ["comment.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>comment.json (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "className":                                "string(Comment)",
- *     "id":                                       "integer",
- *     "owner(Id)":                                "user.json|integer",
- *     "parentType":                               "string(ideas|posts)",
- *     "matchOptionIndex=parentType(parent(Id))":  "idea.json|post.json|integer",
- *     "type":                                     "string(user|moderator)",
- *     "description":                              "html",
- *     "dateCreated":                              "date",
- *     "dateCreatedLocalized":                     "dateFormatted",
- *     "stateId":                                  "integer(1|3)",
- *     "stateName":                                "string(Activated|Archived)",
- *     "resourceUri":                              "string(\/api\/comments\/$id)",
- *     "depth>0(attachments)":                     ["attachment.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>idea.json-collection (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "meta": {
- *         "count":        "integer",
- *         "totalCount":   "integer",
- *         "totalPages":   "integer",
- *         "parameters": {
- *             "page":     "integer",
- *             "limit":    "integer",
- *             "sort":     "string",
- *             "*":        "*"
- *         }
- *     },
- *     "results": ["idea.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>idea.json (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "className":                "string(Idea)",
- *     "id":                       "integer",
- *     "category(Id)":             "category.json|integer",
- *     "title":                    "string",
- *     "description":              "html",
- *     "votes":                    "integer",
- *     "anonymous":                "integer",
- *     "dateCreated":              "date",
- *     "dateCreatedLocalized":     "dateFormatted",
- *     "dateUpdated":              "date",
- *     "dateUpdatedLocalized":     "dateFormatted",
- *     "dateManaged":              "date",
- *     "dateManagedLocalized":     "dateFormatted",
- *     "dateRectified":            "date",
- *     "dateRectifiedLocalized":   "dateFormatted",
- *     "stateId":                  "integer(9|13|14|7|2|5|3|?)",
- *     "stateName":                "string(Drafted|Open|Paused|Declined|Approved|Completed|Archived|?)",
- *     "cachedTags":               "string",
- *     "lockedForComments":        "boolean",
- *     "bonfireUrl":               "string",
- *     "submissionSource":         "string",
- *     "resourceUri":              "string(\/api\/ideas\/$id)",
- *     "applicationUri":           "string(\/ideas\/$id)",
- *     "assignedTo":               "integer",
- *     "author(Id)":               "user.json|integer",
- *     "depth>0(tags)":            ["string"],
- *     "depth>0(comments)":        ["comment.json"],
- *     "currentUserInfo": {
- *         "votes":                "integer",
- *         "votesAvailable":       "integer",
- *         "votesMax":             "integer",
- *         "votesTotal":           "integer",
- *         "voterCount":           "integer",
- *         "ideaId":               "integer($id)",
- *         "categoryId":           "integer($categoryId)",
- *         "isVotable":            "boolean"
- *     }
- * }
- * }
- * </pre>
- * <p>
- * <b>user.json-collection (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "meta": {
- *         "count":        "integer",
- *         "totalCount":   "integer",
- *         "totalPages":   "integer",
- *         "parameters": {
- *             "page":     "integer",
- *             "limit":    "integer",
- *             "sort":     "string",
- *             "*":        "*"
- *         }
- *     },
- *     "results": ["user.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>user.json (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "className":            "string(User)",
- *     "id":                   "integer",
- *     "avatar(Id)":           "attachment.json|integer",
- *     "username":             "string",
- *     "firstName":            "string",
- *     "lastName":             "string",
- *     "email":                "email",
- *     "emailPreferences":     "string(all|digest-nightly|digest-weekly|none)",
- *     "votesTotal":           "integer",
- *     "reputation":           "integer",
- *     "stateId":              "integer(11|1|8|3)",
- *     "stateName":            "string(Invited|Activated|Disabled|Archived)",
- *     "resetRequested":       "date",
- *     "storNotification":     "boolean",
- *     "backend":              "string",
- *     "fullName":             "string($firstName $lastName)",
- *     "avatarUri":            "string(\/api\/users\/$id\/avatar)",
- *     "resourceUri":          "string(\/api\/users\/$id)",
- *     "applicationUri":       "string(\/users\/$id)",
- *     "locale":               "string",
- *     "lastLogin":            "date",
- *     "lastLoginLocalized":   "dateFormatted",
- *     "dateCreated":          "date",
- *     "dateCreatedLocalized": "dateFormatted",
- *     "depth>0(skills)":      ["string"],
- *     "depth>0(interests)":   ["string"],
- *     "depth>0(categories)":  ["category.json|integer"]
- * }
- * }
- * </pre>
- * <p>
- * <b>category.json-collection (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "meta": {
- *         "count":        "integer",
- *         "totalCount":   "integer",
- *         "totalPages":   "integer",
- *         "parameters": {
- *             "page":     "integer",
- *             "limit":    "integer",
- *             "sort":     "string",
- *             "*":        "*"
- *         }
- *     },
- *     "results": ["category.json"]
- * }
- * }
- * </pre>
- * <p>
- * <b>category.json (application/json)</b>
- * <pre>
- * {@code
- * {
- *     "className":                "string(Category|Category_Campaign)",
- *     "id":                       "integer",
- *     "parent(Id)":               "category.json|integer",
- *     "owner(Id)":                "user.json|integer",
- *     "slug":                     "string",
- *     "title":                    "string",
- *     "description":              "string",
- *     "stateId":                  "integer(1|8|3|12|21|17)",
- *     "stateName":                "string(Activated|Disabled|Archived|Locked|Queued|Ended)",
- *     "dateCreated":              "date",
- *     "dateCreatedLocalized":     "dateFormatted",
- *     "dateUpdated":              "date",
- *     "dateUpdatedLocalized":     "dateFormatted",
- *     "isDefault":                "boolean",
- *     "submitIdeaRestriction":    "string(all|moderators)",
- *     "dateStart":                "date",
- *     "dateStartLocalized":       "dateFormatted",
- *     "dateEnd":                  "date",
- *     "dateEndLocalized":         "dateFormatted",
- *     "notifyPhase":              "integer",
- *     "notifyStart":              "integer",
- *     "notifyDaysLeft":           "integer",
- *     "notifyEnd":                "integer",
- *     "reward":                   "string",
- *     "fullyQualifiedTitle":      "string",
- *     "hierarchy":                ["string"],
- *     "ideas": {
- *         "count":                "integer",
- *         "collectionUri":        "string(\/api\/ideas?category=$id)"
- *     },
- *     "resourceUri":              "string(\/api\/categories\/$id)",
- *     "applicationUri":           "string(\/categories\/$id)",
- *     "voteMax":                  "integer",
- *     "depth>0(groups)":          ["group.json|integer"]
- * } 
- * }
- * </pre>
+ * Connector created with the documentation of the service for the version v3.12.0.2
  * @author MuleSoft, Inc.
  */
-@Connector(name="kindling", schemaVersion="1.1", friendlyName="Kindling")
+@Connector(name="kindling", schemaVersion="2.0", friendlyName="Kindling")
 public class KindlingConnector
 {
 	
@@ -438,12 +123,12 @@ public class KindlingConnector
      * @param state <i>Default: ACTIVATED.</i> Get only items in the collection that are in the given state, either by a state ID or it's natural language name
      * @param startsWith find group titles beginning with this string
      * @param query a general group search
-     * @return group.json-collection
+     * @return A {@link KindlingCollection} of {@link KindlingGroup}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveGroups(@Optional Integer depth,
+    public KindlingCollection<KindlingGroup> retrieveGroups(@Optional Integer depth,
 	    						@Optional String sort,
 	    						@Optional Integer page,
 	    						@Optional Integer limit,
@@ -463,12 +148,12 @@ public class KindlingConnector
      * @param groupId The id of the group to retrieve
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
      * group.json
-     * @return group.json
+     * @return A {@link KindlingGroup}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveGroup(String groupId, @Optional Integer depth)
+    public KindlingGroup retrieveGroup(String groupId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveGroup(groupId, depth);
@@ -480,16 +165,16 @@ public class KindlingConnector
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:update-group}
      * 
      * @param groupId  The id of the group to retrieve
-     * @param groupJson The group to create in JSON format
-     * @return group.json
+     * @param group The {@link KindlingGroup} with the data to be updated
+     * @return A {@link KindlingGroup}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String updateGroup(String groupId, String groupJson)
+    public KindlingGroup updateGroup(String groupId, KindlingGroup group)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.updateGroup(groupId, groupJson);
+    	return client.updateGroup(groupId, group);    	
     }
     
     /**
@@ -497,16 +182,16 @@ public class KindlingConnector
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-group}
      * 
-     * @param groupJson The group to create in JSON format
-     * @return group.json
+     * @param group The {@link KindlingGroup} to be created
+     * @return A {@link KindlingGroup}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String createGroup(String groupJson)
+    public KindlingGroup createGroup(KindlingGroup group)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.createGroup(groupJson);
+    	return client.createGroup(group);
     }
 
     /**
@@ -522,12 +207,12 @@ public class KindlingConnector
      * @param state <i>Default: ACTIVATED.</i> Get only items in the collection that are in the given state, either by a state ID or it's natural language name
      * @param parentId Retrieve only comments of a specific parent ID
      * @param type The type of comments to retrieve
-     * @return comment.json-collection
+     * @return A {@link KindlingCollection} of {@link KindlingComment}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveComments(
+    public KindlingCollection<KindlingComment> retrieveComments(
     						KindlingCommentParentType parentType,
     						@Optional Integer depth,
 							@Optional String sort,
@@ -546,16 +231,16 @@ public class KindlingConnector
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-comment}
      *     
-     * @param commentJson A comment representation in JSON format
-     * @return comment.json
+     * @param comment The {@link KindlingComment} to be created
+     * @return A {@link KindlingComment}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String createComment(String commentJson)
+    public KindlingComment createComment(KindlingComment comment)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.createComment(commentJson);
+    	return client.createComment(comment);
     }
     
     /**
@@ -565,12 +250,12 @@ public class KindlingConnector
      * 
      * @param commentId The id of the comment to retrieve
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
-     * @return comment.json
+     * @return @return A {@link KindlingComment}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveComment(String commentId, @Optional Integer depth)
+    public KindlingComment retrieveComment(String commentId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveComment(commentId, depth);
@@ -617,12 +302,12 @@ public class KindlingConnector
      * @param authorId show only ideas from a particular author
      * @param categoryId show only ideas in a particular category
      * @param filter conceptual filters
-     * @return ideas.json-collection
+     * @return A {@link KindlingCollection} of {@link KindlingIdea}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveIdeas(@Optional Integer depth,
+    public KindlingCollection<KindlingIdea> retrieveIdeas(@Optional Integer depth,
 								@Optional String sort,
 								@Optional Integer page,
 								@Optional Integer limit,
@@ -642,16 +327,16 @@ public class KindlingConnector
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-idea}
      * 
-     * @param ideaJson The representation of an Idea in JSON format
+     * @param idea The {@link KindlingIdea} to be created
      * @return idea.json
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String createIdea(String ideaJson)
+    public KindlingIdea createIdea(KindlingIdea idea)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.createIdea(ideaJson);
+    	return client.createIdea(idea);
     }
     
     /**
@@ -661,13 +346,12 @@ public class KindlingConnector
      * 
      * @param ideaId The id of the Idea to retrieve
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
-     * @return idea.json
+     * @return A {@link KindlingIdea}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveIdea(	String ideaId,
-    							@Optional Integer depth)
+    public KindlingIdea retrieveIdea(String ideaId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveIdea(ideaId, depth);
@@ -679,16 +363,16 @@ public class KindlingConnector
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:update-idea}
      * 
      * @param ideaId The id of the Idea to update
-     * @param ideaJson The representation of the Idea in JSON format
-     * @return idea.json
+     * @param idea The {@link KindlingIdea} with the data to be updated
+	 * @return A {@link KindlingIdea}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String updateIdea(String ideaId, String ideaJson)
+    public KindlingIdea updateIdea(String ideaId, KindlingIdea idea)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.updateIdea(ideaId, ideaJson);
+    	return client.updateIdea(ideaId, idea);
     }
     
     /**
@@ -705,12 +389,12 @@ public class KindlingConnector
      * @param digest show only users with a particular type of digest set
      * @param query general user search string
      * @param reputationTimeframe if present, will turn this request into one specifically for reputation leaders for a given timeframe, which may be combined with the associatedWithCategoryId parameter as well to return a leaderbooard for a category
-     * @return user.json-collection
+     * @return A {@link KindlingCollection} of {@link KindlingUser}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveUsers(@Optional Integer depth,
+    public KindlingCollection<KindlingUser> retrieveUsers(@Optional Integer depth,
 								@Optional String sort,
 								@Optional Integer page,
 								@Optional Integer limit,
@@ -729,16 +413,16 @@ public class KindlingConnector
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-user}
      * 
-     * @param userJson The user to create in JSON format
-     * @return user.json
+     * @param user The {@link KindlingUser} to be created
+     * @return A {@link KindlingUser}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String createUser(String userJson)
+    public KindlingUser createUser(KindlingUser user)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.createUser(userJson);
+    	return client.createUser(user);
     }
     
     /**
@@ -748,13 +432,12 @@ public class KindlingConnector
      * 
      * @param userId The id of the user to retrieve
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
-     * @return user.json
+     * @return A {@link KindlingUser}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveUser(	String userId,
-    							@Optional Integer depth)
+    public KindlingUser retrieveUser(String userId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveUser(userId, depth);
@@ -766,16 +449,16 @@ public class KindlingConnector
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:update-user}
      * 
      * @param userId The id of the user to update
-     * @param userJson The representation of the user in JSON format
-     * @return user.json
+     * @param user The {@link KindlingUser} with the data to be updated
+     * @return A {@link KindlingUser}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String updateUser(String userId, String userJson)
+    public KindlingUser updateUser(String userId, KindlingUser user)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.updateUser(userId, userJson);
+    	return client.updateUser(userId, user);
     }
     
     /**
@@ -807,12 +490,12 @@ public class KindlingConnector
      * @param state <i>Default: ACTIVATED.</i> Get only items in the collection that are in the given state, either by a state ID or it's natural language name
      * @param query a general category search
      * @param associatedWithUserId If provided, will only return categories that the given user ID has access to
-     * @return category.json-collection
+     * @return A {@link KindlingCollection} of {@link KindlingCategory}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveCategories(@Optional Integer depth,
+    public KindlingCollection<KindlingCategory> retrieveCategories(@Optional Integer depth,
 									@Optional String sort,
 									@Optional Integer page,
 									@Optional Integer limit,
@@ -829,16 +512,16 @@ public class KindlingConnector
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-category}
      * 
-     * @param categoryJson The category representation to create in JSON format
-     * @return category.json
+     * @param category The {@link KindlingCategory} to be created
+     * @return A {@link KindlingCategory}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String createCategory(String categoryJson)
+    public KindlingCategory createCategory(KindlingCategory category)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.createCategory(categoryJson);
+    	return client.createCategory(category);
     }
     
     /**
@@ -848,13 +531,12 @@ public class KindlingConnector
      * 
      * @param categoryId The id of the category to retrieve
      * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
-     * @return category.json
+     * @return A {@link KindlingCategory}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String retrieveCategory(	String categoryId,
-    								@Optional Integer depth)
+    public KindlingCategory retrieveCategory(String categoryId, @Optional Integer depth)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveCategory(categoryId, depth);
@@ -866,16 +548,16 @@ public class KindlingConnector
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:update-category}
      * 
      * @param categoryId The id of the category to update
-     * @param categoryJson The category representation in JSON format
-     * @return category.json
+     * @param category The {@link KindlingCategory} with the data to be updated
+     * @return A {@link KindlingCategory}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
      */
     @Processor
-    public String updateCategory(String categoryId, String categoryJson)
+    public KindlingCategory updateCategory(String categoryId, KindlingCategory category)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.updateCategory(categoryId, categoryJson);
+    	return client.updateCategory(categoryId, category);
     }
     
     
