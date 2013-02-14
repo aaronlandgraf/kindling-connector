@@ -96,8 +96,8 @@ public class KindlingJsonMappingTest {
 		Assert.assertFalse(checkExistenceOfName("dateUpdatedLocalized", json));
 		Assert.assertTrue(checkExistenceOfValue("stateId", 8, json));
 		Assert.assertTrue(checkExistenceOfValue("stateName", "Locked", json));
-		Assert.assertTrue(checkExistenceOfValue("dateStart", "2013-01-01T01:02:03-0300", json));
-		Assert.assertTrue(checkExistenceOfValue("dateEnd", "2013-01-01T01:02:03-0300", json));
+		Assert.assertTrue(checkExistenceOfName("dateStart", json));
+		Assert.assertTrue(checkExistenceOfName("dateEnd", json));
 	}
 	
 	@Test
