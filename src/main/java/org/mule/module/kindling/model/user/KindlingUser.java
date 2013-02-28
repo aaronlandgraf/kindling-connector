@@ -18,6 +18,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.mule.module.kindling.model.KindlingEntity;
+import org.mule.module.kindling.model.category.KindlingCategory;
 import org.mule.module.kindling.serialization.KindlingDateSerializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -51,7 +52,7 @@ public class KindlingUser implements KindlingEntity {
 	private String dateCreatedLocalized;
 	private List<String> skills;
 	private List<String> interests;
-	private List<Object> categories;
+	private List<KindlingCategory> categories;
 	private Boolean isAnonymous;
 	private String token;
 	
@@ -309,12 +310,12 @@ public class KindlingUser implements KindlingEntity {
 	}
 	
 	@JsonProperty
-	public List<Object> getCategories() {
+	public List<KindlingCategory> getCategories() {
 		return categories;
 	}
 
 	@JsonProperty
-	public void setCategories(List<Object> categories) {
+	public void setCategories(List<KindlingCategory> categories) {
 		this.categories = categories;
 	}
 

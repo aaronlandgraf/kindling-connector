@@ -18,6 +18,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.mule.module.kindling.model.KindlingEntity;
+import org.mule.module.kindling.model.category.KindlingCategory;
+import org.mule.module.kindling.model.commnet.KindlingComment;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.serialization.KindlingDateSerializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -26,7 +29,7 @@ public class KindlingIdea implements KindlingEntity {
 	
 	private String className;
 	private Integer id;
-	private Object category;
+	private KindlingCategory category;
 	private String title;
 	private String description;
 	private Integer votes;
@@ -48,9 +51,9 @@ public class KindlingIdea implements KindlingEntity {
 	private String resourceUri;
 	private String applicationUri;
 	private Integer assignedTo;
-	private Object author;
+	private KindlingUser author;
 	private List<String> tags;
-	private List<Object> comments;
+	private List<KindlingComment> comments;
 	private KindlingIdeaCurrentUserInfo currentUserInfo;
 	private Object events;
 	private List<Object> volunteers;
@@ -325,32 +328,32 @@ public class KindlingIdea implements KindlingEntity {
 	}
 
 	@JsonProperty
-	public Object getCategory() {
+	public KindlingCategory getCategory() {
 		return category;
 	}
 
 	@JsonProperty
-	public void setCategory(Object category) {
+	public void setCategory(KindlingCategory category) {
 		this.category = category;
 	}
 
 	@JsonProperty
-	public Object getAuthor() {
+	public KindlingUser getAuthor() {
 		return author;
 	}
 
 	@JsonProperty
-	public void setAuthor(Object author) {
+	public void setAuthor(KindlingUser author) {
 		this.author = author;
 	}
 
 	@JsonProperty
-	public List<Object> getComments() {
+	public List<KindlingComment> getComments() {
 		return comments;
 	}
 
 	@JsonProperty
-	public void setComments(List<Object> comments) {
+	public void setComments(List<KindlingComment> comments) {
 		this.comments = comments;
 	}
 

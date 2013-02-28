@@ -18,6 +18,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.mule.module.kindling.model.KindlingEntity;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.serialization.KindlingDateSerializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -26,7 +27,7 @@ public class KindlingComment implements KindlingEntity {
 	
 	private String className;
 	private Integer id;
-	private Object owner;
+	private KindlingUser owner;
 	private KindlingCommentParentType parentType;
 	private Object parent;
 	private Object matchOptionIndex;
@@ -142,12 +143,12 @@ public class KindlingComment implements KindlingEntity {
 	}
 
 	@JsonProperty
-	public Object getOwner() {
+	public KindlingUser getOwner() {
 		return owner;
 	}
 
 	@JsonProperty
-	public void setOwner(Object owner) {
+	public void setOwner(KindlingUser owner) {
 		this.owner = owner;
 	}
 

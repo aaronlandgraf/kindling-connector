@@ -19,6 +19,8 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.mule.module.kindling.model.KindlingEntity;
+import org.mule.module.kindling.model.group.KindlingGroup;
+import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.serialization.KindlingDateDeserializer;
 import org.mule.module.kindling.serialization.KindlingDateSerializer;
 
@@ -29,7 +31,7 @@ public class KindlingCategory implements KindlingEntity {
 	private String className;
 	private Integer id;
 	private Object parent;
-	private Object owner;
+	private KindlingUser owner;
 	private String slug;
 	private String title;
 	private String description;
@@ -58,7 +60,7 @@ public class KindlingCategory implements KindlingEntity {
 	private String resourceUri;
 	private String applicationUri;
 	private Integer voteMax;
-	private List<Object> groups;
+	private List<KindlingGroup> groups;
 
 	@JsonProperty
 	public String getClassName() {
@@ -378,22 +380,22 @@ public class KindlingCategory implements KindlingEntity {
 	}
 
 	@JsonProperty
-	public Object getOwner() {
+	public KindlingUser getOwner() {
 		return owner;
 	}
 
 	@JsonProperty
-	public void setOwner(Object owner) {
+	public void setOwner(KindlingUser owner) {
 		this.owner = owner;
 	}
 
 	@JsonProperty
-	public List<Object> getGroups() {
+	public List<KindlingGroup> getGroups() {
 		return groups;
 	}
 
 	@JsonProperty
-	public void setGroups(List<Object> groups) {
+	public void setGroups(List<KindlingGroup> groups) {
 		this.groups = groups;
 	}
 }
