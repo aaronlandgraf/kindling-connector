@@ -41,8 +41,7 @@ public class KindlingConnectorIT {
 		prop.load(stream);
 
 		kindlingConnector = new KindlingConnector();
-		kindlingConnector.setCompanyName(prop.getProperty("kindling.it.company"));
-		kindlingConnector.connect(prop.getProperty("kindling.it.username"), prop.getProperty("kindling.it.password"));		
+		kindlingConnector.connect(prop.getProperty("kindling.it.username"), prop.getProperty("kindling.it.password"), prop.getProperty("kindling.it.company"));		
 	}
 	
 	@Test

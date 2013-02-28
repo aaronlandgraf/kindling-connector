@@ -1,3 +1,7 @@
+2.1 Beta
+========
+    * Added companyName as a tenant parameter
+
 2.0 Beta
 ========
 	* Replaced the signatures of the operations from plain Strings (JSON format) to POJOs

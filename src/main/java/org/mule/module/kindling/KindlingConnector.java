@@ -12,7 +12,6 @@
 package org.mule.module.kindling;
 
 import org.mule.api.ConnectionException;
-import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Connect;
 import org.mule.api.annotations.ConnectionIdentifier;
 import org.mule.api.annotations.Connector;
@@ -51,35 +50,21 @@ import org.mule.module.kindling.types.KindlingUserState;
  * Connector created with the documentation of the service for the version v3.12.0.2
  * @author MuleSoft, Inc.
  */
-@Connector(name="kindling", schemaVersion="2.0", friendlyName="Kindling")
+@Connector(name="kindling", schemaVersion="2.1", friendlyName="Kindling")
 public class KindlingConnector
 {
-	
-	/**
-	 * The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com
-	 */
-	@Configurable
-	private String companyName;
-	
 	private KindlingClient client;
-	
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-	
+		
     /**
      * Connect
      *
      * @param username A username
      * @param password A password
+     * @param companyName The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com
      * @throws ConnectionException
      */
     @Connect
-    public void connect(@ConnectionKey String username, String password)
+    public void connect(@ConnectionKey String username, String password, String companyName)
         throws ConnectionException {
     	
     	KindlingAuthentication auth = new KindlingAuthenticationBasic(username, password);
