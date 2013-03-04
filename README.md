@@ -4,7 +4,7 @@ Kindling Cloud Connector
 Kindling ignites innovation by connecting people and ideas
 
 Allows to connect to the kindling site across the Kindling Service API.
-Connector created with the documentation of the service for the version v3.9.2.0
+Connector created with the documentation of the service for the version v3.13.1.0
 
 Installation and Usage
 ----------------------
