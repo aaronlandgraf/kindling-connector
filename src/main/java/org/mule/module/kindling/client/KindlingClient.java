@@ -13,14 +13,16 @@ import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
 import org.mule.module.kindling.model.KindlingCollection;
 import org.mule.module.kindling.model.category.KindlingCategory;
-import org.mule.module.kindling.model.commnet.KindlingComment;
-import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
-import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.comment.KindlingComment;
+import org.mule.module.kindling.model.comment.KindlingCommentParentType;
+import org.mule.module.kindling.model.comment.KindlingCommentType;
 import org.mule.module.kindling.model.group.KindlingGroup;
 import org.mule.module.kindling.model.idea.KindlingIdea;
+import org.mule.module.kindling.model.post.KindlingPost;
 import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
+import org.mule.module.kindling.types.KindlingPostState;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
 import org.mule.module.kindling.types.KindlingUserReputationTimeframe;
@@ -117,6 +119,23 @@ public interface KindlingClient {
 			KindlingConnectorUnauthorizedException;
 
 	public KindlingCategory updateCategory(String categoryId, KindlingCategory category)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException;
+	
+	public KindlingCollection<KindlingPost> retrievePosts(Integer depth, String sort, Integer page,
+			Integer limit, KindlingPostState state, String startsWith, String query)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException;
+
+	public KindlingPost retrievePost(String postId, Integer depth)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException;
+
+	public KindlingPost updatePost(String postId, KindlingPost group)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException;
+
+	public KindlingPost createPost(KindlingPost group)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 }

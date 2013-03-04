@@ -7,7 +7,7 @@
  * place, you may not use the software.
  */
 
-package org.mule.module.kindling.model.commnet;
+package org.mule.module.kindling.model.comment;
 
 import java.util.Date;
 import java.util.List;

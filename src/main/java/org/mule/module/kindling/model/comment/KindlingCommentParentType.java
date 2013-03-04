@@ -7,23 +7,23 @@
  * place, you may not use the software.
  */
 
-package org.mule.module.kindling.model.commnet;
+package org.mule.module.kindling.model.comment;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonValue;
 
-public enum KindlingCommentType {
-	USER("user"),
-	MODERATOR("moderator");
+public enum KindlingCommentParentType {
+	IDEAS("ideas"),
+	POSTS("posts");
 	
-	static final private Log logger = LogFactory.getLog(KindlingCommentType.class);
+	static final private Log logger = LogFactory.getLog(KindlingCommentParentType.class);
 	
 	@JsonCreator
-	static public KindlingCommentType getValueOf(String arg) {
+	static public KindlingCommentParentType getValueOf(String arg) {
 		
-		for (KindlingCommentType k : KindlingCommentType.values()) {
+		for (KindlingCommentParentType k : KindlingCommentParentType.values()) {
 			if (k.value.equalsIgnoreCase(arg)) return k;
 		}
 		
@@ -33,7 +33,7 @@ public enum KindlingCommentType {
 	
 	private String value;
 		
-	private KindlingCommentType(String value) {
+	private KindlingCommentParentType(String value) {
 		this.value = value;
 	}
 	

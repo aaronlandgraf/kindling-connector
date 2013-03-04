@@ -1,3 +1,7 @@
+2.2 Beta
+========
+    * Adding posts operation support
+
 2.1 Beta
 ========
     * Added companyName as a tenant parameter

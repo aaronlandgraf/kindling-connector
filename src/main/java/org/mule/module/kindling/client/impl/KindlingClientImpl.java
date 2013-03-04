@@ -22,14 +22,16 @@ import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
 import org.mule.module.kindling.model.KindlingCollection;
 import org.mule.module.kindling.model.category.KindlingCategory;
-import org.mule.module.kindling.model.commnet.KindlingComment;
-import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
-import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.post.KindlingPost;
+import org.mule.module.kindling.model.comment.KindlingComment;
+import org.mule.module.kindling.model.comment.KindlingCommentParentType;
+import org.mule.module.kindling.model.comment.KindlingCommentType;
 import org.mule.module.kindling.model.group.KindlingGroup;
 import org.mule.module.kindling.model.idea.KindlingIdea;
 import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
+import org.mule.module.kindling.types.KindlingPostState;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
 import org.mule.module.kindling.types.KindlingUserReputationTimeframe;
@@ -569,5 +571,103 @@ public class KindlingClientImpl extends KindlingClientBase {
     	logger.info("Requesting updateCategory to: " + wr.toString());
     	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, categoryJson);
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public KindlingCollection<KindlingPost> retrievePosts(Integer depth,
+														String sort, 
+														Integer page, 
+														Integer limit, 
+														KindlingPostState state,
+														String startsWith, 
+														String query) 
+			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+
+		URI uri = getBaseUriBuilder().path("posts").build();
+    	
+    	WebResource wr = getJerseyClient().resource(uri);
+    	
+    	// Check for optional parameters (do not send them if they have their default value)
+    	if (depth != null && depth > 0)
+    		wr = wr.queryParam("depth", String.valueOf(depth));
+    	
+    	if (!StringUtils.isEmpty(sort))
+    		wr = wr.queryParam("sort", sort);
+    	
+    	if (page != null && page > 1)
+    		wr = wr.queryParam("page", String.valueOf(page));
+    	
+    	if (limit != null && limit > 0)
+    		wr = wr.queryParam("limit", String.valueOf(limit));
+    	
+    	if (state != null)
+    		wr = wr.queryParam("state", state.getValue());
+    	
+    	if (!StringUtils.isEmpty(query))
+    		wr = wr.queryParam("q", query);
+    	
+    	logger.info("Requesting retrievePosts to: " + wr.toString());
+    	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingPost.class);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+	}
+
+	@Override
+	public KindlingPost retrievePost(String postId, Integer depth)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException {
+
+		if (postId == null)
+    		throw new KindlingConnectorException("The postId parameter it's required");
+    	
+    	URI uri = getBaseUriBuilder().path("posts/{postId}").build(postId);
+    	
+    	WebResource wr = getJerseyClient().resource(uri);
+    	
+    	if (depth != null)
+    		wr = wr.queryParam("depth", String.valueOf(depth));
+    	
+    	logger.info("Requesting retrievePost to: " + wr.toString());
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+	}
+
+	@Override
+	public KindlingPost updatePost(String postId, KindlingPost post)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException {
+		
+		if (StringUtils.isEmpty(postId))
+    		throw new KindlingConnectorException("The postId parameter it's required");
+    	
+    	if (post == null)
+    		throw new KindlingConnectorException("The post parameter it's required");
+    	
+    	URI uri = getBaseUriBuilder().path("post/{postId}").build(postId);
+    	
+    	WebResource wr = getJerseyClient().resource(uri);
+    	
+    	String userJson = KindlingClientUtils.transformObjectToJson(post);
+    	
+    	logger.info("Requesting updatePost to: " + wr.toString());
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, userJson);
+	}
+
+	@Override
+	public KindlingPost createPost(KindlingPost post)
+			throws KindlingConnectorException,
+			KindlingConnectorUnauthorizedException {
+		
+    	if (post == null)
+    		throw new KindlingConnectorException("The post parameter it's required");
+    	
+    	URI uri = getBaseUriBuilder().path("posts").build();
+    	
+    	WebResource wr = getJerseyClient().resource(uri);
+    	
+    	String userJson = KindlingClientUtils.transformObjectToJson(post);
+    	
+    	logger.info("Requesting createPost to: " + wr.toString());
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, userJson);
+
+	}
 
 }

@@ -82,3 +82,19 @@
         <kindling:category ref="#[map-payload:category]" />
     </kindling:update-category>
 <!-- END_INCLUDE(kindling:update-category) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-posts) -->
+    <kindling:retrieve-posts  />
+<!-- END_INCLUDE(kindling:retrieve-posts) -->
+<!-- BEGIN_INCLUDE(kindling:create-post) -->
+    <kindling:create-post>
+        <kindling:post ref="#[map-payload:post]" />
+    </kindling:create-post>
+<!-- END_INCLUDE(kindling:create-post) -->
+<!-- BEGIN_INCLUDE(kindling:retrieve-post) -->
+    <kindling:retrieve-post postId="#[map-payload:postId]" />
+<!-- END_INCLUDE(kindling:retrieve-post) -->
+<!-- BEGIN_INCLUDE(kindling:update-post) -->
+    <kindling:update-post postId="#[map-payload:postId]">
+        <kindling:post ref="#[map-payload:post]" />
+    </kindling:update-post>
+<!-- END_INCLUDE(kindling:update-post) -->

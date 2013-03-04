@@ -7,7 +7,7 @@
  * place, you may not use the software.
  */
 
-package org.mule.module.kindling.model.idea;
+package org.mule.module.kindling.model.post;
 
 import java.util.Date;
 import java.util.List;
@@ -25,39 +25,29 @@ import org.mule.module.kindling.serialization.KindlingDateSerializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class KindlingIdea implements KindlingEntity {
-	
+public class KindlingPost implements KindlingEntity {
+
 	private String className;
 	private Integer id;
 	private KindlingCategory category;
+	private KindlingUser owner;
 	private String title;
 	private String description;
-	private Integer votes;
-	private Integer anonymous;
+	private Object postImage; //Attachment
 	private Date dateCreated;
 	private String dateCreatedLocalized;
 	private Date dateUpdated;
 	private String dateUpdatedLocalized;
-	private Date dateManaged;
-	private String dateManagedLocalized;
-	private Date dateRectified;
-	private String dateRectifiedLocalized;
+	private String datePublished;
+	private String datePublishedLocalized;
 	private Integer stateId;
-	private KindlingIdeaStateName stateName;
-	private String cachetags;
-	private Boolean lockedForComments;
-	private String bonfireUrl;
-	private String submissionSource;
+	private KindlingPostStateName stateName;
+	private Object cachedTags;
+	private Integer lockedForComments;
 	private String resourceUri;
 	private String applicationUri;
-	private Integer assignedTo;
-	private KindlingUser author;
 	private List<String> tags;
 	private List<KindlingComment> comments;
-	private KindlingIdeaCurrentUserInfo currentUserInfo;
-	private Object events;
-	private List<Object> volunteers;
-	private List<Object> contributors;
 	
 	@JsonProperty
 	public String getClassName() {
@@ -68,7 +58,6 @@ public class KindlingIdea implements KindlingEntity {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	
 	@JsonProperty
 	public Integer getId() {
 		return id;
@@ -78,7 +67,27 @@ public class KindlingIdea implements KindlingEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-			
+	
+	@JsonProperty
+	public KindlingCategory getCategory() {
+		return category;
+	}
+	
+	@JsonProperty
+	public void setCategory(KindlingCategory category) {
+		this.category = category;
+	}
+	
+	@JsonProperty
+	public KindlingUser getOwner() {
+		return owner;
+	}
+	
+	@JsonProperty
+	public void setOwner(KindlingUser owner) {
+		this.owner = owner;
+	}
+	
 	@JsonProperty
 	public String getTitle() {
 		return title;
@@ -100,23 +109,13 @@ public class KindlingIdea implements KindlingEntity {
 	}
 	
 	@JsonProperty
-	public Integer getVotes() {
-		return votes;
+	public Object getPostImage() {
+		return postImage;
 	}
 	
 	@JsonProperty
-	public void setVotes(Integer votes) {
-		this.votes = votes;
-	}
-	
-	@JsonProperty
-	public Integer getAnonymous() {
-		return anonymous;
-	}
-	
-	@JsonProperty
-	public void setAnonymous(Integer anonymous) {
-		this.anonymous = anonymous;
+	public void setPostImage(Object postImage) {
+		this.postImage = postImage;
 	}
 	
 	@JsonIgnore
@@ -164,47 +163,25 @@ public class KindlingIdea implements KindlingEntity {
 	}
 	
 	@JsonIgnore
-	public Date getDateManaged() {
-		return dateManaged;
+	public String getDatePublished() {
+		return datePublished;
 	}
 	
 	@JsonProperty
 	@JsonSerialize(using = KindlingDateSerializer.class)
-	public void setDateManaged(Date dateManaged) {
-		this.dateManaged = dateManaged;
+	public void setDatePublished(String datePublished) {
+		this.datePublished = datePublished;
 	}
 	
 	@JsonIgnore
-	public String getDateManagedLocalized() {
-		return dateManagedLocalized;
+	public String getDatePublishedLocalized() {
+		return datePublishedLocalized;
 	}
 	
 	@JsonProperty
 	@JsonSerialize(using = KindlingDateSerializer.class)
-	public void setDateManagedLocalized(String dateManagedLocalized) {
-		this.dateManagedLocalized = dateManagedLocalized;
-	}
-	
-	@JsonIgnore
-	public Date getDateRectified() {
-		return dateRectified;
-	}
-	
-	@JsonProperty
-	@JsonSerialize(using = KindlingDateSerializer.class)
-	public void setDateRectified(Date dateRectified) {
-		this.dateRectified = dateRectified;
-	}
-	
-	@JsonIgnore
-	public String getDateRectifiedLocalized() {
-		return dateRectifiedLocalized;
-	}
-	
-	@JsonProperty
-	@JsonSerialize(using = KindlingDateSerializer.class)
-	public void setDateRectifiedLocalized(String dateRectifiedLocalized) {
-		this.dateRectifiedLocalized = dateRectifiedLocalized;
+	public void setDatePublishedLocalized(String datePublishedLocalized) {
+		this.datePublishedLocalized = datePublishedLocalized;
 	}
 	
 	@JsonProperty
@@ -218,53 +195,33 @@ public class KindlingIdea implements KindlingEntity {
 	}
 	
 	@JsonProperty
-	public KindlingIdeaStateName getStateName() {
+	public KindlingPostStateName getStateName() {
 		return stateName;
 	}
 	
 	@JsonProperty
-	public void setStateName(KindlingIdeaStateName stateName) {
+	public void setStateName(KindlingPostStateName stateName) {
 		this.stateName = stateName;
 	}
 	
 	@JsonProperty
-	public String getCachetags() {
-		return cachetags;
+	public Object getCachedTags() {
+		return cachedTags;
 	}
 	
 	@JsonProperty
-	public void setCachetags(String cachetags) {
-		this.cachetags = cachetags;
+	public void setCachedTags(Object cachedTags) {
+		this.cachedTags = cachedTags;
 	}
 	
 	@JsonProperty
-	public Boolean getLockedForComments() {
+	public Integer getLockedForComments() {
 		return lockedForComments;
 	}
 	
 	@JsonProperty
-	public void setLockedForComments(Boolean lockedForComments) {
+	public void setLockedForComments(Integer lockedForComments) {
 		this.lockedForComments = lockedForComments;
-	}
-	
-	@JsonProperty
-	public String getBonfireUrl() {
-		return bonfireUrl;
-	}
-	
-	@JsonProperty
-	public void setBonfireUrl(String bonfireUrl) {
-		this.bonfireUrl = bonfireUrl;
-	}
-	
-	@JsonProperty
-	public String getSubmissionSource() {
-		return submissionSource;
-	}
-	
-	@JsonProperty
-	public void setSubmissionSource(String submissionSource) {
-		this.submissionSource = submissionSource;
 	}
 	
 	@JsonProperty
@@ -288,16 +245,6 @@ public class KindlingIdea implements KindlingEntity {
 	}
 	
 	@JsonProperty
-	public Integer getAssignedTo() {
-		return assignedTo;
-	}
-	
-	@JsonProperty
-	public void setAssignedTo(Integer assignedTo) {
-		this.assignedTo = assignedTo;
-	}
-	
-	@JsonProperty
 	public List<String> getTags() {
 		return tags;
 	}
@@ -306,74 +253,14 @@ public class KindlingIdea implements KindlingEntity {
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
-		
-	@JsonProperty
-	public KindlingIdeaCurrentUserInfo getCurrentUserInfo() {
-		return currentUserInfo;
-	}
 	
-	@JsonProperty
-	public void setCurrentUserInfo(KindlingIdeaCurrentUserInfo currentUserInfo) {
-		this.currentUserInfo = currentUserInfo;
-	}
-	
-	@JsonProperty
-	public Object getEvents() {
-		return events;
-	}
-
-	@JsonIgnore
-	public void setEvents(Object events) {
-		this.events = events;
-	}
-
-	@JsonProperty
-	public KindlingCategory getCategory() {
-		return category;
-	}
-
-	@JsonProperty
-	public void setCategory(KindlingCategory category) {
-		this.category = category;
-	}
-
-	@JsonProperty
-	public KindlingUser getAuthor() {
-		return author;
-	}
-
-	@JsonProperty
-	public void setAuthor(KindlingUser author) {
-		this.author = author;
-	}
-
 	@JsonProperty
 	public List<KindlingComment> getComments() {
 		return comments;
 	}
-
+	
 	@JsonProperty
 	public void setComments(List<KindlingComment> comments) {
 		this.comments = comments;
-	}
-
-	@JsonProperty
-	public List<Object> getVolunteers() {
-		return volunteers;
-	}
-
-	@JsonProperty
-	public void setVolunteers(List<Object> volunteers) {
-		this.volunteers = volunteers;
-	}
-
-	@JsonProperty
-	public List<Object> getContributors() {
-		return contributors;
-	}
-
-	@JsonProperty
-	public void setContributors(List<Object> contributors) {
-		this.contributors = contributors;
 	}
 }

@@ -23,10 +23,11 @@ import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
 import org.mule.module.kindling.model.KindlingCollection;
 import org.mule.module.kindling.model.category.KindlingCategory;
-import org.mule.module.kindling.model.commnet.KindlingComment;
-import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
+import org.mule.module.kindling.model.comment.KindlingComment;
+import org.mule.module.kindling.model.comment.KindlingCommentParentType;
 import org.mule.module.kindling.model.group.KindlingGroup;
 import org.mule.module.kindling.model.idea.KindlingIdea;
+import org.mule.module.kindling.model.post.KindlingPost;
 import org.mule.module.kindling.model.user.KindlingUser;
 
 public class KindlingConnectorIT {
@@ -130,6 +131,23 @@ public class KindlingConnectorIT {
 		
 		Assert.assertNotNull(kca);
 		Assert.assertTrue(kca.getId() > 0);
+
+		// Posts
+		KindlingCollection<KindlingPost> kckp = kindlingConnector.retrievePosts(3, null, null, null, null, null, null);
+		
+		Assert.assertNotNull(kckp);
+		Assert.assertNotNull(kckp.getResults());
+		Assert.assertTrue(kckp.getResults().size() > 0);
+		
+		KindlingPost kcp = kckp.getResults().get(0);
+		
+		Assert.assertNotNull(kcp);
+		Assert.assertTrue(kcp.getId() > 0);
+		
+		kcp = kindlingConnector.retrievePost(kcp.getId().toString(), 3);
+		
+		Assert.assertNotNull(kcp);
+		Assert.assertTrue(kcp.getId() > 0);
 		
 	}
 }

@@ -26,16 +26,18 @@ import org.mule.module.kindling.client.authentication.impl.KindlingAuthenticatio
 import org.mule.module.kindling.client.impl.KindlingClientImpl;
 import org.mule.module.kindling.exception.KindlingConnectorException;
 import org.mule.module.kindling.exception.KindlingConnectorUnauthorizedException;
-import org.mule.module.kindling.model.KindlingCollection;
 import org.mule.module.kindling.model.category.KindlingCategory;
-import org.mule.module.kindling.model.commnet.KindlingComment;
-import org.mule.module.kindling.model.commnet.KindlingCommentParentType;
-import org.mule.module.kindling.model.commnet.KindlingCommentType;
+import org.mule.module.kindling.model.post.KindlingPost;
+import org.mule.module.kindling.model.KindlingCollection;
+import org.mule.module.kindling.model.comment.KindlingComment;
+import org.mule.module.kindling.model.comment.KindlingCommentParentType;
+import org.mule.module.kindling.model.comment.KindlingCommentType;
 import org.mule.module.kindling.model.group.KindlingGroup;
 import org.mule.module.kindling.model.idea.KindlingIdea;
 import org.mule.module.kindling.model.user.KindlingUser;
 import org.mule.module.kindling.types.KindlingCategoryState;
 import org.mule.module.kindling.types.KindlingIdeaFilter;
+import org.mule.module.kindling.types.KindlingPostState;
 import org.mule.module.kindling.types.KindlingState;
 import org.mule.module.kindling.types.KindlingUserDigest;
 import org.mule.module.kindling.types.KindlingUserReputationTimeframe;
@@ -50,7 +52,7 @@ import org.mule.module.kindling.types.KindlingUserState;
  * Connector created with the documentation of the service for the version v3.12.0.2
  * @author MuleSoft, Inc.
  */
-@Connector(name="kindling", schemaVersion="2.1", friendlyName="Kindling")
+@Connector(name="kindling", schemaVersion="2.2", friendlyName="Kindling")
 public class KindlingConnector
 {
 	private KindlingClient client;
@@ -463,6 +465,88 @@ public class KindlingConnector
     }
     
     /**
+     * Gets the posts collection
+     * <p>
+     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:retrieve-posts}
+     * 
+     * 
+     * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
+     * @param sort <i>Default: title.</i> How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc.
+     * @param page <i>Default: 1.</i> The page requested
+     * @param limit <i>Default: 20.</i> The limit on number of collection items to show per page
+     * @param state <i>Default: ACTIVATED.</i> Get only items in the collection that are in the given state, either by a state ID or it's natural language name
+     * @param startsWith find posts beginning with this string
+     * @param query a general post search
+     * @return A {@link KindlingCollection} of {@link KindlingCategory}
+     * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
+     * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
+     */
+    @Processor
+    public KindlingCollection<KindlingPost> retrievePosts(@Optional Integer depth,
+									@Optional String sort,
+									@Optional Integer page,
+									@Optional Integer limit,
+									@Optional KindlingPostState state,
+									@Optional String startsWith,
+									@Optional String query)
+    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    	
+    	return client.retrievePosts(depth, sort, page, limit, state, startsWith, query);
+    }
+    
+    /**
+     * Creates a new post
+     * <p>
+     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:create-post}
+     * 
+     * @param post The {@link KindlingCategory} to be created
+     * @return A {@link KindlingCategory}
+     * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
+     * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
+     */
+    @Processor
+    public KindlingPost createPost(KindlingPost post)
+    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    	
+    	return client.createPost(post);
+    }
+    
+    /**
+     * Gets a single post
+     * <p>
+     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:retrieve-post}
+     * 
+     * @param postId The id of the post to retrieve
+     * @param depth <i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.
+     * @return A {@link KindlingCategory}
+     * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
+     * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
+     */
+    @Processor
+    public KindlingPost retrievePost(String postId, @Optional Integer depth)
+    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    	
+    	return client.retrievePost(postId, depth);
+    }
+    
+    /**
+     * Updates a single post
+     * <p>
+     * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:update-post}
+     * 
+     * @param postId The id of the post to update
+     * @param post The {@link KindlingPost} with the data to be updated
+     * @return A {@link KindlingPost}
+     * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
+     * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
+     */
+    @Processor
+    public KindlingPost updatePost(String postId, KindlingPost post)
+    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    	
+    	return client.updatePost(postId, post);
+    }
+    /**
      * Gets the categories collection
      * <p>
      * {@sample.xml ../../../doc/kindling-connector.xml.sample kindling:retrieve-categories}
@@ -481,13 +565,13 @@ public class KindlingConnector
      */
     @Processor
     public KindlingCollection<KindlingCategory> retrieveCategories(@Optional Integer depth,
-									@Optional String sort,
-									@Optional Integer page,
-									@Optional Integer limit,
-									@Optional KindlingCategoryState state,
-									@Optional String query,
-									@Optional Integer associatedWithUserId)
-    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    		@Optional String sort,
+    		@Optional Integer page,
+    		@Optional Integer limit,
+    		@Optional KindlingCategoryState state,
+    		@Optional String query,
+    		@Optional Integer associatedWithUserId)
+    				throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveCategories(depth, sort, page, limit, state, query, associatedWithUserId);
     }
@@ -504,7 +588,7 @@ public class KindlingConnector
      */
     @Processor
     public KindlingCategory createCategory(KindlingCategory category)
-    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    		throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.createCategory(category);
     }
@@ -522,7 +606,7 @@ public class KindlingConnector
      */
     @Processor
     public KindlingCategory retrieveCategory(String categoryId, @Optional Integer depth)
-    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    		throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.retrieveCategory(categoryId, depth);
     }
@@ -540,7 +624,7 @@ public class KindlingConnector
      */
     @Processor
     public KindlingCategory updateCategory(String categoryId, KindlingCategory category)
-    	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
+    		throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	return client.updateCategory(categoryId, category);
     }

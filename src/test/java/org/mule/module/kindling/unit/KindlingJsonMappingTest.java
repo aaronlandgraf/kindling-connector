@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.mule.module.kindling.model.KindlingCollection;
 import org.mule.module.kindling.model.category.KindlingCategory;
 import org.mule.module.kindling.model.category.KindlingCategoryStateName;
-import org.mule.module.kindling.model.commnet.KindlingComment;
+import org.mule.module.kindling.model.comment.KindlingComment;
 import org.mule.module.kindling.model.group.KindlingGroup;
 import org.mule.module.kindling.model.idea.KindlingIdea;
 import org.mule.module.kindling.model.user.KindlingUser;
@@ -165,6 +165,23 @@ public class KindlingJsonMappingTest {
 		kg.setId(1);
 		
 		String json = jacksonMapper.writeValueAsString(kg);
+		Assert.assertNotNull(checkExistenceOfValue("id", 1, json));
+	}
+
+	@Test
+	public void postSerialization() throws JsonGenerationException, JsonMappingException, IOException {
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(getJsonPathFor("post.json"));
+		KindlingUser kg = jacksonMapper.readValue(is, KindlingUser.class);
+		
+		Assert.assertNotNull(kg);
+	}
+	
+	@Test
+	public void postsDeserialization() throws JsonGenerationException, JsonMappingException, IOException {
+		KindlingCategory post = new KindlingCategory();
+		post.setId(1);
+		
+		String json = jacksonMapper.writeValueAsString(post);
 		Assert.assertNotNull(checkExistenceOfValue("id", 1, json));
 	}
 	
