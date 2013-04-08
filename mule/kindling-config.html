@@ -216,7 +216,7 @@ Summary:
 <!-- ======== START OF MODULE DATA ======== -->
 
 <div id="jd-header">
-    org.mule.modules
+    org.mule.module
 <h1>mule-module-kindling</h1>
     config
 
@@ -237,7 +237,7 @@ Summary:
           <th>Schema Location</th><td>http://www.mulesoft.org/schema/mule/kindling/current/mule-kindling.xsd&nbsp;&nbsp;(<a href="kindling-schema.html">View Schema</a>)</td>
         </tr>
 <tr>
-          <th>Schema Version</th><td>1.1</td>
+          <th>Schema Version</th><td>2.2</td>
         </tr>
 <tr>
           <th>Minimum Mule Version</th><td>3.2</td>
@@ -254,318 +254,7 @@ Summary:
  Kindling ignites innovation by connecting people and ideas
  <p>
  Allows to connect to the kindling site across the Kindling Service API.
- Connector created with the documentation of the service for the version v3.9.2.0
- <p>
- The supported actions provided for each entity are:
- <table>
- 	<tr>
- 		<td>Entity name</td>
- 		<td>Retrieve Collection</td>
- 		<td>Retrieve single</td>
- 		<td>Create</td>
- 		<td>Update</td>
- 		<td>Delete</td>
- 	</tr>
- 	<tr>
- 		<td>Group</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td></td>		
- 	</tr>
- 	<tr>
- 		<td>Comment</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td></td>
- 		<td>x</td>		
- 	</tr>
- 	<tr>
- 		<td>Idea</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td></td>		
- 	</tr>
- 	<tr>
- 		<td>User</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>		
- 	</tr>
- 	<tr>
- 		<td>Category</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td>x</td>
- 		<td></td>		
- 	</tr>
- </table>
- <h3>Entity representations</h3>
- <b>group.json-collection (application/json)</b>
- <pre>
- <code>{
-     "meta": {
-         "count":        "integer",
-         "totalCount":   "integer",
-         "totalPages":   "integer",
-         "parameters": {
-             "page":     "integer",
-             "limit":    "integer",
-             "sort":     "string",
-             "*":        "*"
-         </code>
-     },
-     "results": ["group.json"]
- }
- }
- </pre>
- <p>
- <b>group.json (application/json)</b>
- <pre>
- <code>{
-     "className":                    "string(Group_Managed|Group_Smart_*)",
-     "id":                           "integer",
-     "title":                        "string",
-     "description":                  "string",
-     "type":                         "string(smart|managed)",
-     "stateId":                      "integer(1|3|8)",
-     "stateName":                    "string(Activated|Archived|Disabled)",
-     "requiresLdap":                 "boolean",
-     "parameters":                   "json",
-     "dateCreated":                  "date",
-     "dateCreatedLocalized":         "dateFormatted",
-     "dateUpdated":                  "date",
-     "dateUpdatedLocalized":         "dateFormatted",
-     "resourceUri":                  "string(\/api\/groups\/$id)",
-     "applicationUri":               "string(\/groups\/$id)",
-     "depth&gt;0(members)":             ["user.json|integer"],
-     "depth&gt;0(moderators)":          ["user.json|integer"],
-     "depth&gt;0(categories)":          ["category.json|integer"]
- </code>
- }
- </pre>
- <p>
- <b>comment.json-collection (application/json)</b>
- <pre>
- <code>{
-     "meta": {
-         "count":        "integer",
-         "totalCount":   "integer",
-         "totalPages":   "integer",
-         "parameters": {
-             "page":     "integer",
-             "limit":    "integer",
-             "sort":     "string",
-             "*":        "*"
-         </code>
-     },
-     "results": ["comment.json"]
- }
- }
- </pre>
- <p>
- <b>comment.json (application/json)</b>
- <pre>
- <code>{
-     "className":                                "string(Comment)",
-     "id":                                       "integer",
-     "owner(Id)":                                "user.json|integer",
-     "parentType":                               "string(ideas|posts)",
-     "matchOptionIndex=parentType(parent(Id))":  "idea.json|post.json|integer",
-     "type":                                     "string(user|moderator)",
-     "description":                              "html",
-     "dateCreated":                              "date",
-     "dateCreatedLocalized":                     "dateFormatted",
-     "stateId":                                  "integer(1|3)",
-     "stateName":                                "string(Activated|Archived)",
-     "resourceUri":                              "string(\/api\/comments\/$id)",
-     "depth&gt;0(attachments)":                     ["attachment.json"]
- </code>
- }
- </pre>
- <p>
- <b>idea.json-collection (application/json)</b>
- <pre>
- <code>{
-     "meta": {
-         "count":        "integer",
-         "totalCount":   "integer",
-         "totalPages":   "integer",
-         "parameters": {
-             "page":     "integer",
-             "limit":    "integer",
-             "sort":     "string",
-             "*":        "*"
-         </code>
-     },
-     "results": ["idea.json"]
- }
- }
- </pre>
- <p>
- <b>idea.json (application/json)</b>
- <pre>
- <code>{
-     "className":                "string(Idea)",
-     "id":                       "integer",
-     "category(Id)":             "category.json|integer",
-     "title":                    "string",
-     "description":              "html",
-     "votes":                    "integer",
-     "anonymous":                "integer",
-     "dateCreated":              "date",
-     "dateCreatedLocalized":     "dateFormatted",
-     "dateUpdated":              "date",
-     "dateUpdatedLocalized":     "dateFormatted",
-     "dateManaged":              "date",
-     "dateManagedLocalized":     "dateFormatted",
-     "dateRectified":            "date",
-     "dateRectifiedLocalized":   "dateFormatted",
-     "stateId":                  "integer(9|13|14|7|2|5|3|?)",
-     "stateName":                "string(Drafted|Open|Paused|Declined|Approved|Completed|Archived|?)",
-     "cachedTags":               "string",
-     "lockedForComments":        "boolean",
-     "bonfireUrl":               "string",
-     "submissionSource":         "string",
-     "resourceUri":              "string(\/api\/ideas\/$id)",
-     "applicationUri":           "string(\/ideas\/$id)",
-     "assignedTo":               "integer",
-     "author(Id)":               "user.json|integer",
-     "depth&gt;0(tags)":            ["string"],
-     "depth&gt;0(comments)":        ["comment.json"],
-     "currentUserInfo": {
-         "votes":                "integer",
-         "votesAvailable":       "integer",
-         "votesMax":             "integer",
-         "votesTotal":           "integer",
-         "voterCount":           "integer",
-         "ideaId":               "integer($id)",
-         "categoryId":           "integer($categoryId)",
-         "isVotable":            "boolean"
-     </code>
- }
- }
- </pre>
- <p>
- <b>user.json-collection (application/json)</b>
- <pre>
- <code>{
-     "meta": {
-         "count":        "integer",
-         "totalCount":   "integer",
-         "totalPages":   "integer",
-         "parameters": {
-             "page":     "integer",
-             "limit":    "integer",
-             "sort":     "string",
-             "*":        "*"
-         </code>
-     },
-     "results": ["user.json"]
- }
- }
- </pre>
- <p>
- <b>user.json (application/json)</b>
- <pre>
- <code>{
-     "className":            "string(User)",
-     "id":                   "integer",
-     "avatar(Id)":           "attachment.json|integer",
-     "username":             "string",
-     "firstName":            "string",
-     "lastName":             "string",
-     "email":                "email",
-     "emailPreferences":     "string(all|digest-nightly|digest-weekly|none)",
-     "votesTotal":           "integer",
-     "reputation":           "integer",
-     "stateId":              "integer(11|1|8|3)",
-     "stateName":            "string(Invited|Activated|Disabled|Archived)",
-     "resetRequested":       "date",
-     "storNotification":     "boolean",
-     "backend":              "string",
-     "fullName":             "string($firstName $lastName)",
-     "avatarUri":            "string(\/api\/users\/$id\/avatar)",
-     "resourceUri":          "string(\/api\/users\/$id)",
-     "applicationUri":       "string(\/users\/$id)",
-     "locale":               "string",
-     "lastLogin":            "date",
-     "lastLoginLocalized":   "dateFormatted",
-     "dateCreated":          "date",
-     "dateCreatedLocalized": "dateFormatted",
-     "depth&gt;0(skills)":      ["string"],
-     "depth&gt;0(interests)":   ["string"],
-     "depth&gt;0(categories)":  ["category.json|integer"]
- </code>
- }
- </pre>
- <p>
- <b>category.json-collection (application/json)</b>
- <pre>
- <code>{
-     "meta": {
-         "count":        "integer",
-         "totalCount":   "integer",
-         "totalPages":   "integer",
-         "parameters": {
-             "page":     "integer",
-             "limit":    "integer",
-             "sort":     "string",
-             "*":        "*"
-         </code>
-     },
-     "results": ["category.json"]
- }
- }
- </pre>
- <p>
- <b>category.json (application/json)</b>
- <pre>
- <code>{
-     "className":                "string(Category|Category_Campaign)",
-     "id":                       "integer",
-     "parent(Id)":               "category.json|integer",
-     "owner(Id)":                "user.json|integer",
-     "slug":                     "string",
-     "title":                    "string",
-     "description":              "string",
-     "stateId":                  "integer(1|8|3|12|21|17)",
-     "stateName":                "string(Activated|Disabled|Archived|Locked|Queued|Ended)",
-     "dateCreated":              "date",
-     "dateCreatedLocalized":     "dateFormatted",
-     "dateUpdated":              "date",
-     "dateUpdatedLocalized":     "dateFormatted",
-     "isDefault":                "boolean",
-     "submitIdeaRestriction":    "string(all|moderators)",
-     "dateStart":                "date",
-     "dateStartLocalized":       "dateFormatted",
-     "dateEnd":                  "date",
-     "dateEndLocalized":         "dateFormatted",
-     "notifyPhase":              "integer",
-     "notifyStart":              "integer",
-     "notifyDaysLeft":           "integer",
-     "notifyEnd":                "integer",
-     "reward":                   "string",
-     "fullyQualifiedTitle":      "string",
-     "hierarchy":                ["string"],
-     "ideas": {
-         "count":                "integer",
-         "collectionUri":        "string(\/api\/ideas?category=$id)"
-     </code>,
-     "resourceUri":              "string(\/api\/categories\/$id)",
-     "applicationUri":           "string(\/categories\/$id)",
-     "voteMax":                  "integer",
-     "depth>0(groups)":          ["group.json|integer"]
- } 
- }
- </pre></p>
+ Connector created with the documentation of the service for the version v3.12.0.2</p>
 
 
 </div><!-- jd-descr -->
@@ -658,6 +347,18 @@ Summary:
 	 
     <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../mule/kindling-config.html#create-post">&lt;kindling:create-post&gt;</a></nobr>
+        
+        <div class="jd-descrdiv">Creates a new post
+ <p>
+ </div>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#create-user">&lt;kindling:create-user&gt;</a></nobr>
         
         <div class="jd-descrdiv">Creates a new user in the users collection
@@ -668,7 +369,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#delete-comment">&lt;kindling:delete-comment&gt;</a></nobr>
         
@@ -680,7 +381,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#delete-user">&lt;kindling:delete-user&gt;</a></nobr>
         
@@ -692,7 +393,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-categories">&lt;kindling:retrieve-categories&gt;</a></nobr>
         
@@ -704,7 +405,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-category">&lt;kindling:retrieve-category&gt;</a></nobr>
         
@@ -716,7 +417,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-comment">&lt;kindling:retrieve-comment&gt;</a></nobr>
         
@@ -728,7 +429,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-comments">&lt;kindling:retrieve-comments&gt;</a></nobr>
         
@@ -740,7 +441,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-group">&lt;kindling:retrieve-group&gt;</a></nobr>
         
@@ -752,7 +453,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-groups">&lt;kindling:retrieve-groups&gt;</a></nobr>
         
@@ -764,7 +465,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-idea">&lt;kindling:retrieve-idea&gt;</a></nobr>
         
@@ -776,7 +477,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-ideas">&lt;kindling:retrieve-ideas&gt;</a></nobr>
         
@@ -788,7 +489,31 @@ Summary:
 
 
 	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../mule/kindling-config.html#retrieve-post">&lt;kindling:retrieve-post&gt;</a></nobr>
+        
+        <div class="jd-descrdiv">Gets a single post
+ <p>
+ </div>
+        
+  </td></tr>
+
+
+	 
     <tr class=" api apilevel-" >
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../mule/kindling-config.html#retrieve-posts">&lt;kindling:retrieve-posts&gt;</a></nobr>
+        
+        <div class="jd-descrdiv">Gets the posts collection
+ <p>
+ </div>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-user">&lt;kindling:retrieve-user&gt;</a></nobr>
         
@@ -800,7 +525,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#retrieve-users">&lt;kindling:retrieve-users&gt;</a></nobr>
         
@@ -812,7 +537,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#update-category">&lt;kindling:update-category&gt;</a></nobr>
         
@@ -824,7 +549,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#update-group">&lt;kindling:update-group&gt;</a></nobr>
         
@@ -836,11 +561,23 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../mule/kindling-config.html#update-idea">&lt;kindling:update-idea&gt;</a></nobr>
         
         <div class="jd-descrdiv">Updates a single idea
+ <p>
+ </div>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../mule/kindling-config.html#update-post">&lt;kindling:update-post&gt;</a></nobr>
+        
+        <div class="jd-descrdiv">Updates a single post
  <p>
  </div>
         
@@ -898,39 +635,6 @@ similar to the following:</p>
 &lt;/mule&gt;
 </pre>
 
-<p>This module is configured using the <i>config</i> element. This element must be placed outside of your flows and at
-the root of your Mule application. You can create as many configurations as you deem necessary as long as each carries
-its own name.</p>
-<p>Each message processor, message source or transformer carries a <i>config-ref</i> attribute that allows the invoker to
-specify which configuration to use.</p>
-<table id="lconfig" class="jd-sumtable">
-<tr><th colspan="12">Attributes</th></tr>
-<tr><th>Type</th><th>Name</th><th>Default Value</th><th>Description</th><th>Java Type</th><th>MIME Type</th><th>Encoding</th></tr>
-<td class="jd-typecol"><nobr>xs:string</nobr></td>
-<td class="jd-linkcol"><nobr>name</nobr></td>
-<td class="jd-descrcol"></td>
-<td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>Give a name to this configuration so it can be later referenced.</td>
-<td/><td/><td/>
-
-    
-      <tr class=" api apilevel-" >
-          <td class="jd-typecol"><nobr>
-          xs:string</nobr></td>
-          <td class="jd-linkcol"><nobr>companyName</nobr></td>
-          <td class="jd-descrcol"></td>
-          <td class="jd-descrcol" width="100%">The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com
-</td>
-          <td class="jd-descrcol"></td>
-          <td class="jd-descrcol"></td>
-          <td class="jd-descrcol"></td>
-      </tr>
-      
-    
-    
-    
-</table>
-
-
 
 
 
@@ -971,6 +675,16 @@ resolution.</p>
           <td class="jd-linkcol"><nobr>password</nobr></td>
           <td class="jd-descrcol"><nobr></nobr></td>
           <td class="jd-descrcol" width="100%">A password</td>
+          <td class="jd-descrcol">String</td>
+          <td class="jd-descrcol">*/*</td>
+          <td class="jd-descrcol">UTF-8</td>
+      </tr>
+      
+    
+      <tr class=" api apilevel-" >
+          <td class="jd-linkcol"><nobr>companyName</nobr></td>
+          <td class="jd-descrcol"><nobr></nobr></td>
+          <td class="jd-descrcol" width="100%">The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
           <td class="jd-descrcol">String</td>
           <td class="jd-descrcol">*/*</td>
           <td class="jd-descrcol">UTF-8</td>
@@ -1046,7 +760,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Creates a new category in the categories collection
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-category categoryJson="#[map-payload:categoryJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-category&gt;
+    &lt;kindling:category ref="#[map-payload:category]" /&gt;
+&lt;/kindling:create-category&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -1064,12 +780,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class=" api apilevel-" >
-                        <td class="jd-linkcol"><nobr>categoryJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>category</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The category representation to create in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -1097,6 +813,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1111,8 +837,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">category.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -1154,7 +880,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Creates a new comment in the comments collection
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-comment commentJson="#[map-payload:commentJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-comment&gt; 
+    &lt;kindling:comment ref="#[map-payload:comment]" /&gt;
+&lt;/kindling:create-comment&gt; </pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -1172,12 +900,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class=" api apilevel-" >
-                        <td class="jd-linkcol"><nobr>commentJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>comment</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">A comment representation in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -1205,6 +933,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1219,8 +957,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">comment.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a></code></td>
              </tr>
          </table>
   </div>
@@ -1262,7 +1000,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Create a new group in the groups collection
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-group groupJson="#[map-payload:groupJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-group&gt;
+    &lt;kindling:group ref="#[map-payload:group]" /&gt;
+&lt;/kindling:create-group&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -1280,12 +1020,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class=" api apilevel-" >
-                        <td class="jd-linkcol"><nobr>groupJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>group</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The group to create in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -1313,6 +1053,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1327,8 +1077,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">group.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code></td>
              </tr>
          </table>
   </div>
@@ -1370,7 +1120,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Create a new idea in the ideas collection
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-idea ideaJson="#[map-payload:ideaJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-idea&gt;
+    &lt;kindling:idea ref="#[map-payload:idea]" /&gt;
+&lt;/kindling:create-idea&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -1388,12 +1140,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class=" api apilevel-" >
-                        <td class="jd-linkcol"><nobr>ideaJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>idea</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The representation of an Idea in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -1421,6 +1173,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1435,8 +1197,128 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></td>
                 <td class="jd-descrcol">idea.json</td>
+             </tr>
+         </table>
+  </div>
+    
+  
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Exception Payloads</h5>
+      <table class="jd-sumtable">
+        <tr><th>Payload Class</th><th>Description</th></tr>
+        
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If something goes wrong with the service API this exception is throw</td>
+        </tr>
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the credentials provided for the user are wrong or are expired this exception is throw
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="create-post"></A>
+
+<div class="jd-details api apilevel-">
+    <h4 class="jd-details-title">
+      <span class="sympad">&lt;kindling:create-post&gt;</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Creates a new post
+ <p>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-post&gt;
+    &lt;kindling:post ref="#[map-payload:post]" /&gt;
+&lt;/kindling:create-post&gt;</pre></div></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Attributes</h5>
+
+        <table id="lconfig" class="jd-sumtable">
+        <tr><th>Name</th><th>Default Value</th><th>Description</th><th>Java Type</th><th>MIME Type</th><th>Encoding</th></tr>
+        <tr>
+          <td class="jd-linkcol"><nobr>config-ref</nobr></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>Specify which configuration to use.</td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+        </tr>
+          
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>post</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+          
+              <tr><th colspan="12">Connection Parameters<br/><span style="font-weight: 200;">This are only required if you didn't specified them at the configuration element. They are also useful for overriding the values of the configurations or even if you need to extract them from the Mule message since they support expression evaluation.</span></th></tr>
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>username</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A username</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>password</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+          
+          
+        </table>
+  </div>
+  
+  
+      <div class="jd-tagdata">
+         <h5 class="jd-tagtitle">Returns</h5>
+         <table id="lconfig" class="jd-sumtable">
+             <tr>
+                <th>Return Type</th>
+                <th>Description</th>
+             </tr>
+             <tr>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -1478,7 +1360,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Creates a new user in the users collection
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-user userJson="#[map-payload:userJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-user&gt;
+    &lt;kindling:user ref="#[map-payload:user]" /&gt;
+&lt;/kindling:create-user&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -1496,12 +1380,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class=" api apilevel-" >
-                        <td class="jd-linkcol"><nobr>userJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>user</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The user to create in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code> to be created</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -1529,6 +1413,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1543,8 +1437,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">user.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code></td>
              </tr>
          </table>
   </div>
@@ -1631,6 +1525,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                         <td class="jd-linkcol"><nobr>password</nobr></td>
                         <td class="jd-descrcol"></td>
                         <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
                         <td class="jd-descrcol">String</td>
                         <td class="jd-descrcol">*/*</td>
                         <td class="jd-descrcol">UTF-8</td>
@@ -1726,6 +1630,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                         <td class="jd-linkcol"><nobr>password</nobr></td>
                         <td class="jd-descrcol"></td>
                         <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
                         <td class="jd-descrcol">String</td>
                         <td class="jd-descrcol">*/*</td>
                         <td class="jd-descrcol">UTF-8</td>
@@ -1899,6 +1813,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -1913,8 +1837,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">category.json-collection</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -2019,6 +1943,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2033,8 +1967,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">category.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -2139,25 +2073,22 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
   </div>
   
   
-      <div class="jd-tagdata">
-         <h5 class="jd-tagtitle">Returns</h5>
-         <table id="lconfig" class="jd-sumtable">
-             <tr>
-                <th>Return Type</th>
-                <th>Description</th>
-             </tr>
-             <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">comment.json</td>
-             </tr>
-         </table>
-  </div>
     
   
   <div class="jd-tagdata">
@@ -2217,7 +2148,7 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                         <td class="jd-linkcol"><nobr>parentType</nobr></td>
                         <td class="jd-descrcol"></td>
                         <td class="jd-descrcol">Retrieve only comments whose parent is of this type</td>
-                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/types/KindlingCommentParentType.html">KindlingCommentParentType</a></td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/comment/KindlingCommentParentType.html">KindlingCommentParentType</a></td>
                         <td class="jd-descrcol">*/*</td>
                         <td class="jd-descrcol"></td>
                     </tr>
@@ -2301,7 +2232,7 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                         <td class="jd-linkcol"><nobr>type</nobr></td>
                         <td class="jd-descrcol"></td>
                         <td class="jd-descrcol"><i>Optional.&nbsp;</i>The type of comments to retrieve</td>
-                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/types/KindlingCommentType.html">KindlingCommentType</a></td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/comment/KindlingCommentType.html">KindlingCommentType</a></td>
                         <td class="jd-descrcol">*/*</td>
                         <td class="jd-descrcol"></td>
                     </tr>
@@ -2331,6 +2262,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2345,8 +2286,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">comment.json-collection</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/comment/KindlingComment.html">KindlingComment</a></code></td>
              </tr>
          </table>
   </div>
@@ -2452,6 +2393,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2466,8 +2417,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">group.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code></td>
              </tr>
          </table>
   </div>
@@ -2632,6 +2583,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2646,8 +2607,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">group.json-collection</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code></td>
              </tr>
          </table>
   </div>
@@ -2752,6 +2713,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2766,8 +2737,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">idea.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></code></td>
              </tr>
          </table>
   </div>
@@ -2978,6 +2949,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -2992,8 +2973,328 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">ideas.json-collection</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></code></td>
+             </tr>
+         </table>
+  </div>
+    
+  
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Exception Payloads</h5>
+      <table class="jd-sumtable">
+        <tr><th>Payload Class</th><th>Description</th></tr>
+        
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If something goes wrong with the service API this exception is throw</td>
+        </tr>
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the credentials provided for the user are wrong or are expired this exception is throw
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="retrieve-post"></A>
+
+<div class="jd-details api apilevel-">
+    <h4 class="jd-details-title">
+      <span class="sympad">&lt;kindling:retrieve-post&gt;</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Gets a single post
+ <p>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:retrieve-post postId="#[map-payload:postId]" /&gt;</pre></div></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Attributes</h5>
+
+        <table id="lconfig" class="jd-sumtable">
+        <tr><th>Name</th><th>Default Value</th><th>Description</th><th>Java Type</th><th>MIME Type</th><th>Encoding</th></tr>
+        <tr>
+          <td class="jd-linkcol"><nobr>config-ref</nobr></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>Specify which configuration to use.</td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+        </tr>
+          
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>postId</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol">The id of the post to retrieve</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>depth</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.</td>
+                        <td class="jd-descrcol">Integer</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+          
+              <tr><th colspan="12">Connection Parameters<br/><span style="font-weight: 200;">This are only required if you didn't specified them at the configuration element. They are also useful for overriding the values of the configurations or even if you need to extract them from the Mule message since they support expression evaluation.</span></th></tr>
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>username</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A username</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>password</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+          
+          
+        </table>
+  </div>
+  
+  
+      <div class="jd-tagdata">
+         <h5 class="jd-tagtitle">Returns</h5>
+         <table id="lconfig" class="jd-sumtable">
+             <tr>
+                <th>Return Type</th>
+                <th>Description</th>
+             </tr>
+             <tr>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
+             </tr>
+         </table>
+  </div>
+    
+  
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Exception Payloads</h5>
+      <table class="jd-sumtable">
+        <tr><th>Payload Class</th><th>Description</th></tr>
+        
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If something goes wrong with the service API this exception is throw</td>
+        </tr>
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the credentials provided for the user are wrong or are expired this exception is throw
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="retrieve-posts"></A>
+
+<div class="jd-details api apilevel-">
+    <h4 class="jd-details-title">
+      <span class="sympad">&lt;kindling:retrieve-posts&gt;</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Gets the posts collection
+ <p>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:retrieve-posts  /&gt;</pre></div></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Attributes</h5>
+
+        <table id="lconfig" class="jd-sumtable">
+        <tr><th>Name</th><th>Default Value</th><th>Description</th><th>Java Type</th><th>MIME Type</th><th>Encoding</th></tr>
+        <tr>
+          <td class="jd-linkcol"><nobr>config-ref</nobr></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>Specify which configuration to use.</td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+        </tr>
+          
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>depth</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: 0.</i> Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc.</td>
+                        <td class="jd-descrcol">Integer</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>sort</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: title.</i> How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc.</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>page</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: 1.</i> The page requested</td>
+                        <td class="jd-descrcol">Integer</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>limit</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: 20.</i> The limit on number of collection items to show per page</td>
+                        <td class="jd-descrcol">Integer</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>state</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i><i>Default: ACTIVATED.</i> Get only items in the collection that are in the given state, either by a state ID or it's natural language name</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/types/KindlingPostState.html">KindlingPostState</a></td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>startsWith</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i>Find posts beginning with this string</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>query</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol"><i>Optional.&nbsp;</i>A general post search</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                
+                
+          
+          
+              <tr><th colspan="12">Connection Parameters<br/><span style="font-weight: 200;">This are only required if you didn't specified them at the configuration element. They are also useful for overriding the values of the configurations or even if you need to extract them from the Mule message since they support expression evaluation.</span></th></tr>
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>username</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A username</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>password</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+          
+          
+        </table>
+  </div>
+  
+  
+      <div class="jd-tagdata">
+         <h5 class="jd-tagtitle">Returns</h5>
+         <table id="lconfig" class="jd-sumtable">
+             <tr>
+                <th>Return Type</th>
+                <th>Description</th>
+             </tr>
+             <tr>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -3035,7 +3336,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Gets a single user
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-user userJson="#[map-payload:userJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:create-user&gt;
+    &lt;kindling:user ref="#[map-payload:user]" /&gt;
+&lt;/kindling:create-user&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -3098,6 +3401,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3112,8 +3425,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">user.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code></td>
              </tr>
          </table>
   </div>
@@ -3302,6 +3615,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3316,8 +3639,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">user.json-collection</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a>&gt;</td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a></code> of <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code></td>
              </tr>
          </table>
   </div>
@@ -3359,7 +3682,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Updates a single category
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-category categoryId="#[map-payload:categoryId]" categoryJson="#[map-payload:categoryJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-category categoryId="#[map-payload:categoryId]"&gt;
+    &lt;kindling:category ref="#[map-payload:category]" /&gt;
+&lt;/kindling:update-category&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -3389,12 +3714,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class="alt-color api apilevel-" >
-                        <td class="jd-linkcol"><nobr>categoryJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>category</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The category representation in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code> with the data to be updated</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -3422,6 +3747,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3436,8 +3771,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">category.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/category/KindlingCategory.html">KindlingCategory</a></code></td>
              </tr>
          </table>
   </div>
@@ -3479,7 +3814,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Updates a single group
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-group groupId="#[map-payload:groupId]" groupJson="#[map-payload:groupJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-group groupId="#[map-payload:groupId]"&gt; 
+    &lt;kindling:group ref="#[map-payload:group]" /&gt;
+&lt;/kindling:update-group&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -3509,12 +3846,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class="alt-color api apilevel-" >
-                        <td class="jd-linkcol"><nobr>groupJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>group</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The group to create in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code> with the data to be updated</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -3542,6 +3879,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3556,8 +3903,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">group.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/group/KindlingGroup.html">KindlingGroup</a></code></td>
              </tr>
          </table>
   </div>
@@ -3599,7 +3946,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Updates a single idea
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-idea ideaId="#[map-payload:ideaId]" ideaJson="#[map-payload:ideaJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-idea ideaId="#[map-payload:ideaId]"&gt;
+    &lt;kindling:idea ref="#[map-payload:idea]" /&gt;
+&lt;/kindling:update-idea&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -3629,12 +3978,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class="alt-color api apilevel-" >
-                        <td class="jd-linkcol"><nobr>ideaJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>idea</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The representation of the Idea in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></code> with the data to be updated</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -3662,6 +4011,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3676,8 +4035,140 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">idea.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/idea/KindlingIdea.html">KindlingIdea</a></code></td>
+             </tr>
+         </table>
+  </div>
+    
+  
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Exception Payloads</h5>
+      <table class="jd-sumtable">
+        <tr><th>Payload Class</th><th>Description</th></tr>
+        
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If something goes wrong with the service API this exception is throw</td>
+        </tr>
+        <tr>
+            <td><a href="../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the credentials provided for the user are wrong or are expired this exception is throw
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="update-post"></A>
+
+<div class="jd-details api apilevel-">
+    <h4 class="jd-details-title">
+      <span class="sympad">&lt;kindling:update-post&gt;</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Updates a single post
+ <p>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-post postId="#[map-payload:postId]"&gt;
+    &lt;kindling:post ref="#[map-payload:post]" /&gt;
+&lt;/kindling:update-post&gt;</pre></div></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Attributes</h5>
+
+        <table id="lconfig" class="jd-sumtable">
+        <tr><th>Name</th><th>Default Value</th><th>Description</th><th>Java Type</th><th>MIME Type</th><th>Encoding</th></tr>
+        <tr>
+          <td class="jd-linkcol"><nobr>config-ref</nobr></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>Specify which configuration to use.</td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+          <td class="jd-descrcol"></td>
+        </tr>
+          
+          
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>postId</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol">The id of the post to update</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                
+                
+          
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>post</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></code> with the data to be updated</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol"></td>
+                    </tr>
+                
+                
+          
+          
+              <tr><th colspan="12">Connection Parameters<br/><span style="font-weight: 200;">This are only required if you didn't specified them at the configuration element. They are also useful for overriding the values of the configurations or even if you need to extract them from the Mule message since they support expression evaluation.</span></th></tr>
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>username</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A username</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class="alt-color api apilevel-" >
+                        <td class="jd-linkcol"><nobr>password</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>A password</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
+          
+          
+        </table>
+  </div>
+  
+  
+      <div class="jd-tagdata">
+         <h5 class="jd-tagtitle">Returns</h5>
+         <table id="lconfig" class="jd-sumtable">
+             <tr>
+                <th>Return Type</th>
+                <th>Description</th>
+             </tr>
+             <tr>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/post/KindlingPost.html">KindlingPost</a></code></td>
              </tr>
          </table>
   </div>
@@ -3719,7 +4210,9 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
       
   <div class="jd-tagdata jd-tagdescr"><p>Updates a single user
  <p>
- <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-user userId="#[map-payload:userId]" userJson="#[map-payload:userJson]" /&gt;</pre></div></p></div>
+ <div class="jd-tagdata"><h5 class="jd-tagtitle">XML Sample</h5><pre>&lt;kindling:update-user userId="#[map-payload:userId]"&gt;
+    &lt;kindling:user ref="#[map-payload:user]" /&gt;
+&lt;/kindling:update-user&gt;</pre></div></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Attributes</h5>
 
@@ -3749,12 +4242,12 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
           
                 
                     <tr class="alt-color api apilevel-" >
-                        <td class="jd-linkcol"><nobr>userJson</nobr></td>
+                        <td class="jd-linkcol"><nobr>user</nobr></td>
                         <td class="jd-descrcol"></td>
-                        <td class="jd-descrcol">The representation of the user in JSON format</td>
-                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">The <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code> with the data to be updated</td>
+                        <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></td>
                         <td class="jd-descrcol">*/*</td>
-                        <td class="jd-descrcol">UTF-8</td>
+                        <td class="jd-descrcol"></td>
                     </tr>
                 
                 
@@ -3782,6 +4275,16 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                     </tr>
                     
                 
+                    <tr class=" api apilevel-" >
+                        <td class="jd-linkcol"><nobr>companyName</nobr></td>
+                        <td class="jd-descrcol"></td>
+                        <td class="jd-descrcol" width="100%"><i>Optional.&nbsp;</i>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+                        <td class="jd-descrcol">String</td>
+                        <td class="jd-descrcol">*/*</td>
+                        <td class="jd-descrcol">UTF-8</td>
+                    </tr>
+                    
+                
           
           
         </table>
@@ -3796,8 +4299,8 @@ attempts to reconnect only during business hours. Such a setting can prove usefu
                 <th>Description</th>
              </tr>
              <tr>
-                <td class="jd-descrcol">String</td>
-                <td class="jd-descrcol">user.json</td>
+                <td class="jd-descrcol"><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></td>
+                <td class="jd-descrcol">A <code><a href="../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a></code></td>
              </tr>
          </table>
   </div>
