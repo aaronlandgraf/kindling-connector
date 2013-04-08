@@ -18,7 +18,8 @@ public enum KindlingUserStateName {
 	INVITED("Invited"),
 	ACTIVATED("Activated"),
 	DISABLED("Disabled"),
-	ARCHIVED("Archived");
+	ARCHIVED("Archived"),
+	DEACTIVATED("Deactivated");
 	
 	static final private Log logger = LogFactory.getLog(KindlingUserStateName.class);
 	
