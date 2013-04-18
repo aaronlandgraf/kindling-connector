@@ -54,4 +54,8 @@ abstract public class KindlingClientBase implements KindlingClient {
 		return loggedUser;
 	}
 	
+	public KindlingAuthentication getAuthentication(){
+		return authentication;
+	}
+	
 }

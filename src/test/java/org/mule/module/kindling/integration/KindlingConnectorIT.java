@@ -42,13 +42,13 @@ public class KindlingConnectorIT {
 		prop.load(stream);
 
 		kindlingConnector = new KindlingConnector();
-		kindlingConnector.connect(prop.getProperty("kindling.it.username"), prop.getProperty("kindling.it.password"), prop.getProperty("kindling.it.company"));		
+		kindlingConnector.connect(prop.getProperty("kindling.it.username"), prop.getProperty("kindling.it.password"), prop.getProperty("kindling.it.company"), prop.getProperty("kindling.it.impersonationToken"));		
 	}
 	
 	@Test
 	public void retrieves() throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
 		// Users
-		KindlingCollection<KindlingUser> kcku = kindlingConnector.retrieveUsers(3, null, null, null, null, null, null, null, null);
+		KindlingCollection<KindlingUser> kcku = kindlingConnector.retrieveUsers(3, null, null, null, null, null, null, null, null,null);
 		
 		Assert.assertNotNull(kcku);
 		Assert.assertNotNull(kcku.getResults());

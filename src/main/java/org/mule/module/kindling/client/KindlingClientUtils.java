@@ -62,15 +62,15 @@ public class KindlingClientUtils {
 		}
 	}
 	
-	static public <T> T webResourceCallWithJavaType(JavaType jtype, Class<T> type, WebResource wr, String loggedUser, KindlingWebResourceMethods method) 
+	static public <T> T webResourceCallWithJavaType(JavaType jtype, Class<T> type, WebResource wr, String loggedUser, String token, KindlingWebResourceMethods method) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
-		return webResourceCallWithJavaType(jtype, type, wr, loggedUser, method, null);
+		return webResourceCallWithJavaType(jtype, type, wr, loggedUser, token, method, null);
 	}
 	
-	static public <T> T webResourceCallWithJavaType(JavaType jtype, Class<T> type, WebResource wr, String loggedUser, KindlingWebResourceMethods method, String requestBody) 
+	static public <T> T webResourceCallWithJavaType(JavaType jtype, Class<T> type, WebResource wr, String loggedUser, String token, KindlingWebResourceMethods method, String requestBody) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
 		
-		String json = webResourceCall(wr, loggedUser, method, null);
+		String json = webResourceCall(wr, loggedUser, token,  method, null);
 		InputStream is = new ByteArrayInputStream(json.getBytes());
 		
 		try {
@@ -84,15 +84,15 @@ public class KindlingClientUtils {
 		}
 	}
 	
-	static public <T> T webResourceCallWithClassType(Class<T> type, WebResource wr, String loggedUser, KindlingWebResourceMethods method) 
+	static public <T> T webResourceCallWithClassType(Class<T> type, WebResource wr, String loggedUser, String token, KindlingWebResourceMethods method) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
-		return webResourceCallWithClassType(type, wr, loggedUser, method, null);
+		return webResourceCallWithClassType(type, wr, loggedUser, token, method, null);
 	}
 	
-	static public <T> T webResourceCallWithClassType(Class<T> type, WebResource wr, String loggedUser, KindlingWebResourceMethods method, String requestBody) 
+	static public <T> T webResourceCallWithClassType(Class<T> type, WebResource wr, String loggedUser, String token,  KindlingWebResourceMethods method, String requestBody) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
 		
-		String json = webResourceCall(wr, loggedUser, method, null);
+		String json = webResourceCall(wr, loggedUser, token, method, null);
 		InputStream is = new ByteArrayInputStream(json.getBytes());
 		
 		try {
@@ -113,12 +113,12 @@ public class KindlingClientUtils {
 	 * @param loggedUser The currently logged user
 	 * @param method The method to use when requesting the resource to the service
 	 * @return The response of the service in an JSON String format
-	 * @throws HubSpotConnectorAccessTokenExpiredException If the service responded with a 401 means that the session has expired
-	 * @throws HubSpotConnectorException If is not a 401 it will throw this exception
+	 * @throws KindlingConnectorUnauthorizedException If the service responded with a 401 means that the session has expired
+	 * @throws KindlingConnectorException If is not a 401 it will throw this exception
 	 */
-	static public String webResourceCall(WebResource wr, String loggedUser, KindlingWebResourceMethods method) 
+	static public String webResourceCall(WebResource wr, String loggedUser, String token, KindlingWebResourceMethods method) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
-		return webResourceCall(wr, loggedUser, method, null);
+		return webResourceCall(wr, loggedUser, token, method, null);
 	}
 	
 	/**
@@ -129,10 +129,10 @@ public class KindlingClientUtils {
 	 * @param method The method to use when requesting the resource to the service
 	 * @param requestBody If the type is PUT or POST, it can contain data in the body (if the service request it that way)
 	 * @return The response of the service in an JSON String format
-	 * @throws HubSpotConnectorAccessTokenExpiredException If the service responded with a 401 means that the session has expired
-	 * @throws HubSpotConnectorException If is not a 401 it will throw this exception
+	 * @throws KindlingConnectorUnauthorizedException If the service responded with a 401 means that the session has expired
+	 * @throws KindlingConnectorException If is not a 401 it will throw this exception
 	 */
-	static public String webResourceCall(WebResource wr, String loggedUser, KindlingWebResourceMethods method, String requestBody) 
+	static public String webResourceCall(WebResource wr, String loggedUser, String token, KindlingWebResourceMethods method, String requestBody) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
 		try {
 			return webResourceCallByEnumType(wr, method, requestBody);
@@ -144,7 +144,7 @@ public class KindlingClientUtils {
 			if (statusCode == 204) {
 				return null;
 			} else if (statusCode == 401) {
-				throw new KindlingConnectorUnauthorizedException(loggedUser);
+					throw new KindlingConnectorUnauthorizedException(loggedUser,token);
 			} else {
 				throw new KindlingConnectorException("ERROR - statusCode: " + statusCode, e);
 			}

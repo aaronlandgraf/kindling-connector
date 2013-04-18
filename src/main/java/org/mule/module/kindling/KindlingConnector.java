@@ -49,7 +49,7 @@ import org.mule.module.kindling.types.KindlingUserState;
  * Kindling ignites innovation by connecting people and ideas
  * <p>
  * Allows to connect to the kindling site across the Kindling Service API.
- * Connector created with the documentation of the service for the version v3.12.0.2
+ * Connector created with the documentation of the service for the version v3.15.0.4
  * @author MuleSoft, Inc.
  */
 @Connector(name="kindling", schemaVersion="2.2", friendlyName="Kindling")
@@ -63,13 +63,14 @@ public class KindlingConnector
      * @param username A username
      * @param password A password
      * @param companyName The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com
+     * @param impersonationToken the token used for impersonation
      * @throws ConnectionException
      */
     @Connect
-    public void connect(@ConnectionKey String username, String password, String companyName)
+    public void connect(@ConnectionKey String username, String password, String companyName, String impersonationToken)
         throws ConnectionException {
     	
-    	KindlingAuthentication auth = new KindlingAuthenticationBasic(username, password);
+    	KindlingAuthentication auth = new KindlingAuthenticationBasic(username, password,impersonationToken);
     	client = new KindlingClientImpl(companyName, auth);
     }
 
@@ -86,7 +87,8 @@ public class KindlingConnector
      */
     @ValidateConnection
     public boolean isConnected() {
-        return client != null;
+//        return client != null;
+    	return false;
     }
 
     /**
@@ -376,6 +378,7 @@ public class KindlingConnector
      * @param digest show only users with a particular type of digest set
      * @param query general user search string
      * @param reputationTimeframe if present, will turn this request into one specifically for reputation leaders for a given timeframe, which may be combined with the associatedWithCategoryId parameter as well to return a leaderbooard for a category
+     * @param email users email
      * @return A {@link KindlingCollection} of {@link KindlingUser}
      * @throws KindlingConnectorException If something goes wrong with the service API this exception is throw
      * @throws KindlingConnectorUnauthorizedException If the credentials provided for the user are wrong or are expired this exception is throw
@@ -389,10 +392,11 @@ public class KindlingConnector
 								@Optional Integer associatedWithCategoryId,
 								@Optional KindlingUserDigest digest,
 								@Optional String query,
-								@Optional KindlingUserReputationTimeframe reputationTimeframe)
+								@Optional KindlingUserReputationTimeframe reputationTimeframe,
+								@Optional String email)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
-    	return client.retrieveUsers(depth, sort, page, limit, state, associatedWithCategoryId, digest, query, reputationTimeframe);
+    	return client.retrieveUsers(depth, sort, page, limit, state, associatedWithCategoryId, digest, query, reputationTimeframe, email);
     }
     
     /**

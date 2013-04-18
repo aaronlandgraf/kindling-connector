@@ -86,7 +86,7 @@ public interface KindlingClient {
 	public KindlingCollection<KindlingUser> retrieveUsers(Integer depth, String sort, Integer page,
 			Integer limit, KindlingUserState state,
 			Integer associatedWithCategoryId, KindlingUserDigest digest,
-			String query, KindlingUserReputationTimeframe reputationTimeframe)
+			String query, KindlingUserReputationTimeframe reputationTimeframe, String email)
 			throws KindlingConnectorException,
 			KindlingConnectorUnauthorizedException;
 

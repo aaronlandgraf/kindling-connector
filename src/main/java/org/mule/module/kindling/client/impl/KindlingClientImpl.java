@@ -90,7 +90,7 @@ public class KindlingClientImpl extends KindlingClientBase {
 //    	return webResourceGet(wr, KindlingWebResourceMethods.GET, null);
     	
     	JavaType type = KindlingClientUtils.constructKindlingCollectionType(KindlingGroup.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(type, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(type, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
         
     @Override
@@ -109,7 +109,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	    	    	
     	logger.info("Requesting retrieveGroup to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
     
     @Override
@@ -129,7 +129,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String groupJson = KindlingClientUtils.transformObjectToJson(group);
     	
     	logger.info("Requesting updateGroup to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, groupJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingGroup.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.PUT, groupJson);
     }
     
     @Override
@@ -146,7 +146,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String groupJson = KindlingClientUtils.transformObjectToJson(group);
     	
     	logger.info("Requesting createGroup to: " + wr.toString());    	
-    	return KindlingClientUtils.webResourceCallWithClassType(null, wr, getLoggedUser(), KindlingWebResourceMethods.POST, groupJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(null, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, groupJson);
     }
 
     @SuppressWarnings("unchecked")
@@ -195,7 +195,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	    	
     	logger.info("Requesting getComments to: " + wr.toString());
     	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingComment.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
     
     @Override
@@ -212,7 +212,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String commentJson = KindlingClientUtils.transformObjectToJson(comment);
     	
     	logger.info("Requesting createComment to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, commentJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, commentJson);
     }
     
     @Override
@@ -230,7 +230,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveComment to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingComment.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
     
     @Override
@@ -245,7 +245,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	WebResource wr = getJerseyClient().resource(uri);
     	
     	logger.info("Requesting deleteComment to: " + wr.toString());
-    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), KindlingWebResourceMethods.DELETE);
+    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.DELETE);
     }
     
     @SuppressWarnings("unchecked")
@@ -299,7 +299,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	
     	logger.info("Requesting retrieveIdeas to: " + wr.toString());
     	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingIdea.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -316,7 +316,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String ideaJson = KindlingClientUtils.transformObjectToJson(idea);
     	
     	logger.info("Requesting createIdea to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, ideaJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, ideaJson);
     }
 
     @Override
@@ -334,7 +334,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveIdea to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -352,7 +352,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	WebResource wr = getJerseyClient().resource(uri);
     	
     	logger.info("Requesting updateIdea to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingIdea.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.PUT);
     }
 
     @SuppressWarnings("unchecked")
@@ -365,7 +365,8 @@ public class KindlingClientImpl extends KindlingClientBase {
 								Integer associatedWithCategoryId,
 								KindlingUserDigest digest,
 								String query,
-								KindlingUserReputationTimeframe reputationTimeframe)
+								KindlingUserReputationTimeframe reputationTimeframe,
+								String email)
     	throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
     	
     	URI uri = getBaseUriBuilder().path("users").build();
@@ -399,10 +400,13 @@ public class KindlingClientImpl extends KindlingClientBase {
    	
     	if (reputationTimeframe != null)
     		wr = wr.queryParam("reputationTimeframe", reputationTimeframe.getValue());
+
+    	if (!StringUtils.isEmpty(email))
+    		wr = wr.queryParam("email", email);
     	
     	logger.info("Requesting retrieveUsers to: " + wr.toString());
     	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingUser.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -419,7 +423,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String userJson = KindlingClientUtils.transformObjectToJson(user);
     	
     	logger.info("Requesting createUser to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, userJson);
     }
 
     @Override
@@ -437,7 +441,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveUser to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -457,7 +461,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String userJson = KindlingClientUtils.transformObjectToJson(user);
     	
     	logger.info("Requesting updateUser to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingUser.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.PUT, userJson);
     }
 
     @Override
@@ -472,7 +476,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	WebResource wr = getJerseyClient().resource(uri);
     	    	
     	logger.info("Requesting deleteUser to: " + wr.toString());
-    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), KindlingWebResourceMethods.DELETE);
+    	KindlingClientUtils.webResourceCall(wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.DELETE);
     }
 
     @SuppressWarnings("unchecked")
@@ -514,7 +518,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	
     	logger.info("Requesting retrieveCategories to: " + wr.toString());
     	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingCategory.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -531,7 +535,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String categoryJson = KindlingClientUtils.transformObjectToJson(category);
     	
     	logger.info("Requesting createCategory to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, categoryJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, categoryJson);
     }
 
     @Override
@@ -549,7 +553,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrieveCategory to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
     }
 
     @Override
@@ -569,7 +573,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String categoryJson = KindlingClientUtils.transformObjectToJson(category);
     	
     	logger.info("Requesting updateCategory to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, categoryJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingCategory.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.PUT, categoryJson);
     }
 
 	@SuppressWarnings("unchecked")
@@ -608,7 +612,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	
     	logger.info("Requesting retrievePosts to: " + wr.toString());
     	JavaType jtype = KindlingClientUtils.constructKindlingCollectionType(KindlingPost.class);
-    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithJavaType(jtype, KindlingCollection.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
 	}
 
 	@Override
@@ -627,7 +631,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     		wr = wr.queryParam("depth", String.valueOf(depth));
     	
     	logger.info("Requesting retrievePost to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.GET);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.GET);
 	}
 
 	@Override
@@ -648,7 +652,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String userJson = KindlingClientUtils.transformObjectToJson(post);
     	
     	logger.info("Requesting updatePost to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.PUT, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.PUT, userJson);
 	}
 
 	@Override
@@ -666,7 +670,7 @@ public class KindlingClientImpl extends KindlingClientBase {
     	String userJson = KindlingClientUtils.transformObjectToJson(post);
     	
     	logger.info("Requesting createPost to: " + wr.toString());
-    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), KindlingWebResourceMethods.POST, userJson);
+    	return KindlingClientUtils.webResourceCallWithClassType(KindlingPost.class, wr, getLoggedUser(), getAuthentication().getToken(), KindlingWebResourceMethods.POST, userJson);
 
 	}
 

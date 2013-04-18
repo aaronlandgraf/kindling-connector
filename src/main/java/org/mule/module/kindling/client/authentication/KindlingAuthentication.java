@@ -15,4 +15,5 @@ public interface KindlingAuthentication {
 	
 	Client generateClientAndAuthenticate();
 	String getUsername();
+	String getToken();
 }
