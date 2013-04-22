@@ -41,14 +41,15 @@ public class KindlingAuthenticationBasic implements KindlingAuthentication {
 		
 		if (StringUtils.isEmpty(impersonationToken)) {
 			authFilter = new HTTPBasicAuthFilter(username,password);
+			logger.info("Authentication configuration created for user " + username);
 		}
 		else {
 			authFilter = new HTTPCustomFilter(impersonationToken);
+			logger.info("Authentication configuration created for supplied token");
 		}
 
 		jerseyClient.addFilter(authFilter);
 		
-		logger.info("Authentication configuration created for user " + username);
         
         return jerseyClient;
 	}
