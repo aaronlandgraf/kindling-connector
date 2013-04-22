@@ -213,6 +213,8 @@
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/package-summary.html">org.mule.module.kindling.client.authentication</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/module/kindling/client/authentication/filter/package-summary.html">org.mule.module.kindling.client.authentication.filter</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/impl/package-summary.html">org.mule.module.kindling.client.authentication.impl</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/impl/package-summary.html">org.mule.module.kindling.client.impl</a></li>
@@ -590,7 +592,7 @@ Summary:
             String</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCall</a></span>(WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCall</a></span>(WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
         
         <div class="jd-descrdiv">Method used to eliminate boilerplate handling exceptions when calling get(String) | post(String) | ...</div>
   
@@ -608,7 +610,7 @@ Summary:
             String</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCall</a></span>(WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCall</a></span>(WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
         
         <div class="jd-descrdiv">Method used to eliminate boilerplate handling exceptions when calling get(String) | post(String) | ...</div>
   
@@ -626,7 +628,7 @@ Summary:
             T</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCallWithClassType</a></span>(Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCallWithClassType</a></span>(Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
         
   </td></tr>
 
@@ -642,7 +644,7 @@ Summary:
             T</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCallWithClassType</a></span>(Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCallWithClassType</a></span>(Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
         
   </td></tr>
 
@@ -658,7 +660,7 @@ Summary:
             T</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCallWithJavaType</a></span>(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCallWithJavaType</a></span>(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
         
   </td></tr>
 
@@ -674,7 +676,7 @@ Summary:
             T</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)">webResourceCallWithJavaType</a></span>(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/client/KindlingClientUtils.html#webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)">webResourceCallWithJavaType</a></span>(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</nobr>
         
   </td></tr>
 
@@ -1111,7 +1113,7 @@ From class
 </div>
 
 
-<A NAME="webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
+<A NAME="webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1124,7 +1126,7 @@ From class
         String
       </span>
       <span class="sympad">webResourceCall</span>
-      <span class="normal">(WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
+      <span class="normal">(WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1149,69 +1151,8 @@ From class
           <td>The currently logged user</td>
         </tr>
         <tr>
-          <th>method</td>
-          <td>The method to use when requesting the resource to the service</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>The response of the service in an JSON String format</li></ul>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
-            <td></td>
-        </tr>  
-        <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
-            <td></td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<A NAME="webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-        static 
-         
-         
-         
-        String
-      </span>
-      <span class="sympad">webResourceCall</span>
-      <span class="normal">(WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Method used to eliminate boilerplate handling exceptions when calling get(String) | post(String) | ... from a WebResource</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>wr</td>
-          <td>The WebResource to call get</td>
-        </tr>
-        <tr>
-          <th>loggedUser</td>
-          <td>The currently logged user</td>
+          <th>token</td>
+          <td></td>
         </tr>
         <tr>
           <th>method</td>
@@ -1231,12 +1172,13 @@ From class
       <h5 class="jd-tagtitle">Throws</h5>
       <table class="jd-tagtable">  
         <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
-            <td></td>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the service responded with a 401 means that the session has expired</td>
         </tr>  
         <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
-            <td></td>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If is not a 401 it will throw this exception
+</td>
         </tr>
       </table>
   </div>
@@ -1245,7 +1187,77 @@ From class
 </div>
 
 
-<A NAME="webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
+<A NAME="webResourceCall(com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">webResourceCall</span>
+      <span class="normal">(WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Method used to eliminate boilerplate handling exceptions when calling get(String) | post(String) | ... from a WebResource</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>wr</td>
+          <td>The WebResource to call get</td>
+        </tr>
+        <tr>
+          <th>loggedUser</td>
+          <td>The currently logged user</td>
+        </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>method</td>
+          <td>The method to use when requesting the resource to the service</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>The response of the service in an JSON String format</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td>If the service responded with a 401 means that the session has expired</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td>If is not a 401 it will throw this exception
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1258,7 +1270,7 @@ From class
         T
       </span>
       <span class="sympad">webResourceCallWithClassType</span>
-      <span class="normal">(Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
+      <span class="normal">(Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1284,6 +1296,79 @@ From class
         </tr>
         <tr>
           <th>loggedUser</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>method</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+         
+         
+         
+        T
+      </span>
+      <span class="sympad">webResourceCallWithClassType</span>
+      <span class="normal">(Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>wr</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>loggedUser</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>token</td>
           <td></td>
         </tr>
         <tr>
@@ -1314,72 +1399,7 @@ From class
 </div>
 
 
-<A NAME="webResourceCallWithClassType(java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-        static 
-         
-         
-         
-        T
-      </span>
-      <span class="sympad">webResourceCallWithClassType</span>
-      <span class="normal">(Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>type</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>wr</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>loggedUser</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>method</td>
-          <td></td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorException.html">KindlingConnectorException</a></td>
-            <td></td>
-        </tr>  
-        <tr>
-            <th><a href="../../../../../../java/org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html">KindlingConnectorUnauthorizedException</a></td>
-            <td></td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<A NAME="webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
+<A NAME="webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1392,7 +1412,7 @@ From class
         T
       </span>
       <span class="sympad">webResourceCallWithJavaType</span>
-      <span class="normal">(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
+      <span class="normal">(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1425,7 +1445,15 @@ From class
           <td></td>
         </tr>
         <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
           <th>method</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>requestBody</td>
           <td></td>
         </tr>
       </table>
@@ -1448,7 +1476,7 @@ From class
 </div>
 
 
-<A NAME="webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods, java.lang.String)"></A>
+<A NAME="webResourceCallWithJavaType(org.codehaus.jackson.type.JavaType, java.lang.Class<T>, com.sun.jersey.api.client.WebResource, java.lang.String, java.lang.String, org.mule.module.kindling.types.KindlingWebResourceMethods)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1461,7 +1489,7 @@ From class
         T
       </span>
       <span class="sympad">webResourceCallWithJavaType</span>
-      <span class="normal">(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method, String requestBody)</span>
+      <span class="normal">(JavaType jtype, Class&lt;T&gt; type, WebResource wr, String loggedUser, String token, <a href="../../../../../../java/org/mule/module/kindling/types/KindlingWebResourceMethods.html">KindlingWebResourceMethods</a> method)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1494,11 +1522,11 @@ From class
           <td></td>
         </tr>
         <tr>
-          <th>method</td>
+          <th>token</td>
           <td></td>
         </tr>
         <tr>
-          <th>requestBody</td>
+          <th>method</td>
           <td></td>
         </tr>
       </table>

@@ -3,6 +3,7 @@ org.mule.module.kindling.adapters
 org.mule.module.kindling.agents
 org.mule.module.kindling.client
 org.mule.module.kindling.client.authentication
+org.mule.module.kindling.client.authentication.filter
 org.mule.module.kindling.client.authentication.impl
 org.mule.module.kindling.client.impl
 org.mule.module.kindling.config

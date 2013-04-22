@@ -213,6 +213,8 @@
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/package-summary.html">org.mule.module.kindling.client.authentication</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/module/kindling/client/authentication/filter/package-summary.html">org.mule.module.kindling.client.authentication.filter</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/impl/package-summary.html">org.mule.module.kindling.client.authentication.impl</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/impl/package-summary.html">org.mule.module.kindling.client.impl</a></li>
@@ -378,6 +380,9 @@ Summary:
   
 
 
+  &#124; <a href="#lfields">Fields</a>
+  
+
 
   &#124; <a href="#inhfields">Inherited Fields</a>
   
@@ -387,6 +392,9 @@ Summary:
   
 
 
+
+  &#124; <a href="#pubmethods">Methods</a>
+  
 
 
 
@@ -625,6 +633,37 @@ java.lang.Throwable
 
 
 
+<!-- =========== FIELD SUMMARY =========== -->
+<table id="lfields" class="jd-sumtable"><tr><th colspan="12">Fields</th></tr>
+
+
+    
+      <tr class="alt-color api apilevel-" >
+          <td class="jd-typecol"><nobr>
+          private
+          
+          
+          String</nobr></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#token">token</a></td>
+          <td class="jd-descrcol" width="100%"></td>
+      </tr>
+      
+    
+      <tr class=" api apilevel-" >
+          <td class="jd-typecol"><nobr>
+          private
+          
+          
+          String</nobr></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#username">username</a></td>
+          <td class="jd-descrcol" width="100%"></td>
+      </tr>
+      
+    
+
+</table>
+
+
 
 
 
@@ -728,7 +767,7 @@ java.lang.Throwable
             </nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#KindlingConnectorUnauthorizedException(java.lang.String)">KindlingConnectorUnauthorizedException</a></span>(String username)</nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#KindlingConnectorUnauthorizedException(java.lang.String, java.lang.String)">KindlingConnectorUnauthorizedException</a></span>(String username, String token)</nobr>
         
   </td></tr>
 
@@ -739,6 +778,79 @@ java.lang.Throwable
 
 
 
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#getToken()">getToken</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#getUsername()">getUsername</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#setToken(java.lang.String)">setToken</a></span>(String token)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/exception/KindlingConnectorUnauthorizedException.html#setUsername(java.lang.String)">setUsername</a></span>(String username)</nobr>
+        
+  </td></tr>
+
+
+
+</table>
 
 
 
@@ -1232,6 +1344,73 @@ From class
 <!-- Fields -->
 
 
+<!-- ========= FIELD DETAIL ======== -->
+<h2>Fields</h2>
+
+
+
+
+<A NAME="token"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        private 
+         
+         
+        String
+      </span>
+        token
+    </h4>
+      <div class="api-level">
+        
+
+
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    
+    </div>
+</div>
+
+
+
+<A NAME="username"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        private 
+         
+         
+        String
+      </span>
+        username
+    </h4>
+      <div class="api-level">
+        
+
+
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    
+    </div>
+</div>
+
+
+
+
 <!-- Public ctors -->
 
 
@@ -1240,7 +1419,7 @@ From class
 
 
 
-<A NAME="KindlingConnectorUnauthorizedException(java.lang.String)"></A>
+<A NAME="KindlingConnectorUnauthorizedException(java.lang.String, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1253,7 +1432,7 @@ From class
         
       </span>
       <span class="sympad">KindlingConnectorUnauthorizedException</span>
-      <span class="normal">(String username)</span>
+      <span class="normal">(String username, String token)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1273,6 +1452,10 @@ From class
           <th>username</td>
           <td></td>
         </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
       </table>
   </div>
 
@@ -1290,6 +1473,165 @@ From class
 
 <!-- ========= METHOD DETAIL ======== -->
 <!-- Public methdos -->
+
+<h2>Public Methods</h2>
+
+
+
+<A NAME="getToken()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getToken</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the token
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUsername()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUsername</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the username
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setToken(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setToken</span>
+      <span class="normal">(String token)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>token</td>
+          <td>The token to set
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setUsername(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setUsername</span>
+      <span class="normal">(String username)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>username</td>
+          <td>The username to set
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 
 
 

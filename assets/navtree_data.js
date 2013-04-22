@@ -10,6 +10,8 @@ var NAVTREE_DATA =
 , "" ] ]
 , "" ], [ "org.mule.module.kindling.client.authentication", "org/mule/module/kindling/client/authentication/package-summary.html", [ [ "Interfaces", null, [ [ "KindlingAuthentication", "org/mule/module/kindling/client/authentication/KindlingAuthentication.html", null, "" ] ]
 , "" ] ]
+, "" ], [ "org.mule.module.kindling.client.authentication.filter", "org/mule/module/kindling/client/authentication/filter/package-summary.html", [ [ "Classes", null, [ [ "HTTPCustomFilter", "org/mule/module/kindling/client/authentication/filter/HTTPCustomFilter.html", null, "" ] ]
+, "" ] ]
 , "" ], [ "org.mule.module.kindling.client.authentication.impl", "org/mule/module/kindling/client/authentication/impl/package-summary.html", [ [ "Classes", null, [ [ "KindlingAuthenticationBasic", "org/mule/module/kindling/client/authentication/impl/KindlingAuthenticationBasic.html", null, "" ] ]
 , "" ] ]
 , "" ], [ "org.mule.module.kindling.client.impl", "org/mule/module/kindling/client/impl/package-summary.html", [ [ "Classes", null, [ [ "KindlingClientImpl", "org/mule/module/kindling/client/impl/KindlingClientImpl.html", null, "" ] ]

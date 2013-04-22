@@ -213,6 +213,8 @@
     <li class="api apilevel-">
   <a href="../../../../../java/org/mule/module/kindling/client/authentication/package-summary.html">org.mule.module.kindling.client.authentication</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../java/org/mule/module/kindling/client/authentication/filter/package-summary.html">org.mule.module.kindling.client.authentication.filter</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../java/org/mule/module/kindling/client/authentication/impl/package-summary.html">org.mule.module.kindling.client.authentication.impl</a></li>
     <li class="api apilevel-">
   <a href="../../../../../java/org/mule/module/kindling/client/impl/package-summary.html">org.mule.module.kindling.client.impl</a></li>
@@ -521,7 +523,7 @@ Summary:
  Kindling ignites innovation by connecting people and ideas
  <p>
  Allows to connect to the kindling site across the Kindling Service API.
- Connector created with the documentation of the service for the version v3.12.0.2</p>
+ Connector created with the documentation of the service for the version v3.15.0.4</p>
 
 
 
@@ -636,7 +638,7 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../org/mule/module/kindling/KindlingConnector.html#connect(java.lang.String, java.lang.String, java.lang.String)">connect</a></span>(String username, String password, String companyName)</nobr>
+        <span class="sympad"><a href="../../../../../org/mule/module/kindling/KindlingConnector.html#connect(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">connect</a></span>(String username, String password, String companyName, String impersonationToken)</nobr>
         
         <div class="jd-descrdiv">Connect</div>
   
@@ -1091,7 +1093,7 @@ Summary:
             <a href="../../../../../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../../../../../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a>&gt;</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../org/mule/module/kindling/KindlingConnector.html#retrieveUsers(java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, org.mule.module.kindling.types.KindlingUserState, java.lang.Integer, org.mule.module.kindling.types.KindlingUserDigest, java.lang.String, org.mule.module.kindling.types.KindlingUserReputationTimeframe)">retrieveUsers</a></span>(Integer depth, String sort, Integer page, Integer limit, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserState.html">KindlingUserState</a> state, Integer associatedWithCategoryId, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserDigest.html">KindlingUserDigest</a> digest, String query, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserReputationTimeframe.html">KindlingUserReputationTimeframe</a> reputationTimeframe)</nobr>
+        <span class="sympad"><a href="../../../../../org/mule/module/kindling/KindlingConnector.html#retrieveUsers(java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, org.mule.module.kindling.types.KindlingUserState, java.lang.Integer, org.mule.module.kindling.types.KindlingUserDigest, java.lang.String, org.mule.module.kindling.types.KindlingUserReputationTimeframe, java.lang.String)">retrieveUsers</a></span>(Integer depth, String sort, Integer page, Integer limit, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserState.html">KindlingUserState</a> state, Integer associatedWithCategoryId, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserDigest.html">KindlingUserDigest</a> digest, String query, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserReputationTimeframe.html">KindlingUserReputationTimeframe</a> reputationTimeframe, String email)</nobr>
         
         <div class="jd-descrdiv">Gets the users collection
  <p>
@@ -1533,7 +1535,7 @@ From class
 
 
 
-<A NAME="connect(java.lang.String, java.lang.String, java.lang.String)"></A>
+<A NAME="connect(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1546,7 +1548,7 @@ From class
         void
       </span>
       <span class="sympad">connect</span>
-      <span class="normal">(String username, String password, String companyName)</span>
+      <span class="normal">(String username, String password, String companyName, String impersonationToken)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1573,6 +1575,10 @@ From class
         <tr>
           <th>companyName</td>
           <td>The name of the company registered in kindling and used for access your site like https://{companyName}.kindlingapp.com</td>
+        </tr>
+        <tr>
+          <th>impersonationToken</td>
+          <td>The token used for impersonation</td>
         </tr>
       </table>
   </div>
@@ -2985,7 +2991,7 @@ From class
 </div>
 
 
-<A NAME="retrieveUsers(java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, org.mule.module.kindling.types.KindlingUserState, java.lang.Integer, org.mule.module.kindling.types.KindlingUserDigest, java.lang.String, org.mule.module.kindling.types.KindlingUserReputationTimeframe)"></A>
+<A NAME="retrieveUsers(java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, org.mule.module.kindling.types.KindlingUserState, java.lang.Integer, org.mule.module.kindling.types.KindlingUserDigest, java.lang.String, org.mule.module.kindling.types.KindlingUserReputationTimeframe, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -2998,7 +3004,7 @@ From class
         <a href="../../../../../java/org/mule/module/kindling/model/KindlingCollection.html">KindlingCollection</a>&lt;<a href="../../../../../java/org/mule/module/kindling/model/user/KindlingUser.html">KindlingUser</a>&gt;
       </span>
       <span class="sympad">retrieveUsers</span>
-      <span class="normal">(Integer depth, String sort, Integer page, Integer limit, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserState.html">KindlingUserState</a> state, Integer associatedWithCategoryId, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserDigest.html">KindlingUserDigest</a> digest, String query, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserReputationTimeframe.html">KindlingUserReputationTimeframe</a> reputationTimeframe)</span>
+      <span class="normal">(Integer depth, String sort, Integer page, Integer limit, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserState.html">KindlingUserState</a> state, Integer associatedWithCategoryId, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserDigest.html">KindlingUserDigest</a> digest, String query, <a href="../../../../../java/org/mule/module/kindling/types/KindlingUserReputationTimeframe.html">KindlingUserReputationTimeframe</a> reputationTimeframe, String email)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -3051,6 +3057,10 @@ From class
         <tr>
           <th>reputationTimeframe</td>
           <td>If present, will turn this request into one specifically for reputation leaders for a given timeframe, which may be combined with the associatedWithCategoryId parameter as well to return a leaderbooard for a category</td>
+        </tr>
+        <tr>
+          <th>email</td>
+          <td>Users email</td>
         </tr>
       </table>
   </div>

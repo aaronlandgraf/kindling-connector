@@ -213,6 +213,8 @@
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/package-summary.html">org.mule.module.kindling.client.authentication</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/module/kindling/client/authentication/filter/package-summary.html">org.mule.module.kindling.client.authentication.filter</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/authentication/impl/package-summary.html">org.mule.module.kindling.client.authentication.impl</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../java/org/mule/module/kindling/client/impl/package-summary.html">org.mule.module.kindling.client.impl</a></li>
@@ -965,7 +967,7 @@ org.mule.api.lifecycle.Stoppable
           
           
           String</nobr></td>
-          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#_passwordType">_passwordType</a></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#_impersonationTokenType">_impersonationTokenType</a></td>
           <td class="jd-descrcol" width="100%"></td>
       </tr>
       
@@ -976,7 +978,29 @@ org.mule.api.lifecycle.Stoppable
           
           
           String</nobr></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#_passwordType">_passwordType</a></td>
+          <td class="jd-descrcol" width="100%"></td>
+      </tr>
+      
+    
+      <tr class=" api apilevel-" >
+          <td class="jd-typecol"><nobr>
+          protected
+          
+          
+          String</nobr></td>
           <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#_usernameType">_usernameType</a></td>
+          <td class="jd-descrcol" width="100%"></td>
+      </tr>
+      
+    
+      <tr class="alt-color api apilevel-" >
+          <td class="jd-typecol"><nobr>
+          protected
+          
+          
+          Object</nobr></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#companyName">companyName</a></td>
           <td class="jd-descrcol" width="100%"></td>
       </tr>
       
@@ -987,7 +1011,7 @@ org.mule.api.lifecycle.Stoppable
           
           
           Object</nobr></td>
-          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#companyName">companyName</a></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#impersonationToken">impersonationToken</a></td>
           <td class="jd-descrcol" width="100%"></td>
       </tr>
       
@@ -1456,6 +1480,26 @@ From class
             Object</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#getImpersonationToken()">getImpersonationToken</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">Retrieves impersonationToken
+ 
+</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            Object</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#getPassword()">getPassword</a></span>()</nobr>
         
         <div class="jd-descrdiv">Retrieves password
@@ -1466,7 +1510,7 @@ From class
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1486,7 +1530,7 @@ From class
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1499,6 +1543,24 @@ From class
         <span class="sympad"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#setCompanyName(java.lang.Object)">setCompanyName</a></span>(Object value)</nobr>
         
         <div class="jd-descrdiv">Sets companyName</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/module/kindling/processors/AbstractConnectedProcessor.html#setImpersonationToken(java.lang.Object)">setImpersonationToken</a></span>(Object value)</nobr>
+        
+        <div class="jd-descrdiv">Sets impersonationToken</div>
   
   </td></tr>
 
