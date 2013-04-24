@@ -92,7 +92,7 @@ public class KindlingClientUtils {
 	static public <T> T webResourceCallWithClassType(Class<T> type, WebResource wr, String loggedUser, String token,  KindlingWebResourceMethods method, String requestBody) 
 			throws KindlingConnectorException, KindlingConnectorUnauthorizedException {
 		
-		String json = webResourceCall(wr, loggedUser, token, method, null);
+		String json = webResourceCall(wr, loggedUser, token, method, requestBody);
 		InputStream is = new ByteArrayInputStream(json.getBytes());
 		
 		try {
