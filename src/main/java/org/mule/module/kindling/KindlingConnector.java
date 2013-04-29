@@ -49,7 +49,7 @@ import org.mule.module.kindling.types.KindlingUserState;
  * Kindling ignites innovation by connecting people and ideas
  * <p>
  * Allows to connect to the kindling site across the Kindling Service API.
- * Connector created with the documentation of the service for the version v3.15.0.4
+ * Connector created with the documentation of the service for the version v3.15.1.0
  * @author MuleSoft, Inc.
  */
 @Connector(name="kindling", schemaVersion="2.2", friendlyName="Kindling")
