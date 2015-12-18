@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mule.modules</groupId>
     <artifactId>mule-module-kindling</artifactId>
-    <version>2.7-SNAPSHOT</version>
+    <version>3.-SNAPSHOT</version>
     <packaging>mule-module</packaging>
     <name>Kindling Cloud Connector</name>
 
     <parent>
         <groupId>org.mule.tools.devkit</groupId>
         <artifactId>mule-devkit-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.6.1</version>
     </parent>
 
     <properties>
