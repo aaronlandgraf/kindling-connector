@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/kindling" prefix="kindling">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="Kindling" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric"></global-cloud-connector>
+  <nested caption="" description="" localId="connection-pooling-profile" abstract="true">
+    <radioBoolean name="defaultPoolingProfile" caption="Use default connection pool configuration" description="Use default connection pool configuration." fillLine="true"></radioBoolean>
+    <radioBoolean name="customPoolingProfile" caption="Define connection pool configuration" description="Define connection pool configuration." fillLine="true"></radioBoolean>
+    <integer defaultValue="5" min="-1" step="0" name="maxActive" caption="Max active" description="Controls the maximum number of connections that can be borrowed from the pool at one time. When set to a negative value, there is no limit to the number of connections that may be active at one time. When maxActive is exceeded, the pool is said to be exhausted." controlled="customPoolingProfile" indented="true" fillLine="true"></integer>
+    <integer defaultValue="5" min="-1" step="0" name="maxIdle" caption="Max idle" description="Controls the maximum number of connections that can sit idle in the pool at any time. When set to a negative value, there is no limit to the number of connections that may be idle at one time." controlled="customPoolingProfile" indented="true" fillLine="true"></integer>
+    <enum defaultValue="INITIALISE_ONE" name="initialisationPolicy" caption="Initialisation policy" description="Determines how connections in a pool should be initialized. The possible values are: INITIALISE_NONE (will not load any connection into the pool on startup), INITIALISE_ONE (will load one initial connection into the pool on startup), or INITIALISE_ALL (will load all connections in the pool on startup)" alwaysFill="true" controlled="customPoolingProfile" indented="true">
+      <option value="INITIALISE_NONE"></option>
+      <option value="INITIALISE_ONE"></option>
+      <option value="INITIALISE_ALL"></option>
+    </enum>
+    <enum defaultValue="WHEN_EXHAUSTED_GROW" name="exhaustedAction" caption="Exhausted action" description="Specifies the behavior of the connection pool when the pool is exhausted. Possible values are: &quot;WHEN_EXHAUSTED_FAIL&quot;, which will throw a NoSuchElementException, &quot;WHEN_EXHAUSTED_WAIT&quot;, which will block by invoking Object.wait(long) until a new or idle object is available, or WHEN_EXHAUSTED_GROW, which will create a new connection and return it, essentially making maxActive meaningless. If a positive maxWait value is supplied, it will block for at most that many milliseconds, after which a NoSuchElementException will be thrown. If maxThreadWait is a negative value, it will block indefinitely." alwaysFill="true" controlled="customPoolingProfile" indented="true">
+      <option value="WHEN_EXHAUSTED_WAIT"></option>
+      <option value="WHEN_EXHAUSTED_FAIL"></option>
+      <option value="WHEN_EXHAUSTED_GROW"></option>
+    </enum>
+    <integer defaultValue="5" min="-1" step="0" name="maxWait" caption="Max wait" description="When exhausted action is Wait (or block) this is the amount of time in milliseconds that the pool will wait before failing. Setting a negative value will block indefinitely until an idle instance becomes available." controlled="customPoolingProfile" indented="true" fillLine="true"></integer>
+    <integer defaultValue="1800000" min="-1" step="0" name="minEvictionMillis" caption="Min eviction (ms)" description="Determines the minimum amount of time a connection may sit idle in the pool before it is eligible for eviction. When non-positive, no connections will be evicted from the pool due to idle time alone." controlled="customPoolingProfile" indented="true" fillLine="true"></integer>
+    <integer defaultValue="-1" min="-1" step="0" name="evictionCheckIntervalMillis" caption="Eviction check interval (ms)" description="Specifies the number of milliseconds between runs of the connection evictor. When non-positive, no connection evictor is executed." controlled="customPoolingProfile" indented="true" fillLine="true"></integer>
+  </nested>
+  <nested caption="" description="" localId="reconnectionStrategyElement" abstract="true">
+    <label name="connectionLabel" caption="Define how mule should attempt to handle a connection failure" description=""></label>
+    <radioBoolean name="noReconnection" caption="Do not use a Reconnection strategy" description="Disable reconection strategy" fillLine="true"></radioBoolean>
+    <radioBoolean name="standardReconnection" caption="Standard Reconnection" description="A reconnection strategy that allows the user to configure how many times a reconnection should be attempted and how long to wait between attempts." fillLine="true"></radioBoolean>
+    <integer defaultValue="2000" min="1" max="2147483647" step="1" name="reconnectionFrequency" caption="Frequency (ms)" description="How often (in ms) to reconnect" controlled="standardReconnection" indented="true"></integer>
+    <integer defaultValue="2" min="1" max="2147483647" step="1" name="reconnectionAttemps" caption="Reconnection Attempts" description="How many reconnection attempts to make" controlled="standardReconnection,!reconnectForever" indented="true"></integer>
+    <boolean name="reconnectForever" caption="Reconnect Forever" description="A reconnection strategy that retries an infinite number of times at the specified frequency." controlled="standardReconnection" indented="true"></boolean>
+    <radioBoolean name="customReconnection" caption="Custom Reconnection" description="A user-defined reconnection strategy." fillLine="true"></radioBoolean>
+    <classname name="class" caption="Class" description="A class that implements the RetryPolicyTemplate interface." controlled="customReconnection" indented="true"></classname>
+    <childElement allowMultiple="true" name="http://www.springframework.org/schema/beans/property" caption="Properties" description="Property elements." controlled="customReconnection"></childElement>
+  </nested>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="Kindling: Connection Management" description="Global Connection Management configuration information." icon="icons/small/kindling-connector-24x16.png" localId="config" image="icons/large/kindling-connector-48x32.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/kindling/parentConfig" connectivityTesting="on" connectivityTestingLabel="Test Connection..." metaData="static" metaDataKeyDisplay="DISPLAY_NAME">
+    <attribute-category caption="General" description="Kindling configuration properties.">
+      <group id="kindlingGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="connection" caption="Connection">
+        <string name="username" caption="Username" description="A username." required="true" javaType="java.lang.String"></string>
+        <string name="password" caption="Password" description="A password." required="true" javaType="java.lang.String"></string>
+        <string name="companyName" caption="Company Name" description="The name of the company registered in kindling and used for access your site like https://{companyName.kindlingapp.com." required="true" javaType="java.lang.String"></string>
+        <string name="impersonationToken" caption="Impersonation Token" description="The token used for impersonation." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+    <attribute-category caption="Pooling Profile" description="Pooling profile options.">
+      <group id="poolingProfile" caption="Pooling Profile">
+        <childElement inplace="true" name="http://www.mulesoft.org/schema/mule/kindling/connection-pooling-profile" caption="" description="" valuePersistence="org.mule.tooling.ui.modules.core.widgets.meta.PoolingProfileValuePersistence"></childElement>
+      </group>
+    </attribute-category>
+    <attribute-category caption="Reconnection" description="Reconnection options.">
+      <group id="reconnectionStrategies" caption="Strategies">
+        <childElement inplace="true" name="http://www.mulesoft.org/schema/mule/core/reconnectionStrategyElement" caption="" description="" valuePersistence="org.mule.tooling.ui.modules.core.widgets.meta.HTTPTransactionValuePersistence"></childElement>
+        <childElement allowSubTypes="true" allowedSubTypes="http://www.mulesoft.org/schema/mule/core/reconnect,http://www.mulesoft.org/schema/mule/core/reconnect-custom-strategy,http://www.mulesoft.org/schema/mule/core/reconnect-forever" name="http://www.mulesoft.org/schema/mule/core/abstractReconnectionStrategy" caption="" description="" visibleInDialog="false"></childElement>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractkindlingconnectorgeneric" description="Interact with Kindling." icon="icons/small/kindling-connector-24x16.png" localId="abstractKindlingConnectorGeneric" image="icons/large/kindling-connector-48x32.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractKindlingConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/kindling/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.kindling" caption="Kindling" description="Kindling Cloud Connector
+
+Kindling ignites innovation by connecting people and ideas
+
+Allows to connect to the kindling site across the Kindling Service API.
+Connector created with the documentation of the service for the version v3.15.1.0." icon="icons/small/kindling-connector-24x16.png" localId="kindling-connector" image="icons/large/kindling-connector-48x32.png" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="kindlingConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Kindling operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-category" modeLabel="Create category"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-comment" modeLabel="Create comment"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-group" modeLabel="Create group"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-idea" modeLabel="Create idea"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-post" modeLabel="Create post"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/create-user" modeLabel="Create user"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/delete-comment" modeLabel="Delete comment"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/delete-user" modeLabel="Delete user"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-categories" modeLabel="Retrieve categories"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-category" modeLabel="Retrieve category"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-comment" modeLabel="Retrieve comment"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-comments" modeLabel="Retrieve comments"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-group" modeLabel="Retrieve group"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-groups" modeLabel="Retrieve groups"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-idea" modeLabel="Retrieve idea"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-ideas" modeLabel="Retrieve ideas"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-post" modeLabel="Retrieve post"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-posts" modeLabel="Retrieve posts"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-user" modeLabel="Retrieve user"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/retrieve-users" modeLabel="Retrieve users"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/update-category" modeLabel="Update category"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/update-group" modeLabel="Update group"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/update-idea" modeLabel="Update idea"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/update-post" modeLabel="Update post"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/kindling/update-user" modeLabel="Update user"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.category.KindlingCategory" caption="Create Category" icon="icons/small/kindling-connector-24x16.png" localId="create-category" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/category" caption="Category Reference" required="true" javaType="org.mule.module.kindling.model.category.KindlingCategory"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.comment.KindlingComment" caption="Create Comment" icon="icons/small/kindling-connector-24x16.png" localId="create-comment" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/comment" caption="Comment Reference" required="true" javaType="org.mule.module.kindling.model.comment.KindlingComment"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.group.KindlingGroup" caption="Create Group" icon="icons/small/kindling-connector-24x16.png" localId="create-group" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/group" caption="Group Reference" required="true" javaType="org.mule.module.kindling.model.group.KindlingGroup"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.idea.KindlingIdea" caption="Create Idea" icon="icons/small/kindling-connector-24x16.png" localId="create-idea" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/idea" caption="Idea Reference" required="true" javaType="org.mule.module.kindling.model.idea.KindlingIdea"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.post.KindlingPost" caption="Create Post" icon="icons/small/kindling-connector-24x16.png" localId="create-post" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/post" caption="Post Reference" required="true" javaType="org.mule.module.kindling.model.post.KindlingPost"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.user.KindlingUser" caption="Create User" icon="icons/small/kindling-connector-24x16.png" localId="create-user" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/user" caption="User Reference" required="true" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Delete Comment" icon="icons/small/kindling-connector-24x16.png" localId="delete-comment" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="commentId" caption="Comment Id" description="The id of the comment to delete." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Delete User" icon="icons/small/kindling-connector-24x16.png" localId="delete-user" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="userId" caption="User Id" description="The id of the user to delete." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.category.KindlingCategory&gt;" caption="Retrieve Categories" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-categories" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="associatedWithUserId" caption="Associated With User Id" description="If provided, will only return categories that the given user ID has access to." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20. The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <string name="query" caption="Query" description="A general category search." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="state" caption="State" description="Default: ACTIVATED. Get only items in the collection that are in the given state, either by a state ID or it's natural language name." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingCategoryState">
+          <option value="ACTIVATED"></option>
+          <option value="CLOSED"></option>
+          <option value="ENDED"></option>
+          <option value="QUEUED"></option>
+        </enum>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.category.KindlingCategory" caption="Retrieve Category" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-category" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="categoryId" caption="Category Id" description="The id of the category to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.comment.KindlingComment" caption="Retrieve Comment" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-comment" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="commentId" caption="Comment Id" description="The id of the comment to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.comment.KindlingComment&gt;" caption="Retrieve Comments" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-comments" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20 The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="parentId" caption="Parent Id" description="Retrieve only comments of a specific parent ID." required="false" javaType="java.lang.Integer"></integer>
+        <enum allowsCustom="true" name="parentType" caption="Parent Type" description="Retrieve only comments whose parent is of this type." supportsExpressions="true" required="true" javaType="org.mule.module.kindling.model.comment.KindlingCommentParentType">
+          <option value="IDEAS"></option>
+          <option value="POSTS"></option>
+        </enum>
+        <enum allowsCustom="true" name="state" caption="State" description="Default: ACTIVATED. Get only items in the collection that are in the given state, either by a state ID or it's natural language name." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingState">
+          <option value="ACTIVATED"></option>
+          <option value="DEACTIVATED"></option>
+        </enum>
+        <enum allowsCustom="true" name="type" caption="Type" description="The type of comments to retrieve." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.model.comment.KindlingCommentType">
+          <option value="MODERATOR"></option>
+          <option value="USER"></option>
+        </enum>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.group.KindlingGroup" caption="Retrieve Group" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-group" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="groupId" caption="Group Id" description="The id of the group to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc. group.json." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.group.KindlingGroup&gt;" caption="Retrieve Groups" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-groups" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20 The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <string name="query" caption="Query" description="A general group search." required="false" javaType="java.lang.String"></string>
+        <string name="startsWith" caption="Starts With" description="Find group titles beginning with this string." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="state" caption="State" description="Default: ACTIVATED. Get only items in the collection that are in the given state, either by a state ID or it's natural language name." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingState">
+          <option value="ACTIVATED"></option>
+          <option value="DEACTIVATED"></option>
+        </enum>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.idea.KindlingIdea" caption="Retrieve Idea" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-idea" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="ideaId" caption="Idea Id" description="The id of the Idea to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.idea.KindlingIdea&gt;" caption="Retrieve Ideas" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-ideas" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20 The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <string name="authorId" caption="Author Id" description="Show only ideas from a particular author." required="false" javaType="java.lang.String"></string>
+        <string name="categoryId" caption="Category Id" description="Show only ideas in a particular category." required="false" javaType="java.lang.String"></string>
+        <string name="query" caption="Query" description="A general idea search string." required="false" javaType="java.lang.String"></string>
+        <string name="state" caption="State" description="Get only items in the collection that are in the given state, either by a state ID or it's natural language name   drafted open approved completed declined paused others depending on workflow settings ." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="filter" caption="Filter" description="Conceptual filters." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingIdeaFilter">
+          <option value="FOLLOWED_IDEAS"></option>
+          <option value="LATEST_IDEAS"></option>
+          <option value="MY_IDEAS"></option>
+          <option value="MY_VOTES"></option>
+          <option value="POPULAR_IDEAS"></option>
+        </enum>
+        <boolean name="allowsVoting" caption="Allows Voting" description="Only show ideas that can or cannot be voted upon." supportsExpressions="true" required="false" javaType="java.lang.Boolean"></boolean>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.post.KindlingPost" caption="Retrieve Post" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-post" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="postId" caption="Post Id" description="The id of the post to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.post.KindlingPost&gt;" caption="Retrieve Posts" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-posts" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20. The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <string name="query" caption="Query" description="A general post search." required="false" javaType="java.lang.String"></string>
+        <string name="startsWith" caption="Starts With" description="Find posts beginning with this string." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="state" caption="State" description="Default: ACTIVATED. Get only items in the collection that are in the given state, either by a state ID or it's natural language name." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingPostState">
+          <option value="DRAFTED"></option>
+          <option value="PUBLISHED"></option>
+        </enum>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.user.KindlingUser" caption="Retrieve User" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-user" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="userId" caption="User Id" description="The id of the user to retrieve." required="true" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.KindlingCollection&lt;org.mule.module.kindling.model.user.KindlingUser&gt;" caption="Retrieve Users" icon="icons/small/kindling-connector-24x16.png" localId="retrieve-users" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="depth" caption="Depth" description="Default: 0. Any object in the result can be displayed at depth, 0 = no depth, 1 = expand first relational object level, etc." required="false" javaType="java.lang.Integer"></integer>
+        <string name="sort" caption="Sort" description="Default: title. How the collection output will be sorted, like 'date ASC', 'date', or 'name DESC' etc." required="false" javaType="java.lang.String"></string>
+        <integer min="0" step="1" name="associatedWithCategoryId" caption="Associated With Category Id" description="Only show users associated with a particular category." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="limit" caption="Limit" description="Default: 20. The limit on number of collection items to show per page." required="false" javaType="java.lang.Integer"></integer>
+        <integer min="0" step="1" name="page" caption="Page" description="Default: 1. The page requested." required="false" javaType="java.lang.Integer"></integer>
+        <string name="email" caption="Email" description="Users email." required="false" javaType="java.lang.String"></string>
+        <string name="query" caption="Query" description="General user search string." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="digest" caption="Digest" description="Show only users with a particular type of digest set." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingUserDigest">
+          <option value="ALL"></option>
+          <option value="DIGEST_NIGHTLY"></option>
+          <option value="DIGEST_WEEKLY"></option>
+          <option value="NONE"></option>
+        </enum>
+        <enum allowsCustom="true" name="reputationTimeframe" caption="Reputation Timeframe" description="If present, will turn this request into one specifically for reputation leaders for a given timeframe, which may be combined with the associatedWithCategoryId parameter as well to return a leaderbooard for a category." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingUserReputationTimeframe">
+          <option value="ALL_TIME"></option>
+          <option value="CURRENT_MONTH"></option>
+          <option value="LAST_90_DAYS"></option>
+        </enum>
+        <enum allowsCustom="true" name="state" caption="State" description="Default: ACTIVATED. Get only items in the collection that are in the given state, either by a state ID or it's natural language name." supportsExpressions="true" required="false" javaType="org.mule.module.kindling.types.KindlingUserState">
+          <option value="ACTIVATED"></option>
+          <option value="DEACTIVATED"></option>
+          <option value="INVITED"></option>
+        </enum>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.category.KindlingCategory" caption="Update Category" icon="icons/small/kindling-connector-24x16.png" localId="update-category" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="categoryId" caption="Category Id" description="The id of the category to update." required="true" javaType="java.lang.String"></string>
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/category" caption="Category Reference" required="true" javaType="org.mule.module.kindling.model.category.KindlingCategory"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.group.KindlingGroup" caption="Update Group" icon="icons/small/kindling-connector-24x16.png" localId="update-group" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="groupId" caption="Group Id" description="The id of the group to retrieve." required="true" javaType="java.lang.String"></string>
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/group" caption="Group Reference" required="true" javaType="org.mule.module.kindling.model.group.KindlingGroup"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.idea.KindlingIdea" caption="Update Idea" icon="icons/small/kindling-connector-24x16.png" localId="update-idea" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="ideaId" caption="Idea Id" description="The id of the Idea to update." required="true" javaType="java.lang.String"></string>
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/idea" caption="Idea Reference" required="true" javaType="org.mule.module.kindling.model.idea.KindlingIdea"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.post.KindlingPost" caption="Update Post" icon="icons/small/kindling-connector-24x16.png" localId="update-post" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="postId" caption="Post Id" description="The id of the post to update." required="true" javaType="java.lang.String"></string>
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/post" caption="Post Reference" required="true" javaType="org.mule.module.kindling.model.post.KindlingPost"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.module.kindling.model.user.KindlingUser" caption="Update User" icon="icons/small/kindling-connector-24x16.png" localId="update-user" image="icons/large/kindling-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/kindling/abstractKindlingConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="userId" caption="User Id" description="The id of the user to update." required="true" javaType="java.lang.String"></string>
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/user" caption="User Reference" required="true" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <nested xmlname="author" caption="" description="" localId="author" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Author Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="avatar-ref" caption="Avatar Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="username" caption="Username" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="firstName" caption="First Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastName" caption="Last Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="email" caption="Email" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/email-preferences" caption="Email Preferences Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserEmailPreferences"></childElement>
+    <integer min="0" step="1" name="votesTotal" caption="Votes Total" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="reputation" caption="Reputation" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="DEACTIVATED"></option>
+      <option value="DISABLED"></option>
+      <option value="INVITED"></option>
+    </enum>
+    <string name="resetRequested" caption="Reset Requested" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <boolean name="storNotification" caption="Stor Notification" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="backend" caption="Backend" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="fullName" caption="Full Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="avatarUri" caption="Avatar Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="locale" caption="Locale" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastLogin" caption="Last Login" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="lastLoginLocalized" caption="Last Login Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="skills" localName="configurable-skills" itemName="skill" caption="Skills" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-list listName="interests" localName="configurable-interests" itemName="interest" caption="Interests" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-listOfPojo listName="categories" localName="configurable-categories" itemName="category" caption="Categories" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.category.KindlingCategory&gt;"></element-controller-listOfPojo>
+    <boolean name="isAnonymous" caption="Is Anonymous" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="token" caption="Token" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+  <nested xmlname="category" caption="" description="" localId="category" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Category Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="parent-ref" caption="Parent Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/owner" caption="Owner Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+    <string name="slug" caption="Slug" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="title" caption="Title" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="description" caption="Description" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.category.KindlingCategoryStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="DISABLED"></option>
+      <option value="ENDED"></option>
+      <option value="LOCKED"></option>
+      <option value="QUEUED"></option>
+    </enum>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateUpdated" caption="Date Updated" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateUpdatedLocalized" caption="Date Updated Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <boolean name="isDefault" caption="Is Default" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <enum allowsCustom="true" name="submitIdeaRestriction" caption="Submit Idea Restriction" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.category.KindlingCategoryIdeaRestriction">
+      <option value="ALL"></option>
+      <option value="MODERATORS"></option>
+    </enum>
+    <string name="dateStart" caption="Date Start" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateStartLocalized" caption="Date Start Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateEnd" caption="Date End" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateEndLocalized" caption="Date End Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateClose" caption="Date Close" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCloseLocalized" caption="Date Close Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="notifyPhase" caption="Notify Phase" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="notifyStart" caption="Notify Start" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="notifyDaysLeft" caption="Notify Days Left" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="notifyEnd" caption="Notify End" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="reward" caption="Reward" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="fullyQualifiedTitle" caption="Fully Qualified Title" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="hierarchy" localName="configurable-hierarchy" itemName="hierarchy" caption="Hierarchy" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/ideas" caption="Ideas Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.category.KindlingCategoryIdea"></childElement>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="voteMax" caption="Vote Max" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <element-controller-listOfPojo listName="groups" localName="configurable-groups" itemName="group" caption="Groups" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.group.KindlingGroup&gt;"></element-controller-listOfPojo>
+  </nested>
+  <nested xmlname="comment" caption="" description="" localId="comment" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Comment Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/owner" caption="Owner Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+    <enum allowsCustom="true" name="parentType" caption="Parent Type" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.comment.KindlingCommentParentType">
+      <option value="IDEAS"></option>
+      <option value="POSTS"></option>
+    </enum>
+    <string name="parent-ref" caption="Parent Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="matchOptionIndex-ref" caption="Match Option Index Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <enum allowsCustom="true" name="type" caption="Type" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.comment.KindlingCommentType">
+      <option value="MODERATOR"></option>
+      <option value="USER"></option>
+    </enum>
+    <string name="description" caption="Description" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.comment.KindlingCommentStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIEVED"></option>
+    </enum>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="attachments" localName="configurable-attachments" itemName="attachment" caption="Attachments" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+  </nested>
+  <nested xmlname="current-user-info" caption="" description="" localId="current-user-info" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Current User Info Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <integer min="0" step="1" name="votes" caption="Votes" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="votesAvailable" caption="Votes Available" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="votesMax" caption="Votes Max" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="votesTotal" caption="Votes Total" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="voterCount" caption="Voter Count" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="ideaId" caption="Idea Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="categoryId" caption="Category Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <boolean name="isVotable" caption="Is Votable" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+  </nested>
+  <nested xmlname="email-preferences" caption="" description="" localId="email-preferences" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Email Preferences Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="defaultValue" caption="Default Value" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="categories-ref" caption="Categories Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+  </nested>
+  <nested xmlname="group" caption="" description="" localId="group" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Group Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="title" caption="Title" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="description" caption="Description" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <enum allowsCustom="true" name="type" caption="Type" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.group.KindlingGroupType">
+      <option value="MANAGED"></option>
+      <option value="SMART"></option>
+    </enum>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.group.KindlingGroupStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="DISABLED"></option>
+    </enum>
+    <boolean name="requiresLdap" caption="Requires Ldap" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="parameters-ref" caption="Parameters Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateUpdated" caption="Date Updated" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateUpdatedLocalized" caption="Date Updated Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="members" localName="configurable-members" itemName="member" caption="Members" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+    <element-controller-list listName="moderators" localName="configurable-moderators" itemName="moderator" caption="Moderators" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+    <element-controller-list listName="categories" localName="configurable-categories" itemName="category" caption="Categories" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+  </nested>
+  <nested xmlname="idea" caption="" description="" localId="idea" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Idea Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/category" caption="Category Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.category.KindlingCategory"></childElement>
+    <string name="title" caption="Title" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="description" caption="Description" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="votes" caption="Votes" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="anonymous" caption="Anonymous" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateUpdated" caption="Date Updated" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateUpdatedLocalized" caption="Date Updated Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateManaged" caption="Date Managed" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateManagedLocalized" caption="Date Managed Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateRectified" caption="Date Rectified" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateRectifiedLocalized" caption="Date Rectified Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.idea.KindlingIdeaStateName">
+      <option value="APPROVED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="COMPLETED"></option>
+      <option value="DECLINED"></option>
+      <option value="DRAFTED"></option>
+      <option value="OPEN"></option>
+      <option value="PAUSED"></option>
+    </enum>
+    <string name="cachetags" caption="Cachetags" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <boolean name="lockedForComments" caption="Locked For Comments" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="bonfireUrl" caption="Bonfire Url" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="submissionSource" caption="Submission Source" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="assignedTo" caption="Assigned To" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/author" caption="Author Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+    <element-controller-list listName="tags" localName="configurable-tags" itemName="tag" caption="Tags" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-listOfPojo listName="comments" localName="configurable-comments" itemName="comment" caption="Comments" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.comment.KindlingComment&gt;"></element-controller-listOfPojo>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/current-user-info" caption="Current User Info Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.idea.KindlingIdeaCurrentUserInfo"></childElement>
+    <string name="events-ref" caption="Events Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <element-controller-list listName="volunteers" localName="configurable-volunteers" itemName="volunteer" caption="Volunteers" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+    <element-controller-list listName="contributors" localName="configurable-contributors" itemName="contributor" caption="Contributors" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.Object&gt;"></element-controller-list>
+  </nested>
+  <nested xmlname="ideas" caption="" description="" localId="ideas" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Ideas Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <integer min="0" step="1" name="count" caption="Count" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="collectionUri" caption="Collection Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+  <nested xmlname="owner" caption="" description="" localId="owner" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Owner Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="avatar-ref" caption="Avatar Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="username" caption="Username" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="firstName" caption="First Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastName" caption="Last Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="email" caption="Email" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/email-preferences" caption="Email Preferences Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserEmailPreferences"></childElement>
+    <integer min="0" step="1" name="votesTotal" caption="Votes Total" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="reputation" caption="Reputation" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="DEACTIVATED"></option>
+      <option value="DISABLED"></option>
+      <option value="INVITED"></option>
+    </enum>
+    <string name="resetRequested" caption="Reset Requested" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <boolean name="storNotification" caption="Stor Notification" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="backend" caption="Backend" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="fullName" caption="Full Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="avatarUri" caption="Avatar Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="locale" caption="Locale" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastLogin" caption="Last Login" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="lastLoginLocalized" caption="Last Login Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="skills" localName="configurable-skills" itemName="skill" caption="Skills" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-list listName="interests" localName="configurable-interests" itemName="interest" caption="Interests" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-listOfPojo listName="categories" localName="configurable-categories" itemName="category" caption="Categories" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.category.KindlingCategory&gt;"></element-controller-listOfPojo>
+    <boolean name="isAnonymous" caption="Is Anonymous" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="token" caption="Token" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+  <nested xmlname="post" caption="" description="" localId="post" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Post Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/category" caption="Category Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.category.KindlingCategory"></childElement>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/owner" caption="Owner Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUser"></childElement>
+    <string name="title" caption="Title" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="description" caption="Description" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="postImage-ref" caption="Post Image Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateUpdated" caption="Date Updated" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateUpdatedLocalized" caption="Date Updated Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="datePublished" caption="Date Published" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="datePublishedLocalized" caption="Date Published Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.post.KindlingPostStateName">
+      <option value="DRAFTED"></option>
+      <option value="PUBLISHED"></option>
+    </enum>
+    <string name="cachedTags-ref" caption="Cached Tags Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <integer min="0" step="1" name="lockedForComments" caption="Locked For Comments" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="tags" localName="configurable-tags" itemName="tag" caption="Tags" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-listOfPojo listName="comments" localName="configurable-comments" itemName="comment" caption="Comments" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.comment.KindlingComment&gt;"></element-controller-listOfPojo>
+  </nested>
+  <nested xmlname="user" caption="" description="" localId="user" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="User Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="className" caption="Class Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <integer min="0" step="1" name="id" caption="Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <string name="avatar-ref" caption="Avatar Reference" description="" required="false" controlled="complex" javaType="java.lang.Object"></string>
+    <string name="username" caption="Username" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="firstName" caption="First Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastName" caption="Last Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="email" caption="Email" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/kindling/email-preferences" caption="Email Preferences Reference" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserEmailPreferences"></childElement>
+    <integer min="0" step="1" name="votesTotal" caption="Votes Total" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="reputation" caption="Reputation" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <integer min="0" step="1" name="stateId" caption="State Id" description="" required="false" controlled="complex" javaType="java.lang.Integer"></integer>
+    <enum allowsCustom="true" name="stateName" caption="State Name" description="" supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.module.kindling.model.user.KindlingUserStateName">
+      <option value="ACTIVATED"></option>
+      <option value="ARCHIVED"></option>
+      <option value="DEACTIVATED"></option>
+      <option value="DISABLED"></option>
+      <option value="INVITED"></option>
+    </enum>
+    <string name="resetRequested" caption="Reset Requested" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <boolean name="storNotification" caption="Stor Notification" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="backend" caption="Backend" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="fullName" caption="Full Name" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="avatarUri" caption="Avatar Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="resourceUri" caption="Resource Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="applicationUri" caption="Application Uri" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="locale" caption="Locale" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="lastLogin" caption="Last Login" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="lastLoginLocalized" caption="Last Login Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <string name="dateCreated" caption="Date Created" description="" required="false" controlled="complex" javaType="java.util.Date"></string>
+    <string name="dateCreatedLocalized" caption="Date Created Localized" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+    <element-controller-list listName="skills" localName="configurable-skills" itemName="skill" caption="Skills" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-list listName="interests" localName="configurable-interests" itemName="interest" caption="Interests" description="" required="false" controlled="complex" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+    <element-controller-listOfPojo listName="categories" localName="configurable-categories" itemName="category" caption="Categories" description="" required="false" controlled="complex" javaType="java.util.List&lt;org.mule.module.kindling.model.category.KindlingCategory&gt;"></element-controller-listOfPojo>
+    <boolean name="isAnonymous" caption="Is Anonymous" description="" supportsExpressions="true" required="false" controlled="complex" javaType="java.lang.Boolean"></boolean>
+    <string name="token" caption="Token" description="" required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+</namespace>

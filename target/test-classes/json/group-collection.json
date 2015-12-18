@@ -1,0 +1,66 @@
+{
+   "meta":{
+      "count":3,
+      "totalCount":3,
+      "totalPages":1,
+      "parameters":{
+         "page":1,
+         "limit":20,
+         "sort":"title ASC",
+         "state":"Activated"
+      }
+   },
+   "results":[
+      {
+         "className":"Group_Smart_All",
+         "id":1,
+         "title":"All Users",
+         "description":"All Users",
+         "type":"smart",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "dateCreated":"2012-07-10T15:37:24+00:00",
+         "dateCreatedLocalized":"July 10, 2012",
+         "dateUpdated":"2012-07-10T15:37:24+00:00",
+         "dateUpdatedLocalized":"July 10, 2012",
+         "parameters":null,
+         "resourceUri":"\/api\/groups\/1",
+         "applicationUri":"\/groups\/1"
+      },
+      {
+         "className":"Group_Managed",
+         "id":2,
+         "title":"OnlyMe",
+         "description":"A group for more people",
+         "type":"managed",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "dateCreated":"2013-01-04T16:49:55+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "dateUpdated":"2013-01-04T16:49:55+00:00",
+         "dateUpdatedLocalized":"January  4, 2013",
+         "parameters":null,
+         "resourceUri":"\/api\/groups\/2",
+         "applicationUri":"\/groups\/2"
+      },
+      {
+         "className":"Group_Managed",
+         "id":3,
+         "title":"Random People",
+         "description":"A group for random people",
+         "type":"managed",
+         "stateId":1,
+         "stateName":"Activated",
+         "requiresLdap":0,
+         "dateCreated":"2013-01-04T16:53:14+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "dateUpdated":"2013-01-04T16:53:14+00:00",
+         "dateUpdatedLocalized":"January  4, 2013",
+         "parameters":null,
+         "resourceUri":"\/api\/groups\/3",
+         "applicationUri":"\/groups\/3"
+      }
+   ]
+}

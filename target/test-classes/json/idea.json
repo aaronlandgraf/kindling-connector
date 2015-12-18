@@ -1,0 +1,734 @@
+{
+   "className":"Idea",
+   "id":5,
+   "category":{
+      "className":"Category",
+      "id":1,
+      "parent":null,
+      "owner":{
+         "className":"User",
+         "id":1,
+         "avatar":{
+            "id":0
+         },
+         "username":"josh.priollaud@mulesoft.com",
+         "firstName":"Josh",
+         "lastName":"Priollaud",
+         "email":"josh.priollaud@mulesoft.com",
+         "votesTotal":10,
+         "stateId":1,
+         "stateName":"Activated",
+         "resetRequested":null,
+         "storNotification":null,
+         "backend":"local",
+         "fullName":"Josh Priollaud",
+         "avatarUri":"\\/img\\/avatarDefault75.png",
+         "resourceUri":"\\/api\\/users\\/1",
+         "applicationUri":"\\/users\\/1",
+         "locale":null,
+         "reputation":12,
+         "isAnonymous":false,
+         "lastLogin":"2013-01-04T16:47:56+00:00",
+         "lastLoginLocalized":"January  4, 2013",
+         "dateCreated":"2012-07-10T11:37:23+00:00",
+         "dateCreatedLocalized":"July 10, 2012",
+         "token":"21d2f70fd81da2b70c24d19af37d44ab",
+         "skills":[
+
+         ],
+         "interests":[
+
+         ],
+         "categories":[
+            {
+               "id":2,
+               "canModerate":true
+            },
+            {
+               "id":3,
+               "canModerate":true
+            },
+            {
+               "id":1,
+               "canModerate":true
+            }
+         ],
+         "emailPreferences":{
+            "default":"instant",
+            "categories":{
+               "2":"instant",
+               "3":"instant",
+               "1":"instant"
+            }
+         }
+      },
+      "slug":"general",
+      "title":"General",
+      "description":null,
+      "stateId":1,
+      "stateName":"Activated",
+      "dateCreated":"2012-07-10T15:37:24+00:00",
+      "dateCreatedLocalized":"July 10, 2012",
+      "dateUpdated":null,
+      "dateUpdatedLocalized":null,
+      "isDefault":1,
+      "submitIdeaRestriction":"all",
+      "dateStart":null,
+      "dateStartLocalized":null,
+      "dateEnd":null,
+      "dateEndLocalized":null,
+      "dateClose":null,
+      "dateCloseLocalized":null,
+      "notifyPhase":0,
+      "notifyStart":0,
+      "notifyDaysLeft":0,
+      "notifyEnd":0,
+      "reward":"",
+      "fullyQualifiedTitle":"General",
+      "hierarchy":[
+
+      ],
+      "ideas":{
+         "count":4,
+         "collectionUri":"\\/api\\/ideas?category=1"
+      },
+      "resourceUri":"\\/api\\/categories\\/1",
+      "applicationUri":"\\/categories\\/1",
+      "voteMax":"10",
+      "groups":[
+         {
+            "className":"Group_Smart_All",
+            "id":1,
+            "title":"All Users",
+            "description":"All Users",
+            "type":"smart",
+            "stateId":1,
+            "stateName":"Activated",
+            "requiresLdap":0,
+            "dateCreated":"2012-07-10T15:37:24+00:00",
+            "dateCreatedLocalized":"July 10, 2012",
+            "dateUpdated":"2012-07-10T15:37:24+00:00",
+            "dateUpdatedLocalized":"July 10, 2012",
+            "parameters":null,
+            "resourceUri":"\\/api\\/groups\\/1",
+            "applicationUri":"\\/groups\\/1"
+         },
+         {
+            "className":"Group_Managed",
+            "id":2,
+            "title":"OnlyMe",
+            "description":"A group for more people",
+            "type":"managed",
+            "stateId":1,
+            "stateName":"Activated",
+            "requiresLdap":0,
+            "parameters":null,
+            "dateCreated":"2013-01-04T16:49:55+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":"2013-01-04T16:49:55+00:00",
+            "dateUpdatedLocalized":"January  4, 2013",
+            "resourceUri":"\\/api\\/groups\\/2",
+            "applicationUri":"\\/groups\\/2"
+         },
+         {
+            "className":"Group_Managed",
+            "id":3,
+            "title":"Random People",
+            "description":"A group for random people",
+            "type":"managed",
+            "stateId":1,
+            "stateName":"Activated",
+            "requiresLdap":0,
+            "parameters":null,
+            "dateCreated":"2013-01-04T16:53:14+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":"2013-01-04T16:53:14+00:00",
+            "dateUpdatedLocalized":"January  4, 2013",
+            "resourceUri":"\\/api\\/groups\\/3",
+            "applicationUri":"\\/groups\\/3"
+         }
+      ]
+   },
+   "title":"Idea test 1",
+   "description":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales.<\\/p>",
+   "votes":0,
+   "anonymous":0,
+   "dateCreated":"2013-01-04T15:59:51+00:00",
+   "dateCreatedLocalized":"January  4, 2013",
+   "dateUpdated":"2013-01-08T14:05:19+00:00",
+   "dateUpdatedLocalized":"January  8, 2013",
+   "dateManaged":null,
+   "dateManagedLocalized":null,
+   "dateRectified":null,
+   "dateRectifiedLocalized":null,
+   "stateId":13,
+   "stateName":"Open",
+   "cachedTags":null,
+   "lockedForComments":0,
+   "bonfireUrl":null,
+   "submissionSource":"kindling-api",
+   "resourceUri":"\\/api\\/ideas\\/5",
+   "applicationUri":"\\/ideas\\/5",
+   "assignedTo":0,
+   "volunteers":[
+      {
+         "className":"User",
+         "id":5,
+         "avatar":{
+            "id":0
+         },
+         "username":"gustavo.alberola@mulesoft.com",
+         "firstName":"Gustavo",
+         "lastName":"Alberola",
+         "email":"gustavo.alberola@mulesoft.com",
+         "votesTotal":10,
+         "stateId":1,
+         "stateName":"Activated",
+         "resetRequested":null,
+         "storNotification":null,
+         "backend":"local",
+         "fullName":"Gustavo Alberola",
+         "avatarUri":"\\/img\\/avatarDefault75.png",
+         "resourceUri":"\\/api\\/users\\/5",
+         "applicationUri":"\\/users\\/5",
+         "locale":null,
+         "reputation":18,
+         "isAnonymous":false,
+         "lastLogin":"2013-02-13T14:53:53+00:00",
+         "lastLoginLocalized":"February 13, 2013",
+         "dateCreated":"2013-01-02T22:09:15+00:00",
+         "dateCreatedLocalized":"January  2, 2013",
+         "token":"1b942cb188bec1379be8622a33d94e06",
+         "skills":[
+            "Cloud Connector Developer",
+            "Kindling Expert",
+            "Pianist",
+            "Swimmer"
+         ],
+         "interests":[
+            "tag1",
+            "tag3"
+         ],
+         "categories":[
+            {
+               "className":"Category",
+               "id":2,
+               "parent":null,
+               "owner":{
+                  "id":5
+               },
+               "slug":null,
+               "title":"Awesome",
+               "description":"The Awesome category!",
+               "stateId":1,
+               "stateName":"Activated",
+               "dateCreated":"2013-01-04T16:55:07+00:00",
+               "dateCreatedLocalized":"January  4, 2013",
+               "dateUpdated":null,
+               "dateUpdatedLocalized":null,
+               "isDefault":0,
+               "submitIdeaRestriction":"all",
+               "dateStart":null,
+               "dateStartLocalized":null,
+               "dateEnd":null,
+               "dateEndLocalized":null,
+               "dateClose":null,
+               "dateCloseLocalized":null,
+               "notifyPhase":null,
+               "notifyStart":null,
+               "notifyDaysLeft":null,
+               "notifyEnd":null,
+               "reward":null,
+               "fullyQualifiedTitle":"Awesome",
+               "hierarchy":[
+
+               ],
+               "ideas":{
+                  "count":0,
+                  "collectionUri":"\\/api\\/ideas?category=2"
+               },
+               "resourceUri":"\\/api\\/categories\\/2",
+               "applicationUri":"\\/categories\\/2",
+               "voteMax":"10",
+               "canModerate":true
+            },
+            {
+               "className":"Category_Campaign",
+               "id":3,
+               "parent":null,
+               "owner":{
+                  "id":5
+               },
+               "slug":null,
+               "title":"Campaign 1",
+               "description":"This is a campaign category",
+               "stateId":21,
+               "stateName":"Ended",
+               "dateCreated":"2013-01-04T16:55:53+00:00",
+               "dateCreatedLocalized":"January  4, 2013",
+               "dateUpdated":null,
+               "dateUpdatedLocalized":null,
+               "isDefault":0,
+               "submitIdeaRestriction":"all",
+               "dateStart":"2013-01-04T08:00:00+00:00",
+               "dateStartLocalized":"January  4, 2013",
+               "dateEnd":"2013-01-31T08:00:00+00:00",
+               "dateEndLocalized":"January 31, 2013",
+               "dateClose":"2013-03-17T08:00:00+00:00",
+               "dateCloseLocalized":"March 17, 2013",
+               "notifyPhase":1,
+               "notifyStart":0,
+               "notifyDaysLeft":0,
+               "notifyEnd":0,
+               "reward":"iPad 3",
+               "fullyQualifiedTitle":"Campaign 1",
+               "hierarchy":[
+
+               ],
+               "ideas":{
+                  "count":0,
+                  "collectionUri":"\\/api\\/ideas?category=3"
+               },
+               "resourceUri":"\\/api\\/categories\\/3",
+               "applicationUri":"\\/categories\\/3",
+               "voteMax":"10",
+               "canModerate":true
+            },
+            {
+               "className":"Category",
+               "id":1,
+               "parent":null,
+               "owner":{
+                  "id":1
+               },
+               "slug":"general",
+               "title":"General",
+               "description":null,
+               "stateId":1,
+               "stateName":"Activated",
+               "dateCreated":"2012-07-10T15:37:24+00:00",
+               "dateCreatedLocalized":"July 10, 2012",
+               "dateUpdated":null,
+               "dateUpdatedLocalized":null,
+               "isDefault":1,
+               "submitIdeaRestriction":"all",
+               "dateStart":null,
+               "dateStartLocalized":null,
+               "dateEnd":null,
+               "dateEndLocalized":null,
+               "dateClose":null,
+               "dateCloseLocalized":null,
+               "notifyPhase":0,
+               "notifyStart":0,
+               "notifyDaysLeft":0,
+               "notifyEnd":0,
+               "reward":"",
+               "fullyQualifiedTitle":"General",
+               "hierarchy":[
+
+               ],
+               "ideas":{
+                  "count":4,
+                  "collectionUri":"\\/api\\/ideas?category=1"
+               },
+               "resourceUri":"\\/api\\/categories\\/1",
+               "applicationUri":"\\/categories\\/1",
+               "voteMax":"10",
+               "canModerate":true
+            }
+         ],
+         "emailPreferences":{
+            "default":"instant",
+            "categories":{
+               "2":"instant",
+               "3":"digest-weekly",
+               "1":"digest-nightly"
+            }
+         }
+      }
+   ],
+   "events":{
+      "viewedCount":3
+   },
+   "author":{
+      "className":"User_Author_Named",
+      "id":5,
+      "avatar":{
+         "id":0
+      },
+      "username":"gustavo.alberola@mulesoft.com",
+      "firstName":"Gustavo",
+      "lastName":"Alberola",
+      "email":"gustavo.alberola@mulesoft.com",
+      "votesTotal":10,
+      "stateId":1,
+      "stateName":"Activated",
+      "resetRequested":null,
+      "storNotification":null,
+      "backend":"local",
+      "fullName":"Gustavo Alberola",
+      "avatarUri":"\\/img\\/avatarDefault75.png",
+      "resourceUri":"\\/api\\/users\\/5",
+      "applicationUri":"\\/users\\/5",
+      "locale":null,
+      "reputation":18,
+      "isAnonymous":false,
+      "lastLogin":"2013-02-13T14:53:53+00:00",
+      "lastLoginLocalized":"February 13, 2013",
+      "dateCreated":"2013-01-02T22:09:15+00:00",
+      "dateCreatedLocalized":"January  2, 2013",
+      "token":"1b942cb188bec1379be8622a33d94e06",
+      "skills":[
+         "Cloud Connector Developer",
+         "Kindling Expert",
+         "Pianist",
+         "Swimmer"
+      ],
+      "interests":[
+         "tag1",
+         "tag3"
+      ],
+      "categories":[
+         {
+            "className":"Category",
+            "id":2,
+            "parent":null,
+            "owner":{
+               "id":5
+            },
+            "slug":null,
+            "title":"Awesome",
+            "description":"The Awesome category!",
+            "stateId":1,
+            "stateName":"Activated",
+            "dateCreated":"2013-01-04T16:55:07+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":0,
+            "submitIdeaRestriction":"all",
+            "dateStart":null,
+            "dateStartLocalized":null,
+            "dateEnd":null,
+            "dateEndLocalized":null,
+            "dateClose":null,
+            "dateCloseLocalized":null,
+            "notifyPhase":null,
+            "notifyStart":null,
+            "notifyDaysLeft":null,
+            "notifyEnd":null,
+            "reward":null,
+            "fullyQualifiedTitle":"Awesome",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":0,
+               "collectionUri":"\\/api\\/ideas?category=2"
+            },
+            "resourceUri":"\\/api\\/categories\\/2",
+            "applicationUri":"\\/categories\\/2",
+            "voteMax":"10",
+            "canModerate":true
+         },
+         {
+            "className":"Category_Campaign",
+            "id":3,
+            "parent":null,
+            "owner":{
+               "id":5
+            },
+            "slug":null,
+            "title":"Campaign 1",
+            "description":"This is a campaign category",
+            "stateId":21,
+            "stateName":"Ended",
+            "dateCreated":"2013-01-04T16:55:53+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":0,
+            "submitIdeaRestriction":"all",
+            "dateStart":"2013-01-04T08:00:00+00:00",
+            "dateStartLocalized":"January  4, 2013",
+            "dateEnd":"2013-01-31T08:00:00+00:00",
+            "dateEndLocalized":"January 31, 2013",
+            "dateClose":"2013-03-17T08:00:00+00:00",
+            "dateCloseLocalized":"March 17, 2013",
+            "notifyPhase":1,
+            "notifyStart":0,
+            "notifyDaysLeft":0,
+            "notifyEnd":0,
+            "reward":"iPad 3",
+            "fullyQualifiedTitle":"Campaign 1",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":0,
+               "collectionUri":"\\/api\\/ideas?category=3"
+            },
+            "resourceUri":"\\/api\\/categories\\/3",
+            "applicationUri":"\\/categories\\/3",
+            "voteMax":"10",
+            "canModerate":true
+         },
+         {
+            "className":"Category",
+            "id":1,
+            "parent":null,
+            "owner":{
+               "id":1
+            },
+            "slug":"general",
+            "title":"General",
+            "description":null,
+            "stateId":1,
+            "stateName":"Activated",
+            "dateCreated":"2012-07-10T15:37:24+00:00",
+            "dateCreatedLocalized":"July 10, 2012",
+            "dateUpdated":null,
+            "dateUpdatedLocalized":null,
+            "isDefault":1,
+            "submitIdeaRestriction":"all",
+            "dateStart":null,
+            "dateStartLocalized":null,
+            "dateEnd":null,
+            "dateEndLocalized":null,
+            "dateClose":null,
+            "dateCloseLocalized":null,
+            "notifyPhase":0,
+            "notifyStart":0,
+            "notifyDaysLeft":0,
+            "notifyEnd":0,
+            "reward":"",
+            "fullyQualifiedTitle":"General",
+            "hierarchy":[
+
+            ],
+            "ideas":{
+               "count":4,
+               "collectionUri":"\\/api\\/ideas?category=1"
+            },
+            "resourceUri":"\\/api\\/categories\\/1",
+            "applicationUri":"\\/categories\\/1",
+            "voteMax":"10",
+            "canModerate":true
+         }
+      ],
+      "emailPreferences":{
+         "default":"instant",
+         "categories":{
+            "2":"instant",
+            "3":"digest-weekly",
+            "1":"digest-nightly"
+         }
+      }
+   },
+   "tags":[
+      "tag1",
+      "tag2",
+      "tag3"
+   ],
+   "comments":[
+      {
+         "className":"Comment",
+         "id":1,
+         "owner":{
+            "className":"User",
+            "id":5,
+            "avatar":{
+               "id":0
+            },
+            "username":"gustavo.alberola@mulesoft.com",
+            "firstName":"Gustavo",
+            "lastName":"Alberola",
+            "email":"gustavo.alberola@mulesoft.com",
+            "votesTotal":10,
+            "stateId":1,
+            "stateName":"Activated",
+            "resetRequested":null,
+            "storNotification":null,
+            "backend":"local",
+            "fullName":"Gustavo Alberola",
+            "avatarUri":"\\/img\\/avatarDefault75.png",
+            "resourceUri":"\\/api\\/users\\/5",
+            "applicationUri":"\\/users\\/5",
+            "locale":null,
+            "reputation":18,
+            "isAnonymous":false,
+            "lastLogin":"2013-02-13T14:53:53+00:00",
+            "lastLoginLocalized":"February 13, 2013",
+            "dateCreated":"2013-01-02T22:09:15+00:00",
+            "dateCreatedLocalized":"January  2, 2013",
+            "token":"1b942cb188bec1379be8622a33d94e06"
+         },
+         "parentType":"ideas",
+         "type":"user",
+         "description":"<p>Comment<\\/p>\\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique suscipit nibh at aliquet. Nam at dui dolor. Sed tellus<\\/p>",
+         "dateCreated":"2013-01-04T16:02:17+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "stateId":1,
+         "stateName":"Activated",
+         "resourceUri":"\\/api\\/comments\\/1",
+         "parent":{
+            "className":"Idea",
+            "id":5,
+            "category":{
+               "id":1
+            },
+            "title":"Idea test 1",
+            "description":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales.<\\/p>",
+            "votes":0,
+            "anonymous":0,
+            "dateCreated":"2013-01-04T15:59:51+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":"2013-01-08T14:05:19+00:00",
+            "dateUpdatedLocalized":"January  8, 2013",
+            "dateManaged":null,
+            "dateManagedLocalized":null,
+            "dateRectified":null,
+            "dateRectifiedLocalized":null,
+            "stateId":13,
+            "stateName":"Open",
+            "cachedTags":null,
+            "lockedForComments":0,
+            "bonfireUrl":null,
+            "submissionSource":"kindling-api",
+            "resourceUri":"\\/api\\/ideas\\/5",
+            "applicationUri":"\\/ideas\\/5",
+            "assignedTo":0,
+            "volunteers":[
+               {
+                  "id":5
+               }
+            ],
+            "events":{
+               "viewedCount":3
+            },
+            "author":{
+               "id":5
+            },
+            "currentUserInfo":{
+               "votes":0,
+               "votesAvailable":10,
+               "votesMax":10,
+               "votesTotal":0,
+               "voterCount":0,
+               "ideaId":5,
+               "categoryId":1,
+               "isVotable":true
+            }
+         },
+         "attachments":[
+
+         ]
+      },
+      {
+         "className":"Comment",
+         "id":2,
+         "owner":{
+            "className":"User",
+            "id":5,
+            "avatar":{
+               "id":0
+            },
+            "username":"gustavo.alberola@mulesoft.com",
+            "firstName":"Gustavo",
+            "lastName":"Alberola",
+            "email":"gustavo.alberola@mulesoft.com",
+            "votesTotal":10,
+            "stateId":1,
+            "stateName":"Activated",
+            "resetRequested":null,
+            "storNotification":null,
+            "backend":"local",
+            "fullName":"Gustavo Alberola",
+            "avatarUri":"\\/img\\/avatarDefault75.png",
+            "resourceUri":"\\/api\\/users\\/5",
+            "applicationUri":"\\/users\\/5",
+            "locale":null,
+            "reputation":18,
+            "isAnonymous":false,
+            "lastLogin":"2013-02-13T14:53:53+00:00",
+            "lastLoginLocalized":"February 13, 2013",
+            "dateCreated":"2013-01-02T22:09:15+00:00",
+            "dateCreatedLocalized":"January  2, 2013",
+            "token":"1b942cb188bec1379be8622a33d94e06"
+         },
+         "parentType":"ideas",
+         "type":"user",
+         "description":"<p>Another comment<\\/p>\\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique suscipit nibh at aliquet. Nam at dui dolor. Sed tellus<\\/p>",
+         "dateCreated":"2013-01-04T16:02:25+00:00",
+         "dateCreatedLocalized":"January  4, 2013",
+         "stateId":1,
+         "stateName":"Activated",
+         "resourceUri":"\\/api\\/comments\\/2",
+         "parent":{
+            "className":"Idea",
+            "id":5,
+            "category":{
+               "id":1
+            },
+            "title":"Idea test 1",
+            "description":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales.<\\/p>",
+            "votes":0,
+            "anonymous":0,
+            "dateCreated":"2013-01-04T15:59:51+00:00",
+            "dateCreatedLocalized":"January  4, 2013",
+            "dateUpdated":"2013-01-08T14:05:19+00:00",
+            "dateUpdatedLocalized":"January  8, 2013",
+            "dateManaged":null,
+            "dateManagedLocalized":null,
+            "dateRectified":null,
+            "dateRectifiedLocalized":null,
+            "stateId":13,
+            "stateName":"Open",
+            "cachedTags":null,
+            "lockedForComments":0,
+            "bonfireUrl":null,
+            "submissionSource":"kindling-api",
+            "resourceUri":"\\/api\\/ideas\\/5",
+            "applicationUri":"\\/ideas\\/5",
+            "assignedTo":0,
+            "volunteers":[
+               {
+                  "id":5
+               }
+            ],
+            "events":{
+               "viewedCount":3
+            },
+            "author":{
+               "id":5
+            },
+            "currentUserInfo":{
+               "votes":0,
+               "votesAvailable":10,
+               "votesMax":10,
+               "votesTotal":0,
+               "voterCount":0,
+               "ideaId":5,
+               "categoryId":1,
+               "isVotable":true
+            }
+         },
+         "attachments":[
+
+         ]
+      }
+   ],
+   "contributors":[
+
+   ],
+   "currentUserInfo":{
+      "votes":0,
+      "votesAvailable":10,
+      "votesMax":10,
+      "votesTotal":0,
+      "voterCount":0,
+      "ideaId":5,
+      "categoryId":1,
+      "isVotable":true
+   }
+}
