@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd 
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd ">
-    <kindling:config name="KindlingCfg" username="gustavo.alberola@mulesoft.com" password="Mule1234" companyName="mulesoft" doc:name="Kindling">
+    <kindling:config impersonationToken="${kindling.it.impersonationToken}" name="KindlingCfg" username="${kindling.it.username}" password="${kindling.it.password}" companyName="${kindling.it.company}" doc:name="Kindling">
         <kindling:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
     </kindling:config>
     <data-mapper:config name="Categories" transformationGraphPath="categories.grf" doc:name="DataMapper"/>
